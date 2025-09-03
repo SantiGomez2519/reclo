@@ -14,7 +14,7 @@ class CustomUserController extends Controller
 
     // Note: Remember to validate the request in the model
     // public function save(Request $request): View
-    // { 
+    // {
     //    Model::validate($request);
     //
     //    In this case, for CustomUser, we need to hash the password

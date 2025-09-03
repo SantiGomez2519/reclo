@@ -13,7 +13,7 @@ class SwapRequestController extends Controller
 
     // Note: Remember to validate the request in the model
     // public function save(Request $request): View
-    // { 
+    // {
     //    Model::validate($request);
     //    Model::create($request->only(['attribute1', 'attribute2', 'attribute3']));
     // }
