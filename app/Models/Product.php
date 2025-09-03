@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
 class Product extends Model
-{ 
+{
     /**
      * PRODUCT ATTRIBUTES
      * $this->attributes['id'] - int - contains the product primary key (id)
@@ -20,8 +24,15 @@ class Product extends Model
      * $this->attributes['status'] - string - contains the product status
      * $this->attributes['swap'] - bool - tells if the product has been swapped
      * $this->attributes['image'] - string - contains the product image (url or path)
+     * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
+     * $this->attributes['order_id'] - int - contains the order foreign key (nullable)
      * $this->attributes['created_at'] - timestamp - contains the product creation timestamp
      * $this->attributes['updated_at'] - timestamp - contains the product last update timestamp
+     * $this->seller - CustomUser - contains the associated seller
+     * $this->order - Order - contains the associated order (nullable)
+     * $this->review - Review - contains the associated review (nullable)
+     * $this->swapRequestsDesired - SwapRequest[] - contains swap requests where this product is desired
+     * $this->swapRequestsOffered - SwapRequest[] - contains swap requests where this product is offered
      */
     protected $fillable = [
         'title',
@@ -33,6 +44,8 @@ class Product extends Model
         'price',
         'status',
         'image',
+        'seller_id',
+        'order_id',
     ];
 
     public static function validate(Request $request): void
@@ -163,5 +176,102 @@ class Product extends Model
     public function getUpdatedAt(): string
     {
         return $this->attributes['updated_at'];
+    }
+
+    // Foreign Key Getters/Setters
+    public function getSellerId(): int
+    {
+        return $this->attributes['seller_id'];
+    }
+
+    public function setSellerId(int $seller_id): void
+    {
+        $this->attributes['seller_id'] = $seller_id;
+    }
+
+    public function getOrderId(): ?int
+    {
+        return $this->attributes['order_id'];
+    }
+
+    public function setOrderId(?int $order_id): void
+    {
+        $this->attributes['order_id'] = $order_id;
+    }
+
+    // Relationships
+    public function seller(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'seller_id');
+    }
+
+    public function getSeller(): CustomUser
+    {
+        return $this->seller;
+    }
+
+    public function setSeller(CustomUser $seller): void
+    {
+        $this->seller = $seller;
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(?Order $order): void
+    {
+        $this->order = $order;
+    }
+
+    public function review(): HasOne
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    public function getReview(): ?Review
+    {
+        return $this->review;
+    }
+
+    public function setReview(?Review $review): void
+    {
+        $this->review = $review;
+    }
+
+    public function swapRequestsDesired(): HasMany
+    {
+        return $this->hasMany(SwapRequest::class, 'desired_item_id');
+    }
+
+    public function getSwapRequestsDesired(): Collection
+    {
+        return $this->swapRequestsDesired;
+    }
+
+    public function setSwapRequestsDesired(Collection $swapRequestsDesired): void
+    {
+        $this->swapRequestsDesired = $swapRequestsDesired;
+    }
+
+    public function swapRequestsOffered(): HasMany
+    {
+        return $this->hasMany(SwapRequest::class, 'offered_item_id');
+    }
+
+    public function getSwapRequestsOffered(): Collection
+    {
+        return $this->swapRequestsOffered;
+    }
+
+    public function setSwapRequestsOffered(Collection $swapRequestsOffered): void
+    {
+        $this->swapRequestsOffered = $swapRequestsOffered;
     }
 }

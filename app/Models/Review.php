@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
 class Review extends Model
@@ -12,12 +13,18 @@ class Review extends Model
      * $this->attributes['id'] - int - contains the review primary key (id)
      * $this->attributes['comment'] - string - contains the review comment
      * $this->attributes['rating'] - int - contains the review rating
+     * $this->attributes['user_id'] - int - contains the user (CustomUser) foreign key
+     * $this->attributes['product_id'] - int - contains the product foreign key
      * $this->attributes['created_at'] - timestamp - contains the review creation timestamp
      * $this->attributes['updated_at'] - timestamp - contains the review last update timestamp
+     * $this->user - CustomUser - contains the associated user who wrote the review
+     * $this->product - Product - contains the associated product being reviewed
      */
     protected $fillable = [
         'comment',
         'rating',
+        'user_id',
+        'product_id',
     ];
 
     public static function validate(Request $request): void
@@ -61,5 +68,57 @@ class Review extends Model
     public function getUpdatedAt(): string
     {
         return $this->attributes['updated_at'];
+    }
+
+    // Foreign Key Getters/Setters
+    public function getUserId(): int
+    {
+        return $this->attributes['user_id'];
+    }
+
+    public function setUserId(int $user_id): void
+    {
+        $this->attributes['user_id'] = $user_id;
+    }
+
+    public function getProductId(): int
+    {
+        return $this->attributes['product_id'];
+    }
+
+    public function setProductId(int $product_id): void
+    {
+        $this->attributes['product_id'] = $product_id;
+    }
+
+    // Relationships
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class);
+    }
+
+    public function getUser(): CustomUser
+    {
+        return $this->user;
+    }
+
+    public function setUser(CustomUser $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
     }
 }

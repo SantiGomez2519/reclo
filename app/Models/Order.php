@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class Order extends Model
@@ -14,14 +17,18 @@ class Order extends Model
      * $this->attributes['total_price'] - int - contains the order total price
      * $this->attributes['status'] - string - contains the order status
      * $this->attributes['payment_method'] - string - contains the order payment method
+     * $this->attributes['buyer_id'] - int - contains the buyer (CustomUser) foreign key
      * $this->attributes['created_at'] - timestamp - contains the order creation timestamp
      * $this->attributes['updated_at'] - timestamp - contains the order last update timestamp
+     * $this->buyer - CustomUser - contains the associated buyer
+     * $this->products - Product[] - contains the products included in this order
      */
     protected $fillable = [
         'order_date',
         'total_price',
         'status',
         'payment_method',
+        'buyer_id',
     ];
 
     public static function validate(Request $request): void
@@ -87,5 +94,47 @@ class Order extends Model
     public function getUpdatedAt(): string
     {
         return $this->attributes['updated_at'];
+    }
+
+    // Foreign Key Getters/Setters
+    public function getBuyerId(): int
+    {
+        return $this->attributes['buyer_id'];
+    }
+
+    public function setBuyerId(int $buyer_id): void
+    {
+        $this->attributes['buyer_id'] = $buyer_id;
+    }
+
+    // Relationships
+    public function buyer(): BelongsTo
+    {
+        return $this->belongsTo(CustomUser::class, 'buyer_id');
+    }
+
+    public function getBuyer(): CustomUser
+    {
+        return $this->buyer;
+    }
+
+    public function setBuyer(CustomUser $buyer): void
+    {
+        $this->buyer = $buyer;
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function setProducts(Collection $products): void
+    {
+        $this->products = $products;
     }
 }
