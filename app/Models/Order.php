@@ -28,7 +28,6 @@ class Order extends Model
         'total_price',
         'status',
         'payment_method',
-        'buyer_id',
     ];
 
     public static function validate(Request $request): void

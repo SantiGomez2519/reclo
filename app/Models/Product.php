@@ -44,8 +44,6 @@ class Product extends Model
         'price',
         'status',
         'image',
-        'seller_id',
-        'order_id',
     ];
 
     public static function validate(Request $request): void

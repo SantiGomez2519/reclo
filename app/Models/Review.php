@@ -23,8 +23,6 @@ class Review extends Model
     protected $fillable = [
         'comment',
         'rating',
-        'user_id',
-        'product_id',
     ];
 
     public static function validate(Request $request): void
@@ -94,7 +92,7 @@ class Review extends Model
     // Relationships
     public function user(): BelongsTo
     {
-        return $this->belongsTo(CustomUser::class);
+        return $this->belongsTo(CustomUser::class, 'user_id');
     }
 
     public function getUser(): CustomUser

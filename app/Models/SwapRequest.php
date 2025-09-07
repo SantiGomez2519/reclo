@@ -27,9 +27,6 @@ class SwapRequest extends Model
         'date_created',
         'date_accepted',
         'status',
-        'initiator_id',
-        'offered_item_id',
-        'desired_item_id',
     ];
 
     public static function validate(Request $request): void
