@@ -11,10 +11,4 @@ class HomeController extends Controller
     {
         return view('home.index');
     }
-
-    public function prueba(): View|RedirectResponse
-    {
-        return redirect()->route('home.index')->with('status', 'Operación realizada con éxito');
-
-    }
 }
