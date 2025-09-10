@@ -42,9 +42,9 @@
           <button class="btn btn-outline-light" type="submit">Search</button>
         </form>
         <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
-          @guest
+          @guest('web')
           <a class="nav-link active" href="{{ route('login') }}">Login</a>
-          <a class="nav-link active" href="{{ route('register') }}">Register</a> 
+          <a class="nav-link active" href="{{ route('register') }}">Register</a>
           @else
           <a class="nav-link active" href="{{ route('user.profile') }}">My Profile</a>
           <form id="logout" action="{{ route('logout') }}" method="POST">

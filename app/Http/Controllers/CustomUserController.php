@@ -12,28 +12,28 @@ class CustomUserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:web');
     }
 
     public function show(): View
     {
         $viewData = [];
-        $viewData['user'] = Auth::user();
-        
+        $viewData['user'] = Auth::guard('web')->user();
+
         return view('user.profile')->with('viewData', $viewData);
     }
 
     public function edit(): View
     {
         $viewData = [];
-        $viewData['user'] = Auth::user();
-        
+        $viewData['user'] = Auth::guard('web')->user();
+
         return view('user.edit')->with('viewData', $viewData);
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $user = Auth::user();
+        $user = Auth::guard('web')->user();
 
         CustomUser::validateUpdate($request, $user->getId());
 
