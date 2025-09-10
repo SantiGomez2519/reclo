@@ -34,17 +34,6 @@
           <a class="nav-link" href="#">Products</a>
           <a class="nav-link" href="#">Reviews</a>
           <a class="nav-link" href="#">Swap</a>
-          <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
-          @guest
-          <a class="nav-link active" href="{{ route('login') }}">Login</a>
-          <a class="nav-link active" href="{{ route('register') }}">Register</a> 
-          @else
-          <form id="logout" action="{{ route('logout') }}" method="POST">
-            <a role="button" class="nav-link active" 
-              onclick="document.getElementById('logout').submit();">Logout</a>
-            @csrf 
-          </form>
-          @endguest
         </div>
 
         <!-- Search Bar -->
@@ -52,6 +41,18 @@
           <input class="form-control me-2" type="search" name="q" placeholder="Search products..." aria-label="Search">
           <button class="btn btn-outline-light" type="submit">Search</button>
         </form>
+        <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
+          @guest
+          <a class="nav-link active" href="{{ route('login') }}">Login</a>
+          <a class="nav-link active" href="{{ route('register') }}">Register</a> 
+          @else
+          <a class="nav-link active" href="{{ route('user.profile') }}">My Profile</a>
+          <form id="logout" action="{{ route('logout') }}" method="POST">
+            <a role="button" class="nav-link active" 
+              onclick="document.getElementById('logout').submit();">Logout</a>
+            @csrf 
+          </form>
+          @endguest
       </div>
     </div>
   </nav>

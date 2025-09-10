@@ -3,12 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 
-class CustomUser extends Model
+class CustomUser extends Authenticatable
 {
+    use HasFactory, Notifiable;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'custom_users';
+
     /**
      * CUSTOM USER ATTRIBUTES
      * $this->attributes['id'] - int - contains the custom user primary key (id)
@@ -23,6 +34,29 @@ class CustomUser extends Model
      * $this->orders - Order[] - contains the orders made by this user
      * $this->reviews - Review[] - contains the reviews written by this user
      * $this->swapRequests - SwapRequest[] - contains the swap requests initiated by this user
+     * 
+     * GETTERS AND SETTERS
+     * getId() - returns the user id
+     * getName() - returns the user name
+     * setName(string $name) - sets the user name
+     * getPhone() - returns the user phone
+     * setPhone(string $phone) - sets the user phone
+     * getEmail() - returns the user email
+     * setEmail(string $email) - sets the user email
+     * getPassword() - returns the user password
+     * setPassword(string $password) - sets the user password
+     * getPaymentMethod() - returns the user payment method
+     * setPaymentMethod(string $payment_method) - sets the user payment method
+     * getCreatedAt() - returns the creation timestamp
+     * getUpdatedAt() - returns the last update timestamp
+     * getProducts() - returns the associated products
+     * setProducts(Collection $products) - sets the associated products
+     * getOrders() - returns the associated orders
+     * setOrders(Collection $orders) - sets the associated orders
+     * getReviews() - returns the associated reviews
+     * setReviews(Collection $reviews) - sets the associated reviews
+     * getSwapRequests() - returns the associated swap requests
+     * setSwapRequests(Collection $swapRequests) - sets the associated swap requests
      */
     protected $fillable = [
         'name',
@@ -46,7 +80,17 @@ class CustomUser extends Model
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|unique:custom_users,email|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+            'payment_method' => 'required|string|max:255',
+        ]);
+    }
+
+    public static function validateUpdate(Request $request, int $userId): void
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:custom_users,email,' . $userId,
             'payment_method' => 'required|string|max:255',
         ]);
     }

@@ -116,3 +116,17 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
+
+/* Basic form enhancements */
+.form-control:focus, .form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(109, 157, 197, 0.25);
+}
+
+/* Auth forms specific styling */
+.card-header {
+  background-color: var(--color-primary);
+  color: var(--color-light);
+  font-weight: 600;
+  border-bottom: none;
+}

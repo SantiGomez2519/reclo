@@ -56,12 +56,15 @@
                                 <button type="submit" class="btn bg-primary text-white">
                                     {{ __('Login') }}
                                 </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn bg-primary text-white" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                                
+                                <div class="mt-3">
+                                    <small class="text-muted">
+                                        Don't have an account? 
+                                        <a href="{{ route('register') }}" class="text-decoration-none" style="color: var(--color-primary);">
+                                            Create one here
+                                        </a>
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </form>
