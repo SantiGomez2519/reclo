@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Reclo') }} - Admin</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Personalized styles -->
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet" />
+    
+    <!-- Admin-specific styles -->
+    <link href="{{ asset('/css/admin.css') }}" rel="stylesheet" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-dark admin-header shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">
+                    <i class="fas fa-shield-alt me-2"></i>{{ config('app.name', 'Reclo') }} Admin
+                </a>
+                
+                <div class="navbar-nav ms-auto">
+                    @auth('admin')
+                        <span class="nav-link text-white">
+                            <i class="fas fa-user me-1"></i>{{ Auth::guard('admin')->user()->getName() }}
+                        </span>
+                        <form id="admin-logout" action="{{ route('admin.logout') }}" method="POST">
+                            <a role="button" class="nav-link text-white" 
+                              onclick="document.getElementById('admin-logout').submit();">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </a>
+                            @csrf 
+                        </form>
+                    @endauth
+                </div>
+            </div>
+        </nav>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

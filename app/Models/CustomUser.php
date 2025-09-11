@@ -3,12 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 
-class CustomUser extends Model
+class CustomUser extends Authenticatable
 {
+    use HasFactory, Notifiable;
+
+    protected $table = 'custom_users';
+
     /**
      * CUSTOM USER ATTRIBUTES
      * $this->attributes['id'] - int - contains the custom user primary key (id)
@@ -46,7 +52,17 @@ class CustomUser extends Model
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|unique:custom_users,email|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+            'payment_method' => 'required|string|max:255',
+        ]);
+    }
+
+    public static function validateUpdate(Request $request, int $userId): void
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:custom_users,email,'.$userId,
             'payment_method' => 'required|string|max:255',
         ]);
     }
