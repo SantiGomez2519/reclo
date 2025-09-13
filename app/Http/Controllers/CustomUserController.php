@@ -5,23 +5,45 @@ namespace App\Http\Controllers;
 use App\Models\CustomUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Hash; // for hashing the password
 
 class CustomUserController extends Controller
 {
-    // Here it goes the methods that are not implemented yet
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+    }
 
-    // Note: Remember to validate the request in the model
-    // public function save(Request $request): View
-    // {
-    //    Model::validate($request);
-    //
-    //    In this case, for CustomUser, we need to hash the password
-    //    CustomUser::create([
-    //        ...
-    //        'password' => Hash::make($request->password), // hash the password
-    //        ...
-    //    ]);
-    // }
+    public function show(): View
+    {
+        $viewData = [];
+        $viewData['user'] = Auth::guard('web')->user();
+
+        return view('user.profile')->with('viewData', $viewData);
+    }
+
+    public function edit(): View
+    {
+        $viewData = [];
+        $viewData['user'] = Auth::guard('web')->user();
+
+        return view('user.edit')->with('viewData', $viewData);
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        $user = Auth::guard('web')->user();
+
+        CustomUser::validateUpdate($request, $user->getId());
+
+        $user->setName($request->name);
+        $user->setPhone($request->phone);
+        $user->setEmail($request->email);
+        $user->setPaymentMethod($request->payment_method);
+
+        $user->save();
+
+        return redirect()->route('user.profile')->with('status', 'Profile updated successfully!');
+    }
 }
