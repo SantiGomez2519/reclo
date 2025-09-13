@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,7 +41,25 @@
           <input class="form-control me-2" type="search" name="q" placeholder="Search products..." aria-label="Search">
           <button class="btn btn-outline-light" type="submit">Search</button>
         </form>
-        <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
+        <div class="vr bg-white mx-2 d-none d-lg-block"></div>
+        
+        <!-- Language Switcher -->
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ $currentLocale === 'en' ? 'English' : 'Español' }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+            @if($currentLocale !== 'en')
+              <li><a class="dropdown-item" href="{{ route('lang.switch', ['locale' => 'en']) }}">English</a></li>
+            @endif
+            @if($currentLocale !== 'es')
+              <li><a class="dropdown-item" href="{{ route('lang.switch', ['locale' => 'es']) }}">Español</a></li>
+            @endif
+            </ul>
+        </div>
+        
+        <div class="vr bg-white mx-2 d-none d-lg-block"></div>
+        
           @guest('web')
           <a class="nav-link active" href="{{ route('login') }}">Login</a>
           <a class="nav-link active" href="{{ route('register') }}">Register</a>
