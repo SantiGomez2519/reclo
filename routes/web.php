@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 // Home Route
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
 
+// Language switching route
+Route::get('/lang/{locale}', 'App\Http\Controllers\LanguageController@switch')->name('lang.switch');
+
 // Customer Authentication Routes (CustomUser model)
 Route::get('/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
