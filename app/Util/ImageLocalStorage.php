@@ -8,21 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageLocalStorage implements ImageStorage
 {
-    public function store(Request $request, string $folder = ''): string
-    {
-        if ($request->hasFile('image')) {
-            $fileName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $path = $folder ? $folder . '/' . $fileName : $fileName;
-
-            Storage::disk('public')->put($path, file_get_contents($request->file('image')->getRealPath()));
-
-            return $path;
-        }
-
-        return 'images/logo.png';
-    }
-
-    public function storeMultiple(Request $request, string $folder = ''): array
+    public function store(Request $request, string $folder = ''): array
     {
         $paths = [];
 
@@ -32,6 +18,7 @@ class ImageLocalStorage implements ImageStorage
                 $path = $folder ? $folder . '/' . $fileName : $fileName;
 
                 Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
+
                 $paths[] = $path;
             }
         }

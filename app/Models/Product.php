@@ -23,7 +23,7 @@ class Product extends Model
      * $this->attributes['price'] - int - contains the product price
      * $this->attributes['status'] - string - contains the product status
      * $this->attributes['swap'] - bool - tells if the product has been swapped
-     * $this->attributes['image'] - string - contains the product image (url or path)
+     * $this->attributes['images'] - array - contains the product images (url or path)
      * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
      * $this->attributes['order_id'] - int - contains the order foreign key (nullable)
      * $this->attributes['created_at'] - timestamp - contains the product creation timestamp
@@ -56,15 +56,9 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
+            'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
-
-        // Validate images - either single image or multiple images
-        if ($request->hasFile('images')) {
-            $rules['images'] = $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5';
-            $rules['images.*'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
-        } else {
-            $rules['image'] = $isUpdate ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
-        }
 
         $request->validate($rules);
     }
@@ -164,32 +158,30 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    public function getFirstImage(): string
-    {
-        $images = $this->getImages();
-
-        if (empty($images)) {
-            return url('storage/images/logo.png'); // Default image
-        }
-
-        $imagePath = $images[0];
-
-        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
-            return $imagePath;
-        }
-
-        return url('storage/' . ltrim($imagePath, '/'));
-    }
-
-
-    // New methods for multiple images
-    public function getImages(): array
+    /** 
+     * Get product images as URLs or file paths
+     */
+    public function getImages(bool $asUrls = true): array
     {
         $image = $this->attributes['image'];
 
         if ($image) {
             $images = json_decode($image, true);
-            return is_array($images) ? $images : [];
+            if (is_array($images)) {
+                if ($asUrls) {
+                    $urls = [];
+                    foreach ($images as $imagePath) {
+                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                            $urls[] = $imagePath;
+                        } else {
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
+                        }
+                    }
+                    return $urls;
+                } else {
+                    return $images;
+                }
+            }
         }
 
         return [];
@@ -199,23 +191,6 @@ class Product extends Model
     {
         $this->attributes['image'] = json_encode($images);
     }
-
-    public function addImage(string $imagePath): void
-    {
-        $images = $this->getImages();
-        $images[] = $imagePath;
-        $this->setImages($images);
-    }
-
-    public function removeImage(string $imagePath): void
-    {
-        $images = $this->getImages();
-        $images = array_filter($images, function ($img) use ($imagePath) {
-            return $img !== $imagePath;
-        });
-        $this->setImages(array_values($images));
-    }
-
 
     public function getCreatedAt(): string
     {

@@ -19,7 +19,8 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="current_image" value="{{ $viewData['product']->getFirstImage() }}">
+                            <input type="hidden" name="current_image"
+                                value="{{ $viewData['product']->getImages()[0] ?? asset('storage/images/logo.png') }}">
 
                             <input type="hidden" name="storage_type" value="local">
 
@@ -29,10 +30,9 @@
                                     {{ __('product.current_images') }}
                                 </label>
                                 <div class="row">
-                                    @foreach ($viewData['product']->getImages() as $index => $imagePath)
+                                    @foreach ($viewData['product']->getImages() as $imageUrl)
                                         <div class="col-md-3 mb-2">
-                                            <img src="{{ asset($imagePath) }}"
-                                                alt="{{ $viewData['product']->getTitle() }} - Image {{ $index + 1 }}"
+                                            <img src="{{ $imageUrl }}" alt="{{ $viewData['product']->getTitle() }}"
                                                 class="img-fluid rounded"
                                                 style="max-height: 150px; width: 100%; object-fit: cover;">
                                         </div>

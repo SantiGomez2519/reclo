@@ -22,21 +22,15 @@
             <div class="col-lg-6 mb-4">
                 <!-- Product Images -->
                 <div class="card">
-                    @php
-                        $images = $viewData['product']->getImages();
-                        $imageCount = count($images);
-                    @endphp
-
-                    @if ($imageCount > 1)
+                    @if (count($viewData['product']->getImages()) > 1)
                         <!-- Multiple Images - Carousel -->
                         <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                @foreach ($images as $index => $imagePath)
-                                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                        <img src="{{ url('storage/' . ltrim($imagePath, '/')) }}"
-                                            alt="{{ $viewData['product']->getTitle() }} - Image {{ $index + 1 }}"
+                                @foreach ($viewData['product']->getImages() as $imageUrl)
+                                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                        <img src="{{ $imageUrl }}" alt="{{ $viewData['product']->getTitle() }}"
                                             class="d-block w-100" style="height: 500px; object-fit: cover;"
-                                            onerror="this.src='{{ url('storage/images/logo.png') }}'">
+                                            onerror="this.src='{{ asset('storage/images/logo.png') }}'">
                                     </div>
                                 @endforeach
                             </div>
@@ -53,8 +47,9 @@
                         </div>
                     @else
                         <!-- Single Image -->
-                        <img src="{{ $viewData['product']->getFirstImage() }}" alt="{{ $viewData['product']->getTitle() }}"
-                            class="card-img-top" style="height: 500px; object-fit: cover;"
+                        <img src="{{ $viewData['product']->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                            alt="{{ $viewData['product']->getTitle() }}" class="card-img-top"
+                            style="height: 500px; object-fit: cover;"
                             onerror="this.src='{{ url('storage/images/logo.png') }}'">
                     @endif
                 </div>
