@@ -1,190 +1,193 @@
 /* 🎨 Color palette according to manual */
 :root {
-  --color-primary: #6D9DC5;   /* Dusty Blue */
-  --color-secondary: #88B490; /* Sage Green */
-  --color-accent: #8B6B4E;    /* Warm Coffee */
-  --color-light: #F7F5F2;     /* Light Neutral */
-  --color-dark: #2E2E2E;      /* Charcoal */
+    --color-primary: #6d9dc5; /* Dusty Blue */
+    --color-secondary: #88b490; /* Sage Green */
+    --color-accent: #8b6b4e; /* Warm Coffee */
+    --color-light: #f7f5f2; /* Light Neutral */
+    --color-dark: #2e2e2e; /* Charcoal */
 }
 
 /* Main sections background */
 .bg-primary {
-  background-color: var(--color-primary) !important;
-  color: var(--color-light);
+    background-color: var(--color-primary) !important;
+    color: var(--color-light);
 }
 
 .bg-secondary {
-  background-color: var(--color-secondary) !important;
-  color: var(--color-light);
+    background-color: var(--color-secondary) !important;
+    color: var(--color-light);
 }
 
 /* Footer */
 .copyright {
-  background-color: var(--color-dark);
-  color: var(--color-light);
-  padding: 15px 0;
-  text-align: center;
-  font-size: 0.9rem;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 /* Navbar */
 nav {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 800;
-  font-size: larger;
-  background-color: var(--color-primary);
-  padding: 0.8rem 1.2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: "Quicksand", sans-serif;
+    font-weight: 800;
+    font-size: larger;
+    background-color: var(--color-primary);
+    padding: 0.8rem 1.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 nav a {
-  color: var(--color-light) !important;
-  margin: 0 12px;
-  transition: color 0.3s ease;
+    color: var(--color-light) !important;
+    margin: 0 12px;
+    transition: color 0.3s ease;
 }
 
 nav a:hover {
-  color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
 }
 
 .navbar-brand img {
-  max-height: 30px;
-  width: auto;
+    max-height: 30px;
+    width: auto;
 }
 
 /* Product card */
 .card {
-  border: none;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-  background-color: var(--color-light);
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    background-color: var(--color-light);
 }
 
 .card:hover {
-  transform: translateY(-5px);
+    transform: translateY(-5px);
 }
 
 .img-card {
-  height: 220px; 
-  width: 100%;
-  object-fit: cover;
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
 }
 
 /* Titles */
-h1, h2, h3, h4 {
-  font-family: 'Quicksand', sans-serif;
-  color: var(--color-dark);
-  font-weight: 700;
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Quicksand", sans-serif;
+    color: var(--color-dark);
+    font-weight: 700;
 }
 
 /* Buttons */
 .btn-custom {
-  background-color: var(--color-primary);
-  border: none;
-  color: var(--color-light);
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-family: 'Quicksand', sans-serif;
-  transition: background 0.3s ease;
+    background-color: var(--color-primary);
+    border: none;
+    color: var(--color-light);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: "Quicksand", sans-serif;
+    transition: background 0.3s ease;
 }
 
 .btn-custom:hover {
-  background-color: var(--color-accent);
-  color: #fff;
+    background-color: var(--color-accent);
+    color: #fff;
 }
 
 /* General background */
 body {
-  background-color: var(--color-light);
-  font-family: 'Glacial Indifference', 'Montserrat';
-  color: var(--color-dark);
-  margin: 0;
-  padding: 0;
+    background-color: var(--color-light);
+    font-family: "Glacial Indifference", "Montserrat";
+    color: var(--color-dark);
+    margin: 0;
+    padding: 0;
 }
 
 /* Sections */
 .section {
-  padding: 60px 20px;
+    padding: 60px 20px;
 }
 
 /* Products grid */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
 }
 
 /* Basic form enhancements */
-.form-control:focus, .form-select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem rgba(109, 157, 197, 0.25);
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(109, 157, 197, 0.25);
 }
 
 /* Auth forms specific styling */
 .card-header {
-  background-color: var(--color-primary);
-  color: var(--color-light);
-  font-weight: 600;
-  border-bottom: none;
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    font-weight: 600;
+    border-bottom: none;
 }
 
 /* Language dropdown styling - aggressive override */
 .navbar .dropdown-menu[data-bs-popper] {
-  position: absolute !important;
-  top: calc(100% + 5px) !important;
-  left: 0 !important;
-  right: auto !important;
-  width: 100% !important;
-  min-width: auto !important;
-  max-width: 100% !important;
-  background-color: var(--color-light) !important;
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
-  margin: 0 !important;
-  transform: none !important;
-  inset: auto !important;
+    position: absolute !important;
+    top: calc(100% + 5px) !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 100% !important;
+    min-width: auto !important;
+    max-width: 100% !important;
+    background-color: var(--color-light) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    margin: 0 !important;
+    transform: none !important;
+    inset: auto !important;
 }
 
 .navbar .dropdown-menu {
-  position: absolute !important;
-  top: calc(100% + 5px) !important;
-  left: 0 !important;
-  right: auto !important;
-  width: 100% !important;
-  min-width: auto !important;
-  max-width: 100% !important;
-  background-color: var(--color-light) !important;
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
-  margin: 0 !important;
-  transform: none !important;
-  inset: auto !important;
+    position: absolute !important;
+    top: calc(100% + 5px) !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 100% !important;
+    min-width: auto !important;
+    max-width: 100% !important;
+    background-color: var(--color-light) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    margin: 0 !important;
+    transform: none !important;
+    inset: auto !important;
 }
 
 .navbar .dropdown {
-  position: relative !important;
-  display: inline-block !important;
+    position: relative !important;
+    display: inline-block !important;
 }
 
 .navbar .dropdown-item {
-  color: var(--color-dark) !important;
-  padding: 8px 12px !important;
-  font-weight: 500 !important;
-  transition: background-color 0.2s ease !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+    color: var(--color-dark) !important;
+    padding: 8px 12px !important;
+    font-weight: 500 !important;
+    transition: background-color 0.2s ease !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .navbar .dropdown-item:hover,
 .navbar .dropdown-item:focus {
-  background-color: var(--color-primary) !important;
-  color: var(--color-light) !important;
+    background-color: var(--color-primary) !important;
+    color: var(--color-light) !important;
 }
-

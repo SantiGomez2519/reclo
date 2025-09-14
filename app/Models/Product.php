@@ -23,7 +23,7 @@ class Product extends Model
      * $this->attributes['price'] - int - contains the product price
      * $this->attributes['status'] - string - contains the product status
      * $this->attributes['swap'] - bool - tells if the product has been swapped
-     * $this->attributes['image'] - string - contains the product image (url or path)
+     * $this->attributes['images'] - array - contains the product images (url or path)
      * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
      * $this->attributes['order_id'] - int - contains the order foreign key (nullable)
      * $this->attributes['created_at'] - timestamp - contains the product creation timestamp
@@ -56,7 +56,8 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'image' => $isUpdate ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $request->validate($rules);
@@ -157,20 +158,38 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    public function getImage(): string
+    /** 
+     * Get product images as URLs or file paths
+     */
+    public function getImages(bool $asUrls = true): array
     {
         $image = $this->attributes['image'];
 
-        if (filter_var($image, FILTER_VALIDATE_URL)) {
-            return $image;
+        if ($image) {
+            $images = json_decode($image, true);
+            if (is_array($images)) {
+                if ($asUrls) {
+                    $urls = [];
+                    foreach ($images as $imagePath) {
+                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                            $urls[] = $imagePath;
+                        } else {
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
+                        }
+                    }
+                    return $urls;
+                } else {
+                    return $images;
+                }
+            }
         }
 
-        return url('storage/'.ltrim($image, '/'));
+        return [];
     }
 
-    public function setImage(string $image): void
+    public function setImages(array $images): void
     {
-        $this->attributes['image'] = $image;
+        $this->attributes['image'] = json_encode($images);
     }
 
     public function getCreatedAt(): string

@@ -20,14 +20,18 @@
 
                             <input type="hidden" name="storage_type" value="local">
 
-                            <!-- Product Image -->
+                            <!-- Product Images -->
                             <div class="mb-4">
-                                <label for="image" class="form-label fw-semibold">
-                                    {{ __('product.product_image') }} *
+                                <label for="images" class="form-label fw-semibold">
+                                    {{ __('product.product_images') }} *
                                 </label>
-                                <input type="file" id="image" name="image" accept="image/*" class="form-control"
-                                    required>
-                                @error('image')
+                                <input type="file" id="images" name="images[]" accept="image/*" class="form-control"
+                                    multiple required>
+                                <div class="form-text">{{ __('product.images_help') }}</div>
+                                @error('images')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                                @error('images.*')
                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

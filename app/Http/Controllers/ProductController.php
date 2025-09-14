@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['products'] = Product::with('seller')->where('status', 'available')->paginate(12);
+        $viewData['products'] = Product::with('seller')->where('status', 'available')->get();
 
         return view('product.index')->with('viewData', $viewData);
     }
@@ -65,8 +65,8 @@ class ProductController extends Controller
         $product->setSellerId(Auth::guard('web')->id());
 
         // Handle image upload using ImageStorage
-        $imagePath = $this->imageStorage->store($request, 'products');
-        $product->setImage($imagePath);
+        $imagePaths = $this->imageStorage->store($request, 'products');
+        $product->setImages($imagePaths);
 
         $product->save();
 
@@ -108,17 +108,7 @@ class ProductController extends Controller
         $product->setSwap($request->has('swap'));
 
         // Handle image upload using ImageStorage
-        if ($request->hasFile('image')) {
-            // Delete old image if it's not the default
-            if ($product->getImage() !== 'images/logo.png') {
-                $previousImagePath = str_replace(url('storage').'/', '', $product->getImage());
-                $this->imageStorage->delete($previousImagePath);
-            }
-            $product->setImage($this->imageStorage->store($request, 'products'));
-        } else {
-            // Keep current image if no new image is uploaded
-            $product->setImage($request->input('current_image', $product->getImage()));
-        }
+        $this->handleImageUpload($request, $product);
 
         $product->save();
 
@@ -130,11 +120,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $this->checkProductOwnership($product);
 
-        // Delete image file using ImageStorage
-        if ($product->getImage() && $product->getImage() !== 'images/logo.png') {
-            $imagePath = str_replace(url('storage').'/', '', $product->getImage());
-            $this->imageStorage->delete($imagePath);
-        }
+        // Delete image files using ImageStorage
+        $this->deleteOldImages($product->getImages(false));
 
         $product->delete();
 
@@ -146,7 +133,7 @@ class ProductController extends Controller
         $viewData = [];
         $viewData['products'] = Product::where('seller_id', Auth::guard('web')->id())
             ->orderBy('created_at', 'desc')
-            ->paginate(12);
+            ->get();
 
         return view('product.my-products')->with('viewData', $viewData);
     }
@@ -160,5 +147,28 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->back()->with('success', __('product.product_marked_as_sold'));
+    }
+
+    private function handleImageUpload(Request $request, Product $product): void
+    {
+        if ($request->hasFile('images')) {
+            // Delete old images if they're not the default
+            $this->deleteOldImages($product->getImages(false));
+            $imagePaths = $this->imageStorage->store($request, 'products');
+            $product->setImages($imagePaths);
+        } else {
+            // Keep current images if no new images are uploaded
+            $currentImages = $product->getImages(false);
+            $product->setImages($currentImages);
+        }
+    }
+
+    private function deleteOldImages(array $images): void
+    {
+        foreach ($images as $imagePath) {
+            if ($imagePath !== 'images/logo.png') {
+                $this->imageStorage->delete($imagePath);
+            }
+        }
     }
 }

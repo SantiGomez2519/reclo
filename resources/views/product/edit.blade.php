@@ -19,29 +19,39 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="current_image" value="{{ $viewData['product']->getImage() }}">
+                            <input type="hidden" name="current_image"
+                                value="{{ $viewData['product']->getImages()[0] ?? asset('storage/images/logo.png') }}">
 
                             <input type="hidden" name="storage_type" value="local">
 
-                            <!-- Current Product Image -->
+                            <!-- Current Product Images -->
                             <div class="mb-4">
                                 <label class="form-label fw-semibold">
-                                    {{ __('product.current_image') }}
+                                    {{ __('product.current_images') }}
                                 </label>
-                                <div class="text-center">
-                                    <img src="{{ asset($viewData['product']->getImage()) }}"
-                                        alt="{{ $viewData['product']->getTitle() }}" class="img-fluid rounded"
-                                        style="max-height: 200px;">
+                                <div class="row">
+                                    @foreach ($viewData['product']->getImages() as $imageUrl)
+                                        <div class="col-md-3 mb-2">
+                                            <img src="{{ $imageUrl }}" alt="{{ $viewData['product']->getTitle() }}"
+                                                class="img-fluid rounded"
+                                                style="max-height: 150px; width: 100%; object-fit: cover;">
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
 
-                            <!-- New Product Image -->
+                            <!-- New Product Images -->
                             <div class="mb-4">
-                                <label for="image" class="form-label fw-semibold">
-                                    {{ __('product.update_image_optional') }}
+                                <label for="images" class="form-label fw-semibold">
+                                    {{ __('product.update_images_optional') }}
                                 </label>
-                                <input type="file" id="image" name="image" accept="image/*" class="form-control">
-                                @error('image')
+                                <input type="file" id="images" name="images[]" accept="image/*" class="form-control"
+                                    multiple>
+                                <div class="form-text">{{ __('product.images_help') }}</div>
+                                @error('images')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                                @error('images.*')
                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

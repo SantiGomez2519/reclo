@@ -23,7 +23,8 @@
                     <div class="card h-100 shadow-sm">
                         <!-- Product Image -->
                         <div class="position-relative">
-                            <img src="{{ $product->getImage() }}" alt="{{ $product->getTitle() }}" class="card-img-top"
+                            <img src="{{ $product->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                                alt="{{ $product->getTitle() }}" class="card-img-top"
                                 style="height: 250px; object-fit: cover;">
 
                             <!-- Condition Badge -->
@@ -87,11 +88,5 @@
             @endforelse
         </div>
 
-        <!-- Pagination -->
-        @if ($viewData['products']->hasPages())
-            <div class="d-flex justify-content-center">
-                {{ $viewData['products']->links() }}
-            </div>
-        @endif
     </div>
 @endsection
