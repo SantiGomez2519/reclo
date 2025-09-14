@@ -6,6 +6,8 @@
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,9 +45,56 @@
         </form>
         <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
           @guest('web')
+          <!-- Auth -->
           <a class="nav-link active" href="{{ route('login') }}">Login</a>
           <a class="nav-link active" href="{{ route('register') }}">Register</a>
           @else
+          <!-- Notifications Dropdown -->
+          <li class="nav-item dropdown me-3">
+           <a id="notifDropdown"
+              class="nav-link position-relative"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+                <i class="bi bi-bell" style="font-size: 1.4rem;"></i>
+                @if(count($viewData['notifications']) > 0)
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ count($viewData['notifications']) }}
+                    </span>
+                @endif
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notifDropdown" style="min-width:320px;">
+              <h6 class="dropdown-header">Notifications</h6>
+
+              <div class="notif-list">
+                @forelse($viewData['notifications'] as $notification)
+                  <a class="dropdown-item small" href="{{ route('notifications.read', $notification->id) }}">
+                    @if($notification->type === 'App\Notifications\SwapRequestCreated')
+                      📩 Nueva solicitud — "{{ $notification->data['desiredItemTitle'] ?? 'Producto' }}"
+                      <div class="text-muted small mt-1">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</div>
+                    @elseif($notification->type === 'App\Notifications\SwapRequestResponded')
+                      🔄 Respuesta a tu solicitud
+                      <div class="text-muted small mt-1">{{ $notification->data['message'] ?? '' }}</div>
+                    @elseif($notification->type === 'App\Notifications\SwapRequestFinalized')
+                      ✅ Intercambio finalizado
+                      <div class="text-muted small mt-1">{{ $notification->data['message'] ?? '' }}</div>
+                    @else
+                      🔔 {{ $notification->data['message'] ?? 'Tienes una nueva notificación' }}
+                    @endif
+                  </a>
+                @empty
+                  <div class="dropdown-item text-muted small">No tienes notificaciones</div>
+                @endforelse
+              </div>
+
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-center small" href="{{ route('notifications.index') }}">See all</a>
+            </div>
+          </li>
+
+          <!-- User Profile and Logout -->
           <a class="nav-link active" href="{{ route('user.profile') }}">My Profile</a>
           <form id="logout" action="{{ route('logout') }}" method="POST">
             <a role="button" class="nav-link active" 
@@ -84,5 +133,6 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
 </body>
 </html>

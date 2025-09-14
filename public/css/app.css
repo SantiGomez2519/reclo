@@ -96,6 +96,26 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
+
+.btn-success {
+  background-color: #5fb96b !important;
+  border-color: #6BCB77 !important;
+}
+
+.btn-success:hover {
+  background-color: #5AAE6A !important;
+  border-color: #5AAE6A !important;
+}
+
+.btn-danger {
+  background-color: #ff6961 !important;
+  border-color: #ff6961 !important;
+}
+
+.btn-danger:hover {
+  background-color: #e45d55 !important;
+  border-color: #e45d55 !important;
+}
 /* General background */
 body {
   background-color: var(--color-light);
@@ -130,3 +150,42 @@ body {
   font-weight: 600;
   border-bottom: none;
 }
+
+/* Increases clickeable area in notifications dropdown toggle */
+#notifDropdown {
+    align-items: center;
+    justify-content: center;
+    padding: 2px 5px;
+    font-size: 1.2rem; 
+}
+
+/* Font in notifications dropdown */
+.dropdown-menu .dropdown-item {
+    font-size: 1rem;   
+    padding: 10px 15px;
+    color: #212529 !important;          
+    font-size: 1rem !important;         
+    line-height: 1.25 !important;
+    padding: 10px 14px !important;
+}
+
+/* Notifications dropdown header*/
+.dropdown-menu .dropdown-header {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Notifications dropdown footer */
+.dropdown-menu .no-notifications {
+  color: #6c757d !important;
+  font-size: 0.95rem !important;
+}
+
+/* Scroll */
+.dropdown-menu .notif-list {
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px; 
+}
+

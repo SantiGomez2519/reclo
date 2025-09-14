@@ -13,7 +13,7 @@ class SwapRequest extends Model
      * $this->attributes['id'] - int - contains the swap request primary key (id)
      * $this->attributes['date_created'] - string - contains the swap request creation date
      * $this->attributes['date_accepted'] - string - contains the swap request acceptance date
-     * $this->attributes['status'] - string - contains the swap request status
+     * $this->attributes['status'] - string - contains the swap request status (Pending, Counter Proposed, Accepted, Rejected)
      * $this->attributes['initiator_id'] - int - contains the initiator (CustomUser) foreign key
      * $this->attributes['offered_item_id'] - int - contains the offered item (Product) foreign key (nullable)
      * $this->attributes['desired_item_id'] - int - contains the desired item (Product) foreign key
@@ -24,17 +24,26 @@ class SwapRequest extends Model
      * $this->desiredItem - Product - contains the associated desired product
      */
     protected $fillable = [
+        'initiator_id',
+        'desired_item_id',
+        'status',
         'date_created',
         'date_accepted',
         'status',
     ];
 
-    public static function validate(Request $request): void
+    public static function validateRespond(Request $request): void
     {
         $request->validate([
-            'date_created' => 'required',
-            'date_accepted' => 'nullable',
-            'status' => 'required|string|max:255',
+            'response' => 'required|in:accept,reject',
+            'offered_item_id' => 'nullable|exists:products,id',
+        ]);
+    }
+
+    public static function validateFinalize(Request $request): void
+    {
+        $request->validate([
+            'response' => 'required|in:accepted,rejected',
         ]);
     }
 

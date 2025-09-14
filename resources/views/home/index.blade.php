@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Home Page - Reclo')
-
 @section('content')
 <div class="container mt-5 mb-5">
     
