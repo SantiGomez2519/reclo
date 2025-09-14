@@ -14,8 +14,8 @@ class ImageLocalStorage implements ImageStorage
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-                $path = $folder ? $folder . '/' . $fileName : $fileName;
+                $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+                $path = $folder ? $folder.'/'.$fileName : $fileName;
 
                 Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
 

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
-class CustomUserController extends Controller
+class AdminCustomUserController extends Controller
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class CustomUserController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['customUsers'] = CustomUser::withCount('products')->paginate(10);
+        $viewData['customUsers'] = CustomUser::withCount('products')->get();
 
         return view('admin.customuser.index')->with('viewData', $viewData);
     }
@@ -39,7 +39,7 @@ class CustomUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        CustomUser::validate($request);
+        CustomUser::validate($request, false);
 
         $customUser = new CustomUser;
         $customUser->setName($request->input('name'));
@@ -64,7 +64,7 @@ class CustomUserController extends Controller
     {
         $customUser = CustomUser::findOrFail($id);
 
-        CustomUser::validateUpdate($request, (int) $id);
+        CustomUser::validate($request, true, (int) $id);
 
         $customUser->setName($request->input('name'));
         $customUser->setPhone($request->input('phone'));
@@ -73,9 +73,6 @@ class CustomUserController extends Controller
 
         // Only update password if provided
         if ($request->filled('password')) {
-            $request->validate([
-                'password' => 'string|min:8|confirmed',
-            ]);
             $customUser->setPassword(Hash::make($request->input('password')));
         }
 
