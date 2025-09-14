@@ -40,6 +40,18 @@
                     <a class="nav-link" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
                     @auth
                         <a class="nav-link" href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
+                        <a class="nav-link position-relative" href="{{ route('cart.index') }}">
+                            <i class="fas fa-shopping-cart me-1"></i>{{ __('cart.title') }}
+                            @if ($cartCount > 0)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $cartCount }}
+                                </span>
+                            @endif
+                        </a>
+                        <a class="nav-link" href="{{ route('orders.index') }}">
+                            <i class="fas fa-receipt me-1"></i>{{ __('cart.order_details') }}
+                        </a>
                     @endauth
                     <a class="nav-link" href="#">{{ __('layout.nav_reviews') }}</a>
                     <a class="nav-link" href="#">{{ __('layout.nav_swap') }}</a>

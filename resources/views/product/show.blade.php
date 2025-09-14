@@ -30,7 +30,7 @@
                                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                         <img src="{{ $imageUrl }}" alt="{{ $viewData['product']->getTitle() }}"
                                             class="d-block w-100" style="height: 500px; object-fit: cover;"
-                                            onerror="this.src='{{ asset('storage/images/logo.png') }}'">
+                                            onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                                     </div>
                                 @endforeach
                             </div>
@@ -47,10 +47,10 @@
                         </div>
                     @else
                         <!-- Single Image -->
-                        <img src="{{ $viewData['product']->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                        <img src="{{ $viewData['product']->getImages()[0] ?? asset('images/default-product.jpg') }}"
                             alt="{{ $viewData['product']->getTitle() }}" class="card-img-top"
                             style="height: 500px; object-fit: cover;"
-                            onerror="this.src='{{ url('storage/images/logo.png') }}'">
+                            onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                     @endif
                 </div>
 
@@ -164,10 +164,14 @@
                                     <div class="d-grid gap-2">
                                         <div class="row g-2">
                                             <div class="col-6">
-                                                <button class="btn btn-primary w-100">
-                                                    <i class="fas fa-shopping-cart me-2"></i>
-                                                    {{ __('product.add_to_cart') }}
-                                                </button>
+                                                <form action="{{ route('cart.add', $viewData['product']->getId()) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary w-100">
+                                                        <i class="fas fa-shopping-cart me-2"></i>
+                                                        {{ __('product.add_to_cart') }}
+                                                    </button>
+                                                </form>
                                             </div>
                                             @if ($viewData['product']->getSwap())
                                                 <div class="col-6">

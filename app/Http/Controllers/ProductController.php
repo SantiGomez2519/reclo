@@ -166,7 +166,7 @@ class ProductController extends Controller
     private function deleteOldImages(array $images): void
     {
         foreach ($images as $imagePath) {
-            if ($imagePath !== 'images/logo.png') {
+            if ($imagePath !== 'images/default-product.jpg') {
                 $this->imageStorage->delete($imagePath);
             }
         }

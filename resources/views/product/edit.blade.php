@@ -20,7 +20,7 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="current_image"
-                                value="{{ $viewData['product']->getImages()[0] ?? asset('storage/images/logo.png') }}">
+                                value="{{ $viewData['product']->getImages()[0] ?? asset('images/default-product.jpg') }}">
 
                             <input type="hidden" name="storage_type" value="local">
 

@@ -23,7 +23,7 @@
                     <div class="card h-100 shadow-sm">
                         <!-- Product Image -->
                         <div class="position-relative">
-                            <img src="{{ $product->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                            <img src="{{ $product->getImages()[0] ?? asset('images/default-product.jpg') }}"
                                 alt="{{ $product->getTitle() }}" class="card-img-top"
                                 style="height: 250px; object-fit: cover;">
 
@@ -40,6 +40,18 @@
                                         <i class="fas fa-exchange-alt"></i>
                                     </button>
                                 @endif
+                                @auth('web')
+                                    @if ($product->getSellerId() !== Auth::guard('web')->id())
+                                        <form action="{{ route('cart.add', $product->getId()) }}" method="POST"
+                                            class="d-inline me-1">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-primary bg-opacity-75 text-white"
+                                                title="Add to Cart">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                @endauth
                                 <button class="btn btn-sm btn-dark bg-opacity-50 text-white" title="Add to Favorites">
                                     <i class="fas fa-heart"></i>
                                 </button>

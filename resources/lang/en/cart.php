@@ -1,0 +1,46 @@
+<?php
+
+return [
+    'title' => 'Shopping Cart',
+    'empty_cart' => 'Your cart is empty',
+    'product_added' => 'Product added to cart successfully',
+    'product_removed' => 'Product removed from cart',
+    'cleared' => 'Cart cleared successfully',
+    'product_not_available' => 'This product is no longer available',
+    'cannot_buy_own_product' => 'You cannot buy your own product',
+    'product_already_in_cart' => 'This product is already in your cart',
+    'order_completed' => 'Order completed successfully!',
+
+    // Cart items
+    'item' => 'Item',
+    'price' => 'Price',
+    'quantity' => 'Quantity',
+    'subtotal' => 'Subtotal',
+    'total' => 'Total',
+    'remove' => 'Remove',
+    'update' => 'Update',
+    'clear_cart' => 'Clear Cart',
+    'continue_shopping' => 'Continue Shopping',
+    'proceed_checkout' => 'Proceed to Checkout',
+
+    // Checkout
+    'checkout' => 'Checkout',
+    'order_summary' => 'Order Summary',
+    'payment_method' => 'Payment Method',
+    'place_order' => 'Place Order',
+    'credit_card' => 'Credit Card',
+    'paypal' => 'PayPal',
+    'bank_transfer' => 'Bank Transfer',
+
+    // Orders
+    'order_number' => 'Order #',
+    'order_date' => 'Order Date',
+    'order_status' => 'Status',
+    'order_total' => 'Total',
+    'view_order' => 'View Order',
+    'no_orders' => 'You have no orders yet',
+    'order_details' => 'Order Details',
+    'completed' => 'Completed',
+    'pending' => 'Pending',
+    'cancelled' => 'Cancelled',
+];

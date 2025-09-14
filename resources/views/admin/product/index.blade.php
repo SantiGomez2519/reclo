@@ -54,7 +54,7 @@
                                                             <img src="{{ $product->getImages()[0] }}"
                                                                 alt="{{ $product->getTitle() }}"
                                                                 class="product-thumbnail-img"
-                                                                onerror="this.src='{{ asset('storage/images/logo.png') }}'">
+                                                                onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                                                         </div>
                                                     @else
                                                         <div class="no-image-placeholder">
