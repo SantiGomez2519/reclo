@@ -193,21 +193,5 @@
         </div>
     </div>
 
-    <script>
-        // Image preview functionality
-        document.getElementById('image').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const container = document.querySelector('.border-dashed');
-                    container.innerHTML = `
-                <img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">
-                <p class="text-muted mt-2">${file.name}</p>
-            `;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+    <script src="{{ asset('js/product-image-preview.js') }}"></script>
 @endsection
