@@ -8,7 +8,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class AdminDashboardController extends Controller
 {
     public function __construct()
     {

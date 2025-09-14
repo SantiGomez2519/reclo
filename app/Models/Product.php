@@ -56,44 +56,19 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
+            'status' => 'required|string|in:available,sold,unavailable',
             'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
+        // seller_id validation for admin
+        if ($request->has('seller_id')) {
+            $rules['seller_id'] = 'required|exists:custom_users,id';
+        }
+
         $request->validate($rules);
     }
 
-    public static function validateAdmin(Request $request): void
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'size' => 'required|string|max:50',
-            'condition' => 'required|string|max:50',
-            'price' => 'required|integer|gt:0',
-            'status' => 'required|string|max:255',
-            'seller_id' => 'required|exists:custom_users,id',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-    }
-
-    public static function validateAdminUpdate(Request $request): void
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'size' => 'required|string|max:50',
-            'condition' => 'required|string|max:50',
-            'price' => 'required|integer|gt:0',
-            'status' => 'required|string|max:255',
-            'seller_id' => 'required|exists:custom_users,id',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-    }
 
     public function getId(): int
     {
