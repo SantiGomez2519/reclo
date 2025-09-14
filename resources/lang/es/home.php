@@ -21,4 +21,5 @@ return [
     'alt_accounts' => 'Cuentas',
     'alt_ratings' => 'Calificaciones',
     'alt_search' => 'Búsqueda',
+    'search_aria_label' => 'Buscar',
 ];

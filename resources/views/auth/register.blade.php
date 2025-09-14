@@ -5,14 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('auth.register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Full Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('auth.full_name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('auth.phone_number') }}</label>
 
                             <div class="col-md-6">
                                 <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="tel">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('auth.email_address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('auth.password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('auth.confirm_password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -76,14 +76,14 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="payment_method" class="col-md-4 col-form-label text-md-end">{{ __('Preferred Payment Method') }}</label>
+                            <label for="payment_method" class="col-md-4 col-form-label text-md-end">{{ __('auth.preferred_payment_method') }}</label>
 
                             <div class="col-md-6">
                                 <select id="payment_method" class="form-select @error('payment_method') is-invalid @enderror" name="payment_method">
-                                    <option value="Credit Card" {{ old('payment_method') == 'Credit Card' ? 'selected' : '' }}>Credit Card</option>
-                                    <option value="Debit Card" {{ old('payment_method') == 'Debit Card' ? 'selected' : '' }}>Debit Card</option>
-                                    <option value="PayPal" {{ old('payment_method') == 'PayPal' ? 'selected' : '' }}>PayPal</option>
-                                    <option value="Bank Transfer" {{ old('payment_method') == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                                    <option value="Credit Card" {{ old('payment_method') == 'Credit Card' ? 'selected' : '' }}>{{ __('auth.credit_card') }}</option>
+                                    <option value="Debit Card" {{ old('payment_method') == 'Debit Card' ? 'selected' : '' }}>{{ __('auth.debit_card') }}</option>
+                                    <option value="PayPal" {{ old('payment_method') == 'PayPal' ? 'selected' : '' }}>{{ __('auth.paypal') }}</option>
+                                    <option value="Bank Transfer" {{ old('payment_method') == 'Bank Transfer' ? 'selected' : '' }}>{{ __('auth.bank_transfer') }}</option>
                                 </select>
 
                                 @error('payment_method')
@@ -97,14 +97,14 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn bg-primary text-white">
-                                    {{ __('Create Account') }}
+                                    {{ __('auth.create_account') }}
                                 </button>
                                 
                                 <div class="mt-3">
                                     <small class="text-muted">
-                                        Already have an account? 
+                                        {{ __('auth.already_have_account') }} 
                                         <a href="{{ route('login') }}" class="text-decoration-none" style="color: var(--color-primary);">
-                                            Sign in here
+                                            {{ __('auth.sign_in_here') }}
                                         </a>
                                     </small>
                                 </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomUser;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -17,6 +19,8 @@ class DashboardController extends Controller
     {
         $viewData = [];
         $viewData['admin'] = Auth::guard('admin')->user();
+        $viewData['customUsersCount'] = CustomUser::count();
+        $viewData['productsCount'] = Product::count();
 
         return view('admin.dashboard')->with('viewData', $viewData);
     }

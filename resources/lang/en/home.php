@@ -21,4 +21,5 @@ return [
     'alt_accounts' => 'Accounts',
     'alt_ratings' => 'Ratings',
     'alt_search' => 'Search',
+    'search_aria_label' => 'Search',
 ];

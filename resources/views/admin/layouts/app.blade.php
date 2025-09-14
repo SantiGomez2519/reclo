@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Reclo') }} - Admin</title>
+    <title>{{ config('app.name', 'Reclo') }} - {{ __('admin.admin_panel') }}</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-dark admin-header shadow-sm">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">
-                    <i class="fas fa-shield-alt me-2"></i>{{ config('app.name', 'Reclo') }} Admin
+                    <i class="fas fa-shield-alt me-2"></i>{{ config('app.name', 'Reclo') }} {{ __('admin.admin_panel') }}
                 </a>
                 
                 <div class="navbar-nav ms-auto">
@@ -36,7 +36,7 @@
                         <form id="admin-logout" action="{{ route('admin.logout') }}" method="POST">
                             <a role="button" class="nav-link text-white" 
                               onclick="document.getElementById('admin-logout').submit();">
-                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                <i class="fas fa-sign-out-alt me-1"></i>{{ __('admin.logout') }}
                             </a>
                             @csrf 
                         </form>
