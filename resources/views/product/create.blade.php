@@ -18,6 +18,8 @@
                         <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
+                            <input type="hidden" name="storage_type" value="local">
+
                             <!-- Product Image -->
                             <div class="mb-4">
                                 <label for="image" class="form-label fw-semibold">

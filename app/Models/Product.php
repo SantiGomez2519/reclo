@@ -56,7 +56,7 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,sv|max:2048',
         ]);
     }
 
@@ -171,7 +171,13 @@ class Product extends Model
 
     public function getImage(): string
     {
-        return $this->attributes['image'];
+        $image = $this->attributes['image'];
+
+        if (filter_var($image, FILTER_VALIDATE_URL)) {
+            return $image;
+        }
+        
+        return url('storage/' . ltrim($image, '/'));
     }
 
     public function setImage(string $image): void

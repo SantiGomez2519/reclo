@@ -23,8 +23,8 @@
                     <div class="card h-100 shadow-sm">
                         <!-- Product Image -->
                         <div class="position-relative">
-                            <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getTitle() }}"
-                                class="card-img-top" style="height: 250px; object-fit: cover;">
+                            <img src="{{ $product->getImage() }}" alt="{{ $product->getTitle() }}" class="card-img-top"
+                                style="height: 250px; object-fit: cover;">
 
                             <!-- Status Badge -->
                             <span

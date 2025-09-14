@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ImageStorage;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,11 +50,10 @@ class ProductController extends Controller
         $product->setSwap($request->has('swap'));
         $product->setSellerId(Auth::guard('web')->id());
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-            $product->setImage($imagePath);
-        }
+        // Handle image upload using ImageStorage
+        $imageStorage = app(ImageStorage::class);
+        $imagePath = $imageStorage->store($request, 'products');
+        $product->setImage($imagePath);
 
         $product->save();
 
@@ -106,15 +106,19 @@ class ProductController extends Controller
         $product->setPrice($request->price);
         $product->setSwap($request->has('swap'));
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($product->getImage()) {
-                Storage::disk('public')->delete($product->getImage());
-            }
+        // Handle image upload using ImageStorage
+        $imageStorage = app(ImageStorage::class);
 
-            $imagePath = $request->file('image')->store('products', 'public');
-            $product->setImage($imagePath);
+        if ($request->hasFile('image')) {
+            // Delete old image if it's not the default
+            if ($product->getImage() !== 'images/logo.png') {
+                $previousImagePath = str_replace(url('storage') . '/', '', $product->getImage());
+                $imageStorage->delete($previousImagePath);
+            }
+            $product->setImage($imageStorage->store($request, 'products'));
+        } else {
+            // Keep current image if no new image is uploaded
+            $product->setImage($request->input('current_image', $product->getImage()));
         }
 
         $product->save();
@@ -131,9 +135,12 @@ class ProductController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Delete image file
-        if ($product->getImage()) {
-            Storage::disk('public')->delete($product->getImage());
+        // Delete image file using ImageStorage
+        $imageStorage = app(ImageStorage::class);
+
+        if ($product->getImage() && $product->getImage() !== 'images/logo.png') {
+            $imagePath = str_replace(url('storage') . '/', '', $product->getImage());
+            $imageStorage->delete($imagePath);
         }
 
         $product->delete();
