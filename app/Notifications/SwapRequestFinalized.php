@@ -25,7 +25,7 @@ class SwapRequestFinalized extends Notification
     {
 
         $desiredTitle = $this->swapRequest->getDesiredItem()->getTitle() ?? 'Producto solicitado';
-        $offeredTitle = $this->swapRequest->getOfferedItem()->getTitle() ?? 'Producto ofrecido';
+        $offeredTitle = $this->swapRequest->getOfferedItem()?->getTitle() ?? 'Producto ofrecido';
 
         if ($this->swapRequest->getStatus() === 'Accepted') {
             $message = 'The swap between "'.$desiredTitle.'" and "'.$offeredTitle.'" has been ACCEPTED.';

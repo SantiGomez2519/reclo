@@ -5,6 +5,7 @@
   --color-accent: #8B6B4E;    /* Warm Coffee */
   --color-light: #F7F5F2;     /* Light Neutral */
   --color-dark: #2E2E2E;      /* Charcoal */
+  --color-danger: #C57D7D;     /* Dusty Red */
 }
 
 /* Main sections background */
@@ -98,23 +99,23 @@ h1, h2, h3, h4 {
 
 
 .btn-success {
-  background-color: #5fb96b !important;
-  border-color: #6BCB77 !important;
+  background-color: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+  color: var(--color-light) !important;
 }
 
 .btn-success:hover {
-  background-color: #5AAE6A !important;
-  border-color: #5AAE6A !important;
+  filter: brightness(90%);
 }
 
 .btn-danger {
-  background-color: #ff6961 !important;
-  border-color: #ff6961 !important;
+  background-color: var(--color-danger) !important;
+  border-color: var(--color-danger) !important;
+  color: var(--color-light) !important;
 }
 
 .btn-danger:hover {
-  background-color: #e45d55 !important;
-  border-color: #e45d55 !important;
+  filter: brightness(90%);
 }
 /* General background */
 body {

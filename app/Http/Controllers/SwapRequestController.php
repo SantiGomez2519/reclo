@@ -96,7 +96,7 @@ class SwapRequestController extends Controller
 
         if ($request->response === 'reject') {
             $swapRequest->setStatus('Rejected');
-            $swapRequest->getInitiator()->notify(new SwapRequestRequestFinalized($swapRequest));
+            $swapRequest->getInitiator()->notify(new SwapRequestFinalized($swapRequest));
         } else {
             if (! $request->offered_item_id) {
                 return back()->withErrors(['You must select a product to accept the swap request.']);
@@ -149,8 +149,8 @@ class SwapRequestController extends Controller
             $swapRequest->setStatus('Accepted');
             $swapRequest->setDateAccepted(now());
 
-            $swapRequest->getDesiredItem()->update(['available' => false]);
-            $swapRequest->getOfferedItem()->update(['available' => false]);
+            Product::find($swapRequest->getDesiredItemId())->setAvailable(false);
+            Product::find($swapRequest->getOfferedItemId())->setAvailable(false);
 
             $swapRequest->getDesiredItem()->seller->notify(new SwapRequestFinalized($swapRequest));
             $swapRequest->getOfferedItem()->seller->notify(new SwapRequestFinalized($swapRequest));
@@ -169,6 +169,7 @@ class SwapRequestController extends Controller
             ->orWhereHas('desiredItem', function ($query) {
                 $query->where('seller_id', Auth::guard('web')->user()->getId());
             })
+            ->orderBy('updated_at', 'desc')
             ->get();
 
         return view('swap_request.index')->with('viewData', $viewData);

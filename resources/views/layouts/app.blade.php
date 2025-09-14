@@ -72,7 +72,7 @@
                 @forelse($viewData['notifications'] as $notification)
                   <a class="dropdown-item small" href="{{ route('notifications.read', $notification->id) }}">
                     @if($notification->type === 'App\Notifications\SwapRequestCreated')
-                      📩 Nueva solicitud — "{{ $notification->data['desiredItemTitle'] ?? 'Producto' }}"
+                      📩 Nueva solicitud de swap — "{{ $notification->data['desiredItemTitle'] ?? 'Producto' }}"
                       <div class="text-muted small mt-1">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</div>
                     @elseif($notification->type === 'App\Notifications\SwapRequestResponded')
                       🔄 Respuesta a tu solicitud

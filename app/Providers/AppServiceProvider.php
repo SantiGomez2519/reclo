@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             $user = Auth::guard('web')->user();
 
             $viewData['notifications'] = $user
-                ? $user->notifications
+                ? $user->unreadNotifications
                 : collect();
 
             $view->with('viewData', $viewData);

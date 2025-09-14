@@ -22,10 +22,10 @@
                             @csrf
                             <input type="hidden" name="desired_item_id" value="{{ $viewData['desiredItem']->getId() }}">
                             <button type="submit" class="btn btn-success">
-                                Confirm swap request
+                                Confirm request
                             </button>
                         </form>
-                        <a href="{{ route('home.index') }}" class="btn btn-danger d-inline-block ms-2">Cancel</a>
+                        <a href="{{ route('home.index') }}" class="btn btn-danger d-inline-block ms-2">Cancel request</a>
                     </div>
                 </div>
             </div>

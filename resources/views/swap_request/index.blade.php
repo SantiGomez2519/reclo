@@ -14,11 +14,11 @@
                     <span>Swap #{{ $swapRequest->getId() }}</span>
                     <span>
                         @if($swapRequest->getStatus() === 'Accepted')
-                            <span class="badge bg-success">Accepted</span>
+                            <span class="badge bg-success fs-6">Accepted</span>
                         @elseif($swapRequest->getStatus() === 'Rejected')
-                            <span class="badge bg-danger">Rejected</span>
+                            <span class="badge bg-danger fs-6">Rejected</span>
                         @else
-                            <span class="badge bg-secondary">{{ ucfirst($swapRequest->getStatus()) }}</span>
+                            <span class="badge bg-warning fs-6">{{ ucfirst($swapRequest->getStatus()) }}</span>
                         @endif
                     </span>
                 </div>
@@ -62,10 +62,8 @@
                         </div>
                         @endif
 
-                    <hr>
-
                     <p><strong>Created at:</strong> {{ $swapRequest->getCreatedAt() }}</p>
-                    <p><strong>Last update:</strong> {{ $swapRequest->getUpdatedAt() }}</p>
+                    <p><strong>Last update:</strong> {{ $swapRequest->updated_at->diffForHumans() }}</p>
                 </div>
             </div>
             @endforeach

@@ -35,7 +35,7 @@ Route::middleware('customer')->group(function () {
     // ----- Notifications Routes -----
     Route::get('/notifications', 'App\Http\Controllers\NotificationController@index')->name('notifications.index');
     Route::get('/notifications/{id}', 'App\Http\Controllers\NotificationController@read')->name('notifications.read');
-    Route::post('/notifications/{id}/read', 'App\Http\Controllers\NotificationController@markAsRead')->name('notifications.markAsRead');
+    Route::post('/notifications/{id}/read', 'App\Http\Controllers\NotificationController@mark')->name('notifications.mark');
 });
 
 // Admin Authentication Routes (User model)

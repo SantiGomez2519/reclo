@@ -4,13 +4,11 @@
 <div class="container">
     <h2 class="mb-4">{{ $viewData['title'] }}</h2>
 
-    <p>Swap ID: <strong>{{ $viewData['swapRequest']->id }}</strong></p>
-
     <div class="row">
         <!-- Desired Product -->
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-info text-white">
+                <div class="card-header bg-primary text-white">
                     Desired product
                 </div>
                 <div class="card-body text-center">

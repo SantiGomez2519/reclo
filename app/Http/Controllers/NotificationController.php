@@ -24,7 +24,7 @@ class NotificationController extends Controller
 
     public function read(string $id): RedirectResponse
     {
-        $notification = Auth::guard('web')->user()->notifications->findOrFail($id);
+        $notification = Auth::guard('web')->user()->notifications()->findOrFail($id);
         $notification->markAsRead();
 
         switch ($notification->type) {
@@ -39,7 +39,7 @@ class NotificationController extends Controller
         }
     }
 
-    public function markAsRead(string $id): RedirectResponse
+    public function mark(string $id): RedirectResponse
     {
         $notification = Auth::guard('web')->user()->notifications()->find($id);
         if ($notification) {
