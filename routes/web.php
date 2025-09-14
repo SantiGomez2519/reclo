@@ -59,7 +59,7 @@ Route::middleware('admin')->group(function () {
 
     // CustomUser CRUD Routes
     Route::get('/admin/customusers', 'App\Http\Controllers\Admin\AdminCustomUserController@index')->name('admin.customusers.index');
-    Route::get('/admin/customusers/create', 'App\Http\Controllers\Admin\CustomUserController@create')->name('admin.customusers.create');
+    Route::get('/admin/customusers/create', 'App\Http\Controllers\Admin\AdminCustomUserController@create')->name('admin.customusers.create');
     Route::post('/admin/customusers', 'App\Http\Controllers\Admin\AdminCustomUserController@store')->name('admin.customusers.store');
     Route::get('/admin/customusers/{id}', 'App\Http\Controllers\Admin\AdminCustomUserController@show')->name('admin.customusers.show');
     Route::get('/admin/customusers/{id}/edit', 'App\Http\Controllers\Admin\AdminCustomUserController@edit')->name('admin.customusers.edit');
