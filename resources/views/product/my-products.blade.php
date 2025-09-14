@@ -1,139 +1,135 @@
 @extends('layouts.app')
 
-@section('title', 'My Products - Reclo')
+@section('title', __('product.my_products_title'))
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container py-4">
         <!-- Header -->
-        <div class="flex justify-between items-center mb-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">My Products</h1>
-                <p class="text-gray-600">Manage your listed items</p>
+                <h1 class="display-5 fw-bold text-dark mb-2">{{ __('product.my_products') }}</h1>
+                <p class="lead text-muted">{{ __('product.manage_listed_items') }}</p>
             </div>
-            <a href="{{ route('product.create') }}"
-                class="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-200">
-                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                    </path>
-                </svg>
-                Add New Product
+            <a href="{{ route('product.create') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>
+                {{ __('product.add_new_product') }}
             </a>
         </div>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+        <div class="row g-4 mb-4">
             @forelse($viewData['products'] as $product)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
-                    <!-- Product Image -->
-                    <div class="relative">
-                        <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getTitle() }}"
-                            class="w-full h-64 object-cover">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card h-100 shadow-sm">
+                        <!-- Product Image -->
+                        <div class="position-relative">
+                            <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getTitle() }}"
+                                class="card-img-top" style="height: 250px; object-fit: cover;">
 
-                        <!-- Status Badge -->
-                        <div class="absolute top-2 left-2">
-                            @if ($product->getStatus() === 'available')
-                                <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
-                                    Available
-                                </span>
-                            @else
-                                <span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">
-                                    Sold
-                                </span>
-                            @endif
-                        </div>
+                            <!-- Status Badge -->
+                            <span
+                                class="position-absolute top-0 start-0 m-2 badge {{ $product->getStatus() === 'available' ? 'bg-success' : 'bg-danger' }}">
+                                {{ $product->getStatus() === 'available' ? __('product.available') : __('product.sold') }}
+                            </span>
 
-                        <!-- Condition Badge -->
-                        <div class="absolute top-2 right-2">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
+                            <!-- Condition Badge -->
+                            <span class="position-absolute top-0 end-0 m-2 badge bg-primary">
                                 {{ $product->getCondition() }}
                             </span>
                         </div>
-                    </div>
 
-                    <!-- Product Info -->
-                    <div class="p-4">
-                        <h3 class="font-semibold text-gray-800 mb-1 truncate">{{ $product->getTitle() }}</h3>
-                        <p class="text-sm text-gray-600 mb-2">{{ $product->getCategory() }} • {{ $product->getSize() }}</p>
+                        <!-- Product Info -->
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ $product->getTitle() }}</h5>
+                            <p class="card-text text-muted small mb-2">{{ $product->getCategory() }} •
+                                {{ $product->getSize() }}</p>
 
-                        <!-- Price -->
-                        <div class="flex items-center space-x-2 mb-3">
-                            <span class="text-lg font-bold text-gray-800">${{ $product->getPrice() }}</span>
-                        </div>
+                            <!-- Price -->
+                            <div class="mb-3">
+                                <span class="h5 fw-bold text-dark">${{ $product->getPrice() }}</span>
+                            </div>
 
-                        <!-- Action Buttons -->
-                        <div class="space-y-2">
-                            <a href="{{ route('product.show', $product->getId()) }}"
-                                class="block w-full text-center bg-gray-100 text-gray-800 py-2 rounded-lg hover:bg-gray-200 transition duration-200">
-                                View Details
-                            </a>
+                            <!-- Action Buttons -->
+                            <div class="mt-auto">
+                                <a href="{{ route('product.show', $product->getId()) }}"
+                                    class="btn btn-outline-primary btn-sm w-100 mb-2">
+                                    {{ __('product.view_details') }}
+                                </a>
 
-                            @if ($product->getStatus() === 'available')
-                                <div class="grid grid-cols-2 gap-2">
-                                    <a href="{{ route('product.edit', $product->getId()) }}"
-                                        class="text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('product.destroy', $product->getId()) }}" method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this product?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition duration-200 text-sm">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            @else
-                                <div class="text-center">
-                                    <span class="text-sm text-gray-500">Product sold</span>
-                                </div>
-                            @endif
+                                @if ($product->getStatus() === 'available')
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <a href="{{ route('product.edit', $product->getId()) }}"
+                                                class="btn btn-primary btn-sm w-100">
+                                                {{ __('product.edit_product') }}
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <form action="{{ route('product.destroy', $product->getId()) }}" method="POST"
+                                                onsubmit="return confirm('{{ __('product.are_you_sure_delete') }}')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm w-100">
+                                                    {{ __('product.delete_product') }}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="text-center">
+                                        <small class="text-muted">{{ __('product.product_sold') }}</small>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             @empty
-                <div class="col-span-full text-center py-12">
-                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                    </svg>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">No products yet</h3>
-                    <p class="text-gray-600 mb-4">Start selling by listing your first item!</p>
-                    <a href="{{ route('product.create') }}"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-200">
-                        List Your First Product
-                    </a>
+                <div class="col-12">
+                    <div class="text-center py-5">
+                        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                        <h3 class="text-muted">{{ __('product.no_products_yet') }}</h3>
+                        <p class="text-muted mb-4">{{ __('product.start_selling') }}</p>
+                        <a href="{{ route('product.create') }}" class="btn btn-primary btn-lg">
+                            {{ __('product.list_first_product') }}
+                        </a>
+                    </div>
                 </div>
             @endforelse
         </div>
 
         <!-- Pagination -->
         @if ($viewData['products']->hasPages())
-            <div class="flex justify-center">
+            <div class="d-flex justify-content-center">
                 {{ $viewData['products']->links() }}
             </div>
         @endif
 
         <!-- Statistics -->
         @if ($viewData['products']->count() > 0)
-            <div class="mt-12 bg-gray-50 rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Your Statistics</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-blue-600">
-                            {{ $viewData['products']->where('status', 'available')->count() }}</div>
-                        <div class="text-sm text-gray-600">Available Items</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-green-600">
-                            {{ $viewData['products']->where('status', 'sold')->count() }}</div>
-                        <div class="text-sm text-gray-600">Sold Items</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-purple-600">
-                            {{ $viewData['products']->where('swap', true)->count() }}</div>
-                        <div class="text-sm text-gray-600">Exchange Items</div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-4">{{ __('product.your_statistics') }}</h5>
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <div class="h2 text-primary fw-bold">
+                                        {{ $viewData['products']->where('status', 'available')->count() }}</div>
+                                    <div class="text-muted">{{ __('product.available_items') }}</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="h2 text-success fw-bold">
+                                        {{ $viewData['products']->where('status', 'sold')->count() }}</div>
+                                    <div class="text-muted">{{ __('product.sold_items') }}</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="h2 text-info fw-bold">
+                                        {{ $viewData['products']->where('swap', true)->count() }}</div>
+                                    <div class="text-muted">{{ __('product.exchange_items') }}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

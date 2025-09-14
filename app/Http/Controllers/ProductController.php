@@ -57,7 +57,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('product.index')->with('success', 'Product created successfully!');
+        return redirect()->route('product.index')->with('success', __('product.product_created_successfully'));
     }
 
     public function show(int $id): View
@@ -119,7 +119,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('product.show', $id)->with('success', 'Product updated successfully!');
+        return redirect()->route('product.show', $id)->with('success', __('product.product_updated_successfully'));
     }
 
     public function destroy(int $id): RedirectResponse
@@ -138,7 +138,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'Product deleted successfully!');
+        return redirect()->route('product.index')->with('success', __('product.product_deleted_successfully'));
     }
 
     public function myProducts(): View
@@ -163,6 +163,6 @@ class ProductController extends Controller
         $product->setStatus('sold');
         $product->save();
 
-        return redirect()->back()->with('success', 'Product marked as sold!');
+        return redirect()->back()->with('success', __('product.product_marked_as_sold'));
     }
 }

@@ -36,8 +36,11 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link" href="#">{{ __('layout.nav_home') }}</a>
-                    <a class="nav-link" href="#">{{ __('layout.nav_products') }}</a>
+                    <a class="nav-link" href="{{ route('home.index') }}">{{ __('layout.nav_home') }}</a>
+                    <a class="nav-link" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
+                    @auth
+                        <a class="nav-link" href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
+                    @endauth
                     <a class="nav-link" href="#">{{ __('layout.nav_reviews') }}</a>
                     <a class="nav-link" href="#">{{ __('layout.nav_swap') }}</a>
                 </div>
