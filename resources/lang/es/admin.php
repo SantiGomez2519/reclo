@@ -1,0 +1,234 @@
+<?php
+
+return [
+    // Common terms
+    'actions' => 'Acciones',
+    'view' => 'Ver',
+    'edit' => 'Editar',
+    'delete' => 'Eliminar',
+    'create' => 'Crear',
+    'update' => 'Actualizar',
+    'save' => 'Guardar',
+    'cancel' => 'Cancelar',
+    'back' => 'Atrás',
+    'confirm' => 'Confirmar',
+    'close' => 'Cerrar',
+    'yes' => 'Sí',
+    'no' => 'No',
+    'search' => 'Buscar',
+    'filter' => 'Filtrar',
+    'loading' => 'Cargando...',
+    'no_data' => 'No hay datos disponibles',
+    'required' => 'Requerido',
+    'optional' => 'Opcional',
+
+    // Status and alerts
+    'success' => 'Éxito',
+    'error' => 'Error',
+    'warning' => 'Advertencia',
+    'info' => 'Información',
+    'created_successfully' => 'Creado exitosamente',
+    'updated_successfully' => 'Actualizado exitosamente',
+    'deleted_successfully' => 'Eliminado exitosamente',
+
+    // Common fields
+    'id' => 'ID',
+    'name' => 'Nombre',
+    'email' => 'Correo',
+    'phone' => 'Teléfono',
+    'created_at' => 'Creado',
+    'updated_at' => 'Actualizado',
+    'status' => 'Estado',
+    'image' => 'Imagen',
+    'description' => 'Descripción',
+    'price' => 'Precio',
+    'category' => 'Categoría',
+
+    // Navigation
+    'back_to_list' => 'Volver a la Lista',
+    'back_to_dashboard' => 'Volver al Panel',
+    'dashboard' => 'Panel',
+    'home' => 'Inicio',
+
+    // Products
+    'products' => 'Productos',
+    'product' => 'Producto',
+    'product_details' => 'Detalles del Producto',
+    'product_management' => 'Gestión de Productos',
+    'create_product' => 'Crear Producto',
+    'edit_product' => 'Editar Producto',
+    'view_product' => 'Ver Producto',
+    'delete_product' => 'Eliminar Producto',
+    'no_products' => 'No se encontraron productos',
+    'products_list' => 'Lista de Productos',
+    'product_title' => 'Título del Producto',
+    'product_image' => 'Imagen del Producto',
+    'product_price' => 'Precio ($)',
+    'product_category' => 'Categoría',
+    'product_condition' => 'Condición',
+    'product_color' => 'Color',
+    'product_size' => 'Talla',
+    'product_status' => 'Estado',
+    'product_seller' => 'Vendedor',
+    'seller_information' => 'Información del Vendedor',
+    'no_image_available' => 'No hay imagen disponible',
+    'image_not_found' => 'Imagen no encontrada',
+
+    // Product categories
+    'category_clothing' => 'Ropa',
+    'category_shoes' => 'Zapatos',
+    'category_accessories' => 'Accesorios',
+    'category_other' => 'Otro',
+
+    // Product conditions
+    'condition_new' => 'Nuevo',
+    'condition_like_new' => 'Como Nuevo',
+    'condition_good' => 'Bueno',
+    'condition_fair' => 'Regular',
+    'condition_poor' => 'Malo',
+
+    // Product status
+    'status_available' => 'Disponible',
+    'status_sold' => 'Vendido',
+    'status_pending' => 'Pendiente',
+
+    // Customers
+    'customers' => 'Clientes',
+    'customer' => 'Cliente',
+    'customer_details' => 'Detalles del Cliente',
+    'customer_management' => 'Gestión de Clientes',
+    'create_customer' => 'Crear Cliente',
+    'edit_customer' => 'Editar Cliente',
+    'view_customer' => 'Ver Cliente',
+    'delete_customer' => 'Eliminar Cliente',
+    'no_customers' => 'No se encontraron clientes',
+    'customers_list' => 'Lista de Clientes',
+    'customer_name' => 'Nombre del Cliente',
+    'customer_email' => 'Correo Electrónico',
+    'customer_phone' => 'Número de Teléfono',
+    'customer_payment_method' => 'Método de Pago',
+    'customer_registered' => 'Registrado',
+    'member_since' => 'Miembro Desde',
+    'personal_information' => 'Información Personal',
+    'activity_summary' => 'Resumen de Actividad',
+    'recent_activity' => 'Actividad Reciente',
+    'no_activity' => 'Sin Actividad Aún',
+    'no_activity_description' => 'Este cliente aún no ha listado productos, realizado pedidos o escrito reseñas.',
+
+    // Customer activity
+    'products_listed' => 'Productos Listados',
+    'orders_made' => 'Pedidos Realizados',
+    'reviews_written' => 'Reseñas Escritas',
+    'recent_products' => 'Productos Recientes',
+    'recent_orders' => 'Pedidos Recientes',
+    'recent_reviews' => 'Reseñas Recientes',
+
+    // Payment methods
+    'payment_credit_card' => 'Tarjeta de Crédito',
+    'payment_debit_card' => 'Tarjeta de Débito',
+    'payment_paypal' => 'PayPal',
+    'payment_bank_transfer' => 'Transferencia Bancaria',
+
+    // Forms
+    'full_name' => 'Nombre Completo',
+    'phone_number' => 'Número de Teléfono',
+    'email_address' => 'Correo Electrónico',
+    'payment_method' => 'Método de Pago',
+    'password' => 'Contraseña',
+    'confirm_password' => 'Confirmar Contraseña',
+    'new_password' => 'Nueva Contraseña',
+    'password_update' => 'Actualización de Contraseña',
+    'leave_empty_keep_password' => 'Deja los campos de contraseña vacíos para mantener la contraseña actual sin cambios.',
+    'minimum_characters' => 'Se requieren mínimo 8 caracteres',
+    'minimum_characters_if_changing' => 'Se requieren mínimo 8 caracteres (si cambias la contraseña)',
+    'select_category' => 'Seleccionar Categoría',
+    'select_condition' => 'Seleccionar Condición',
+    'select_status' => 'Seleccionar Estado',
+    'select_seller' => 'Seleccionar Vendedor',
+    'select_payment_method' => 'Seleccionar Método de Pago',
+
+    // File upload
+    'accepted_formats' => 'Formatos aceptados: JPG, JPEG, PNG. Tamaño máximo: 2MB',
+    'leave_empty_keep_image' => 'Deja vacío para mantener la imagen actual.',
+    'current_image' => 'Imagen actual:',
+
+    // Confirmations and warnings
+    'confirm_delete' => 'Confirmar Eliminación',
+    'delete_confirmation' => '¿Estás seguro de que quieres eliminar este :item? Esta acción no se puede deshacer.',
+    'delete_customer_confirmation' => '¿Estás seguro de que quieres eliminar al cliente :name?',
+    'delete_customer_warning' => 'Esta acción no se puede deshacer y fallará si el cliente tiene productos o pedidos existentes.',
+    'cannot_delete_customer' => 'No se puede eliminar cliente con productos o pedidos existentes.',
+
+    // Notes and information
+    'note' => 'Nota',
+    'customer_login_note' => 'El cliente podrá iniciar sesión usando el correo y contraseña proporcionados aquí. Asegúrate de informarles sus credenciales de acceso.',
+    'swap_available' => 'Intercambio Disponible',
+    'swap_yes' => 'Sí',
+    'swap_no' => 'No',
+
+    // Pagination and counts
+    'showing_results' => 'Mostrando :from a :to de :total resultados',
+    'showing_first' => 'Mostrando :count de :total :items',
+    'view_seller_profile' => 'Ver Perfil del Vendedor',
+
+    // Time and dates
+    'last_updated' => 'Última Actualización',
+    'date_format' => 'd M, Y',
+    'datetime_format' => 'd M, Y H:i',
+
+    // Placeholders
+    'start_by_creating' => 'Comienza creando tu primer :item.',
+
+    // Additional unique keys
+    'back_to_product' => 'Volver al Producto',
+    'image_upload_help' => 'Formatos aceptados: JPG, JPEG, PNG. Tamaño máximo: 2MB. Dejar vacío para mantener la imagen actual.',
+    'update_product' => 'Actualizar Producto',
+    'update_customer' => 'Actualizar Cliente',
+    'admin_login' => 'Inicio de Sesión Administrador',
+    'passwords_do_not_match' => 'Las contraseñas no coinciden',
+    'image_load_error' => 'Error al cargar imagen para',
+    'back_to_customers' => 'Volver a Clientes',
+    'customer_id' => 'ID del Cliente',
+    'order_id' => 'ID del Pedido',
+    'date' => 'Fecha',
+    'total' => 'Total',
+    'no_activity_yet' => 'Aún Sin Actividad',
+    'showing_products' => 'Mostrando :shown de :total productos',
+    'showing_orders' => 'Mostrando :shown de :total pedidos',
+    'showing_reviews' => 'Mostrando :shown de :total reseñas',
+
+    // Controller Messages
+    'product_created_successfully' => 'Producto creado exitosamente.',
+    'product_updated_successfully' => 'Producto actualizado exitosamente.',
+    'product_deleted_successfully' => 'Producto eliminado exitosamente.',
+    'customer_created_successfully' => 'Cliente creado exitosamente.',
+    'customer_updated_successfully' => 'Cliente actualizado exitosamente.',
+    'customer_deleted_successfully' => 'Cliente eliminado exitosamente.',
+
+    // Dashboard specific
+    'welcome_back' => 'Bienvenido, ',
+    'successfully_logged_in' => 'Has accedido al panel de administración.',
+    'system_status' => 'Estado del Sistema:',
+    'dual_auth_active' => 'Sistema de doble autenticación activo.',
+    'customer_auth' => 'Autenticación de clientes:',
+    'admin_auth' => 'Autenticación de admin:',
+    'active' => 'Activo',
+    'customuser_model' => '(Modelo CustomUser)',
+    'user_model' => '(Modelo User)',
+    'quick_actions' => 'Acciones',
+    'view_customer_site' => 'Ver Sitio Cliente',
+    'manage_users' => 'Gestionar Usuarios',
+    'system_settings' => 'Configuración',
+    'feature_coming_soon' => '¡Próximamente!',
+    'manage_customuser_accounts' => 'Gestionar cuentas CustomUser',
+    'manage_all_products' => 'Gestionar todos los productos del mercado',
+    'view_all_users' => 'Ver Todos los Usuarios',
+    'create_new_user' => 'Crear Nuevo Usuario',
+    'view_all_products' => 'Ver Todos los Productos',
+    'create_new_product' => 'Crear Nuevo Producto',
+
+    // Layout specific
+    'admin_panel' => 'Admin',
+    'logout' => 'Salir',
+    'back_to_customer_site' => 'Volver al Sitio',
+];

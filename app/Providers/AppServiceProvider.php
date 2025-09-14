@@ -2,29 +2,25 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\LocaleComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // Se ejecuta cada vez que se va a renderizar una vista
+        // Share notifications with all views
         View::composer('*', function ($view) {
-            $data = $view->getData(); // lo que ya se pasó desde el controlador
-            $viewData = $data['viewData'] ?? []; // si no existe, arranca vacío
+            $data = $view->getData(); 
+            $viewData = $data['viewData'] ?? []; 
 
             $user = Auth::guard('web')->user();
 
@@ -34,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('viewData', $viewData);
         });
+
+        // Share current locale with all views
+        View::composer('*', LocaleComposer::class);
     }
 }

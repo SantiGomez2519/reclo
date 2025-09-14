@@ -6,39 +6,24 @@
         <div class="col-md-10">
             <div class="card admin-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">{{ __('Admin Dashboard') }}</h4>
+                    <h4 class="mb-0">{{ __('admin.dashboard') }}</h4>
                     <span class="badge admin-badge">{{ $viewData['admin']->getRole() }}</span>
                 </div>
 
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-8">
-                            <h5 class="text-success">{{ __('Welcome back, ') }}{{ $viewData['admin']->getName() }}!</h5>
-                            <p class="text-muted">{{ __('You are successfully logged in to the admin panel.') }}</p>
-                            
-                            <div class="alert alert-info admin-alert" role="alert">
-                                <i class="fas fa-info-circle me-2"></i>
-                                <strong>System Status:</strong> Dual authentication system is active.
-                                <ul class="mb-0 mt-2">
-                                    <li>Customer authentication: <span class="badge bg-success">Active</span> (CustomUser model)</li>
-                                    <li>Admin authentication: <span class="badge bg-success">Active</span> (User model)</li>
-                                </ul>
-                            </div>
+                            <h5 class="text-success">{{ __('admin.welcome_back') }}{{ $viewData['admin']->getName() }}!</h5>
+                            <p class="text-muted">{{ __('admin.successfully_logged_in') }}</p>
                         </div>
                         
                         <div class="col-md-4">
                             <div class="card bg-light">
                                 <div class="card-body text-center">
-                                    <h6 class="card-title">Quick Actions</h6>
+                                    <h6 class="card-title">{{ __('admin.quick_actions') }}</h6>
                                     <div class="d-grid gap-2">
                                         <a href="{{ route('home.index') }}" class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-external-link-alt me-1"></i>View Customer Site
-                                        </a>
-                                        <a href="#" class="btn btn-outline-secondary btn-sm" onclick="alert('Feature coming soon!')">
-                                            <i class="fas fa-users me-1"></i>Manage Users
-                                        </a>
-                                        <a href="#" class="btn btn-outline-secondary btn-sm" onclick="alert('Feature coming soon!')">
-                                            <i class="fas fa-cog me-1"></i>System Settings
+                                            <i class="fas fa-external-link-alt me-1"></i>{{ __('admin.view_customer_site') }}
                                         </a>
                                     </div>
                                 </div>
@@ -48,39 +33,48 @@
                     
                     <hr>
                     
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <div class="card bg-primary text-white admin-dashboard-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fas fa-users"></i>
+                    <!-- CRUD Management Sections -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card admin-crud-card mb-4">
+                                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-users me-2"></i>{{ __('admin.customer_management') }}
                                     </h5>
-                                    <p class="card-text">Customer Management</p>
-                                    <small>Manage CustomUser accounts</small>
+                                    <span class="badge bg-light text-primary">{{ $viewData['customUsersCount'] ?? 0 }}</span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">{{ __('admin.manage_customuser_accounts') }}</p>
+                                    <div class="d-grid gap-2">
+                                        <a href="{{ route('admin.customusers.index') }}" class="btn btn-primary">
+                                            <i class="fas fa-list me-1"></i>{{ __('admin.view_all_users') }}
+                                        </a>
+                                        <a href="{{ route('admin.customusers.create') }}" class="btn btn-outline-primary">
+                                            <i class="fas fa-plus me-1"></i>{{ __('admin.create_new_user') }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-4">
-                            <div class="card bg-success text-white admin-dashboard-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fas fa-shopping-cart"></i>
+                        <div class="col-md-6">
+                            <div class="card admin-crud-card mb-4">
+                                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-shopping-cart me-2"></i>{{ __('admin.product_management') }}
                                     </h5>
-                                    <p class="card-text">Orders & Products</p>
-                                    <small>Monitor marketplace activity</small>
+                                    <span class="badge bg-light text-success">{{ $viewData['productsCount'] ?? 0 }}</span>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="card bg-warning text-white admin-dashboard-card">
                                 <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </h5>
-                                    <p class="card-text">Analytics</p>
-                                    <small>View system reports</small>
+                                    <p class="card-text">{{ __('admin.manage_all_products') }}</p>
+                                    <div class="d-grid gap-2">
+                                        <a href="{{ route('admin.products.index') }}" class="btn btn-success">
+                                            <i class="fas fa-list me-1"></i>{{ __('admin.view_all_products') }}
+                                        </a>
+                                        <a href="{{ route('admin.products.create') }}" class="btn btn-outline-success">
+                                            <i class="fas fa-plus me-1"></i>{{ __('admin.create_new_product') }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

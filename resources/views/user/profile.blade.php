@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Profile - Reclo')
+@section('title', __('user.my_profile') . ' - Reclo')
 
 @section('content')
 <div class="container">
@@ -8,16 +8,16 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">{{ __('My Profile') }}</h4>
+                    <h4 class="mb-0">{{ __('user.my_profile') }}</h4>
                     <a href="{{ route('user.edit') }}" class="btn btn-sm bg-primary text-white">
-                        {{ __('Edit Profile') }}
+                        {{ __('user.edit_profile') }}
                     </a>
                 </div>
 
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>{{ __('Name:') }}</strong>
+                            <strong>{{ __('user.name_label') }}</strong>
                         </div>
                         <div class="col-md-8">
                             {{ $viewData['user']->getName() }}
@@ -26,7 +26,7 @@
 
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>{{ __('Phone:') }}</strong>
+                            <strong>{{ __('user.phone_label') }}</strong>
                         </div>
                         <div class="col-md-8">
                             {{ $viewData['user']->getPhone() }}
@@ -35,7 +35,7 @@
 
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>{{ __('Email:') }}</strong>
+                            <strong>{{ __('user.email_label') }}</strong>
                         </div>
                         <div class="col-md-8">
                             {{ $viewData['user']->getEmail() }}
@@ -44,19 +44,19 @@
 
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>{{ __('Payment Method:') }}</strong>
+                            <strong>{{ __('user.payment_method_label') }}</strong>
                         </div>
                         <div class="col-md-8">
-                            <span class="badge bg-secondary">{{ $viewData['user']->getPaymentMethod() }}</span>
+                            <span class="badge bg-secondary">{{ __('user.' . str_replace(' ', '_', strtolower($viewData['user']->getPaymentMethod()))) }}</span>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>{{ __('Member since:') }}</strong>
+                            <strong>{{ __('user.member_since') }}</strong>
                         </div>
                         <div class="col-md-8">
-                            {{ $viewData['user']->created_at->format('F j, Y') }}
+                            {{ $viewData['user']->getCreatedAt()->translatedFormat('F j, Y') }}
                         </div>
                     </div>
                 </div>
