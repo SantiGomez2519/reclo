@@ -47,7 +47,7 @@
                             <strong>{{ __('user.payment_method_label') }}</strong>
                         </div>
                         <div class="col-md-8">
-                            <span class="badge bg-secondary">{{ __('user.payment_methods.' . $viewData['user']->getPaymentMethod()) }}</span>
+                            <span class="badge bg-secondary">{{ __('user.' . str_replace(' ', '_', strtolower($viewData['user']->getPaymentMethod()))) }}</span>
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                             <strong>{{ __('user.member_since') }}</strong>
                         </div>
                         <div class="col-md-8">
-                            {{ $viewData['user']->created_at->translatedFormat('F j, Y') }}
+                            {{ $viewData['user']->getCreatedAt()->translatedFormat('F j, Y') }}
                         </div>
                     </div>
                 </div>

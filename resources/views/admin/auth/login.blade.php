@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="card admin-card">
                 <div class="card-header">
-                    <h4 class="mb-0 text-center">Admin {{ __('auth.login') }}</h4>
+                    <h4 class="mb-0 text-center">{{ __('admin.admin_login') }}</h4>
                 </div>
 
                 <div class="card-body p-4">
@@ -66,7 +66,7 @@
             
             <div class="text-center mt-3">
                 <a href="{{ route('home.index') }}" class="text-muted">
-                    <i class="fas fa-arrow-left me-1"></i>{{ __('adminLayout.back_to_customer_site') }}
+                    <i class="fas fa-arrow-left me-1"></i>{{ __('admin.back_to_customer_site') }}
                 </a>
             </div>
         </div>

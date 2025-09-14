@@ -8,7 +8,7 @@ return [
     'remember_me' => 'Remember Me',
     'dont_have_account' => 'Don\'t have an account?',
     'create_one_here' => 'Create one here',
-    
+
     // Register form
     'register' => 'Register',
     'full_name' => 'Full Name',

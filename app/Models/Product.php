@@ -61,6 +61,38 @@ class Product extends Model
         ]);
     }
 
+    public static function validateAdmin(Request $request): void
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'size' => 'required|string|max:50',
+            'condition' => 'required|string|max:50',
+            'price' => 'required|integer|gt:0',
+            'status' => 'required|string|max:255',
+            'seller_id' => 'required|exists:custom_users,id',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    }
+
+    public static function validateAdminUpdate(Request $request): void
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'size' => 'required|string|max:50',
+            'condition' => 'required|string|max:50',
+            'price' => 'required|integer|gt:0',
+            'status' => 'required|string|max:255',
+            'seller_id' => 'required|exists:custom_users,id',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    }
+
     public function getId(): int
     {
         return $this->attributes['id'];

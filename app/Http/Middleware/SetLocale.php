@@ -13,7 +13,7 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         $supportedLocales = ['en', 'es'];
-        
+
         // Check if user has a preferred locale in session
         $sessionLocale = Session::get('locale');
         if (in_array($sessionLocale, $supportedLocales)) {
@@ -21,7 +21,7 @@ class SetLocale
         } else {
             // Fallback to browser language detection
             $browserLocale = $this->getBrowserLocale($request);
-            
+
             if (in_array($browserLocale, $supportedLocales)) {
                 App::setLocale($browserLocale);
                 Session::put('locale', $browserLocale);
@@ -31,35 +31,35 @@ class SetLocale
                 Session::put('locale', 'en');
             }
         }
-        
+
         return $next($request);
     }
-    
+
     private function getBrowserLocale(Request $request): string
     {
         $acceptLanguage = $request->header('Accept-Language');
-        
-        if (!$acceptLanguage) {
+
+        if (! $acceptLanguage) {
             return 'en';
         }
-        
+
         // Parse Accept-Language header
         $languages = [];
         foreach (explode(',', $acceptLanguage) as $lang) {
             $parts = explode(';', trim($lang));
             $locale = trim($parts[0]);
             $quality = 1.0;
-            
+
             if (isset($parts[1]) && strpos($parts[1], 'q=') === 0) {
                 $quality = (float) substr($parts[1], 2);
             }
-            
+
             $languages[$locale] = $quality;
         }
-        
+
         // Sort by quality
         arsort($languages);
-        
+
         // Check for supported locales
         foreach (array_keys($languages) as $locale) {
             // Extract language code (e.g., 'es' from 'es-ES')
@@ -68,7 +68,7 @@ class SetLocale
                 return $langCode;
             }
         }
-        
+
         return 'en';
     }
 }

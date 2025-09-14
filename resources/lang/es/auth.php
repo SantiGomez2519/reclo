@@ -8,7 +8,7 @@ return [
     'remember_me' => 'Recordarme',
     'dont_have_account' => '¿No tienes cuenta?',
     'create_one_here' => 'Crear aquí',
-    
+
     // Register form
     'register' => 'Registro',
     'full_name' => 'Nombre',
