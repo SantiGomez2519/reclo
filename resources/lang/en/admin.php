@@ -75,22 +75,26 @@ return [
     'image_not_found' => 'Image not found',
 
     // Product categories
-    'category_clothing' => 'Clothing',
-    'category_shoes' => 'Shoes',
-    'category_accessories' => 'Accessories',
-    'category_other' => 'Other',
+    'category_Women' => 'Women',
+    'category_Men' => 'Men',
+    'category_Vintage' => 'Vintage',
+    'category_Accessories' => 'Accessories',
+    'category_Shoes' => 'Shoes',
+    'category_Bags' => 'Bags',
+    'category_Jewelry' => 'Jewelry',
 
     // Product conditions
-    'condition_new' => 'New',
-    'condition_like_new' => 'Like New',
-    'condition_good' => 'Good',
-    'condition_fair' => 'Fair',
-    'condition_poor' => 'Poor',
+    'condition_Like New' => 'Like New',
+    'condition_Excellent' => 'Excellent',
+    'condition_Very Good' => 'Very Good',
+    'condition_Good' => 'Good',
+    'condition_Fair' => 'Fair',
 
     // Product status
     'status_available' => 'Available',
     'status_sold' => 'Sold',
     'status_pending' => 'Pending',
+    'status_unavailable' => 'Unavailable',
 
     // Customers
     'customers' => 'Customers',
@@ -146,11 +150,16 @@ return [
     'select_status' => 'Select Status',
     'select_seller' => 'Select Seller',
     'select_payment_method' => 'Select Payment Method',
+    'select_size' => 'Select Size',
+    'one_size' => 'One Size',
 
     // File upload
     'accepted_formats' => 'Accepted formats: JPG, JPEG, PNG. Max size: 2MB',
     'leave_empty_keep_image' => 'Leave empty to keep current image.',
     'current_image' => 'Current image:',
+    'product_images' => 'Product Images',
+    'current_images' => 'Current Images',
+    'images_help' => 'Accepted formats: JPG, JPEG, PNG. Max size: 2MB each.',
 
     // Confirmations and warnings
     'confirm_delete' => 'Confirm Delete',
