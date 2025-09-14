@@ -21,11 +21,30 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # or your project PHP version
+          php-version: "8.2"
           tools: composer
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Run Laravel Pint
-        run: ./vendor/bin/pint --test
+      - name: Run Laravel Pint (Check)
+        id: pint-check
+        run: |
+          if ./vendor/bin/pint --test; then
+            echo "pint-changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "pint-changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Laravel Pint (Fix)
+        if: steps.pint-check.outputs.pint-changed == 'true'
+        run: ./vendor/bin/pint
+
+      - name: Commit changes
+        if: steps.pint-check.outputs.pint-changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "style: fix code style with Laravel Pint [skip ci]"
+          git push
