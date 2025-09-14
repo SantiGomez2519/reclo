@@ -7,14 +7,32 @@ use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    private ImageStorage $imageStorage;
+
+    public function __construct(ImageStorage $imageStorage)
     {
         $this->middleware('auth:web')->except(['index', 'show']);
+        $this->imageStorage = $imageStorage;
+    }
+
+    private function getFormData(): array
+    {
+        return [
+            'categories' => ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'],
+            'conditions' => ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'],
+            'sizes' => ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'],
+        ];
+    }
+
+    private function checkProductOwnership(Product $product): void
+    {
+        if ($product->getSellerId() !== Auth::guard('web')->id()) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     public function index(): View
@@ -24,21 +42,17 @@ class ProductController extends Controller
 
         return view('product.index')->with('viewData', $viewData);
     }
+
     public function create(): View
     {
-        $viewData = [];
-        $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
-        $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
-        $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
-
-        return view('product.create')->with('viewData', $viewData);
+        return view('product.create')->with('viewData', $this->getFormData());
     }
 
     public function store(Request $request): RedirectResponse
     {
         Product::validate($request);
 
-        $product = new Product();
+        $product = new Product;
         $product->setTitle($request->title);
         $product->setDescription($request->description);
         $product->setCategory($request->category);
@@ -51,8 +65,7 @@ class ProductController extends Controller
         $product->setSellerId(Auth::guard('web')->id());
 
         // Handle image upload using ImageStorage
-        $imageStorage = app(ImageStorage::class);
-        $imagePath = $imageStorage->store($request, 'products');
+        $imagePath = $this->imageStorage->store($request, 'products');
         $product->setImage($imagePath);
 
         $product->save();
@@ -70,18 +83,10 @@ class ProductController extends Controller
 
     public function edit(int $id): View
     {
-        $viewData = [];
         $product = Product::findOrFail($id);
+        $this->checkProductOwnership($product);
 
-        // Check if user owns the product
-        if ($product->getSellerId() !== Auth::guard('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $viewData['product'] = $product;
-        $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
-        $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
-        $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
+        $viewData = array_merge($this->getFormData(), ['product' => $product]);
 
         return view('product.edit')->with('viewData', $viewData);
     }
@@ -89,13 +94,9 @@ class ProductController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
+        $this->checkProductOwnership($product);
 
-        // Check if user owns the product
-        if ($product->getSellerId() !== Auth::guard('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        Product::validateUpdate($request);
+        Product::validate($request, true);
 
         $product->setTitle($request->title);
         $product->setDescription($request->description);
@@ -107,15 +108,13 @@ class ProductController extends Controller
         $product->setSwap($request->has('swap'));
 
         // Handle image upload using ImageStorage
-        $imageStorage = app(ImageStorage::class);
-
         if ($request->hasFile('image')) {
             // Delete old image if it's not the default
             if ($product->getImage() !== 'images/logo.png') {
-                $previousImagePath = str_replace(url('storage') . '/', '', $product->getImage());
-                $imageStorage->delete($previousImagePath);
+                $previousImagePath = str_replace(url('storage').'/', '', $product->getImage());
+                $this->imageStorage->delete($previousImagePath);
             }
-            $product->setImage($imageStorage->store($request, 'products'));
+            $product->setImage($this->imageStorage->store($request, 'products'));
         } else {
             // Keep current image if no new image is uploaded
             $product->setImage($request->input('current_image', $product->getImage()));
@@ -129,18 +128,12 @@ class ProductController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-
-        // Check if user owns the product
-        if ($product->getSellerId() !== Auth::guard('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->checkProductOwnership($product);
 
         // Delete image file using ImageStorage
-        $imageStorage = app(ImageStorage::class);
-
         if ($product->getImage() && $product->getImage() !== 'images/logo.png') {
-            $imagePath = str_replace(url('storage') . '/', '', $product->getImage());
-            $imageStorage->delete($imagePath);
+            $imagePath = str_replace(url('storage').'/', '', $product->getImage());
+            $this->imageStorage->delete($imagePath);
         }
 
         $product->delete();
@@ -161,11 +154,7 @@ class ProductController extends Controller
     public function markAsSold(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-
-        // Check if user owns the product
-        if ($product->getSellerId() !== Auth::guard('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->checkProductOwnership($product);
 
         $product->setStatus('sold');
         $product->save();

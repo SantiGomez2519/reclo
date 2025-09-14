@@ -40,16 +40,7 @@
                                 <label for="image" class="form-label fw-semibold">
                                     {{ __('product.update_image_optional') }}
                                 </label>
-                                <div class="border border-2 border-dashed rounded p-4 text-center"
-                                    style="border-color: #dee2e6 !important;">
-                                    <input type="file" id="image" name="image" accept="image/*"
-                                        class="form-control d-none">
-                                    <label for="image" class="cursor-pointer">
-                                        <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
-                                        <p class="text-muted mb-1">{{ __('product.click_to_upload_new') }}</p>
-                                        <p class="small text-muted">{{ __('product.image_formats') }}</p>
-                                    </label>
-                                </div>
+                                <input type="file" id="image" name="image" accept="image/*" class="form-control">
                                 @error('image')
                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror

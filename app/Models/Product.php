@@ -46,9 +46,9 @@ class Product extends Model
         'image',
     ];
 
-    public static function validate(Request $request): void
+    public static function validate(Request $request, bool $isUpdate = false): void
     {
-        $request->validate([
+        $rules = [
             'title' => 'required|string|max:255|min:3',
             'description' => 'required|string|min:10|max:1000',
             'category' => 'required|string|in:Women,Men,Vintage,Accessories,Shoes,Bags,Jewelry',
@@ -56,22 +56,10 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,sv|max:2048',
-        ]);
-    }
+            'image' => $isUpdate ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
 
-    public static function validateUpdate(Request $request): void
-    {
-        $request->validate([
-            'title' => 'required|string|max:255|min:3',
-            'description' => 'required|string|min:10|max:1000',
-            'category' => 'required|string|in:Women,Men,Vintage,Accessories,Shoes,Bags,Jewelry',
-            'color' => 'required|string|max:50',
-            'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
-            'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
-            'price' => 'required|integer|min:1|max:10000',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+        $request->validate($rules);
     }
 
     public function getId(): int
@@ -176,8 +164,8 @@ class Product extends Model
         if (filter_var($image, FILTER_VALIDATE_URL)) {
             return $image;
         }
-        
-        return url('storage/' . ltrim($image, '/'));
+
+        return url('storage/'.ltrim($image, '/'));
     }
 
     public function setImage(string $image): void

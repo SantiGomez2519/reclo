@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'customer' => \App\Http\Middleware\CustomerMiddleware::class,
             'setlocale' => \App\Http\Middleware\SetLocale::class,
         ]);
-        
+
         // Apply locale middleware globally to web routes
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,

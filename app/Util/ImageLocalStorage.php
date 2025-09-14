@@ -10,12 +10,16 @@ class ImageLocalStorage implements ImageStorage
 {
     public function store(Request $request, string $folder = ''): string
     {
-        $fileName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-        $path = $folder ? $folder . '/' . $fileName : $fileName;
+        if ($request->hasFile('image')) {
+            $fileName = uniqid().'.'.$request->file('image')->getClientOriginalExtension();
+            $path = $folder ? $folder.'/'.$fileName : $fileName;
 
-        Storage::disk('public')->put($path, file_get_contents($request->file('image')->getRealPath()));
+            Storage::disk('public')->put($path, file_get_contents($request->file('image')->getRealPath()));
 
-        return $path;
+            return $path;
+        }
+
+        return 'images/logo.png';
     }
 
     public function delete(string $path): void

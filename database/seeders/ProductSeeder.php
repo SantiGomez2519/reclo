@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use App\Models\CustomUser;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -16,8 +16,9 @@ class ProductSeeder extends Seeder
         // Get the first custom user to be the seller
         $user = CustomUser::first();
 
-        if (!$user) {
+        if (! $user) {
             $this->command->info('No custom users found. Please run CustomUserSeeder first.');
+
             return;
         }
 
