@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomUser;
 use App\Models\Product;
 use App\Models\SwapRequest;
-use App\Models\CustomUser;
 use App\Notifications\SwapRequestCreated;
 use App\Notifications\SwapRequestFinalized;
 use App\Notifications\SwapRequestResponded;
@@ -65,9 +65,9 @@ class SwapRequestController extends Controller
         $desiredItem = Product::find($request->desired_item_id);
 
         $existingSwap = SwapRequest::where('initiator_id', Auth::guard('web')->user()->getId())
-        ->where('desired_item_id', $request->desired_item_id)
-        ->where('status', 'Pending') 
-        ->first();
+            ->where('desired_item_id', $request->desired_item_id)
+            ->where('status', 'Pending')
+            ->first();
 
         if ($existingSwap) {
             return redirect()->route('home.index')
@@ -120,7 +120,7 @@ class SwapRequestController extends Controller
             abort(403, 'No autorizado');
         }
 
-        if($swapRequest->getStatus() !== 'Pending') {
+        if ($swapRequest->getStatus() !== 'Pending') {
             return redirect()->route('home.index')
                 ->with('status', 'Error: This swap request has already been responded to.');
         }
@@ -142,7 +142,7 @@ class SwapRequestController extends Controller
             ->with('status', 'Answer registered succesfully.');
     }
 
-    public function finalize(Request $request, int $id): View
+    public function finalize(int $id): View
     {
         $swapRequest = SwapRequest::findOrFail($id);
 
@@ -167,8 +167,6 @@ class SwapRequestController extends Controller
 
     public function close(Request $request, int $id): RedirectResponse
     {
-        SwapRequest::validateFinalize($request);
-
         $swapRequest = SwapRequest::findOrFail($id);
 
         if ($swapRequest->getInitiatorId() !== Auth::guard('web')->user()->getId()) {
@@ -177,10 +175,10 @@ class SwapRequestController extends Controller
 
         if ($swapRequest->getStatus() !== 'Counter Proposed') {
             $message = match ($swapRequest->getStatus()) {
-                'Pending'  => 'Error: This swap request is still pending and cannot be finalized yet.',
+                'Pending' => 'Error: This swap request is still pending and cannot be finalized yet.',
                 'Accepted' => 'Error: This swap request has already been accepted.',
                 'Rejected' => 'Error: This swap request has already been rejected.',
-                default    => 'Error: This swap request cannot be finalized.',
+                default => 'Error: This swap request cannot be finalized.',
             };
 
             return redirect()->route('home.index')
@@ -193,7 +191,7 @@ class SwapRequestController extends Controller
         } else {
             $swapRequest->setStatus('Accepted');
             $swapRequest->setDateAccepted(now());
-            
+
             $desiredItem = Product::find($swapRequest->getDesiredItemId());
             $desiredItem->setAvailable(false);
             $desiredItem->save();

@@ -17,8 +17,8 @@
                         <div class="card-header" style="background-color: #efe8e0ff; ">
                             <h5 class="mb-0 text-dark fw-bold">Solicited Product</h5>
                         </div>
-                        @if($viewData['desiredItem']->getImage())
-                            <img src="{{ asset('storage/' . $viewData['desiredItem']->getImage()) }}" 
+                        @if($viewData['desiredItem']->getImages())
+                            <img src="{{ asset('storage/' . $viewData['desiredItem']->getImages()) }}" 
                                  class="card-img-top"
                                  alt="{{ $viewData['desiredItem']->getTitle() }}">
                         @endif
@@ -62,8 +62,8 @@
                                                         <label class="card-body stretched-link mb-0" for="product_{{ $product->getId() }}" style="cursor: pointer;">
                                                             <div class="row align-items-center">
                                                                 <div class="col-md-4">
-                                                                    @if($product->getImage())
-                                                                        <img src="{{ asset('storage/' . $product->getImage()) }}" class="img-fluid rounded" alt="{{ $product->getTitle() }}">
+                                                                    @if($product->getImages())
+                                                                        <img src="{{ asset('storage/' . $product->getImages()) }}" class="img-fluid rounded" alt="{{ $product->getTitle() }}">
                                                                     @endif
                                                                 </div>
                                                                 <div class="col-md-8">

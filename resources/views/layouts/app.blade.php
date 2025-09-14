@@ -40,9 +40,9 @@
                     <a class="nav-link" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
                     @auth
                         <a class="nav-link" href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
+                        <a class="nav-link" href="{{ route('swap-request.test') }}">{{ __('layout.nav_swap') }}</a>
                     @endauth
                     <a class="nav-link" href="#">{{ __('layout.nav_reviews') }}</a>
-                    <a class="nav-link" href="{{ route('swap-request.test') }}">{{ __('layout.nav_swap') }}</a>
                 </div>
 
                 <!-- Search Bar -->
@@ -55,33 +55,42 @@
                 <div class="vr bg-white mx-2 d-none d-lg-block"></div>
 
                 <!-- Language Switcher -->
-                <div class="dropdown">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ $currentLocale === 'en' ? __('layout.language_english') : __('layout.language_spanish') }}
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                        @if ($currentLocale !== 'en')
-                            <li><a class="dropdown-item"
-                                    href="{{ route('lang.switch', ['locale' => 'en']) }}">{{ __('layout.language_english') }}</a>
-                            </li>
-                        @endif
-                        @if ($currentLocale !== 'es')
-                            <li><a class="dropdown-item"
-                                    href="{{ route('lang.switch', ['locale' => 'es']) }}">{{ __('layout.language_spanish') }}</a>
-                            </li>
-                        @endif
-                    </ul>
+                <div class="dropdown-language nav-item dropdown me-3">
+                  <button class="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown"
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ $currentLocale === 'en' ? __('layout.language_english') : __('layout.language_spanish') }}
+                  </button>
+
+                  <ul class="dropdown-menu dropdown-menu-end py-1 px-0" aria-labelledby="languageDropdown">
+                    @if ($currentLocale !== 'en')
+                      <li>
+                        <a class="dropdown-item btn btn-outline-light w-100 text-center rounded-0"
+                          href="{{ route('lang.switch', ['locale' => 'en']) }}">
+                          {{ __('layout.language_english') }}
+                        </a>
+                      </li>
+                    @endif
+
+                    @if ($currentLocale !== 'es')
+                      <li>
+                        <a class="dropdown-item btn btn-outline-light w-100 text-center rounded-0"
+                          href="{{ route('lang.switch', ['locale' => 'es']) }}">
+                          {{ __('layout.language_spanish') }}
+                        </a>
+                      </li>
+                    @endif
+                  </ul>
                 </div>
+
 
                 <div class="vr bg-white mx-2 d-none d-lg-block"></div>
 
-                @guest('web')
-                    <!-- Auth -->
-          <a class="nav-link active" href="{{ route('login') }}">{{ __('layout.login') }}</a>
-                    <a class="nav-link active" href="{{ route('register') }}">{{ __('layout.register') }}</a>
-                @else
-                    <!-- Notifications Dropdown -->
+          @guest('web')
+              <!-- Auth -->
+              <a class="nav-link active" href="{{ route('login') }}">{{ __('layout.login') }}</a>
+              <a class="nav-link active" href="{{ route('register') }}">{{ __('layout.register') }}</a>
+          @else
+              <!-- Notifications Dropdown -->
           <div class="nav-item dropdown me-3">
            <a id="notifDropdown"
               class="nav-link position-relative"

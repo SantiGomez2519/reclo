@@ -31,9 +31,9 @@
                                 <div class="card-header border-0" style="background-color: #efe8e0ff; ">
                                     <h5 class="mb-0 text-dark">Desired Product</h5>
                                 </div>
-                                <img src="{{ $swapRequest->getDesiredItem()->getImage() ?? 'https://via.placeholder.com/250' }}" 
-                                     class="card-img-top" 
-                                     alt="{{ $swapRequest->getDesiredItem()->getTitle() }}">
+                                <img src="{{ $swapRequest->getDesiredItem()->getImages()[0] ?? 'https://via.placeholder.com/250' }}" 
+                                    class="card-img-top"
+                                    alt="{{ $swapRequest->getDesiredItem()->getTitle() }}">
                                 <div class="card-body">
                                     <h6 class="card-title fw-bold">{{ $swapRequest->getDesiredItem()->getTitle() }}</h6>
                                     <p class="card-text small">{{ $swapRequest->getDesiredItem()->getDescription() }}</p>
@@ -57,9 +57,9 @@
                                     <div div class="card-header border-0" style="background-color: #efe8e0ff; ">
                                         <h5 class="mb-0 text-dark">Offered Product</h5>
                                     </div>
-                                    <img src="{{ $swapRequest->getOfferedItem()->getImage() ?? 'https://via.placeholder.com/250' }}" 
-                                         class="card-img-top" 
-                                         alt="{{ $swapRequest->getOfferedItem()->getTitle() }}">
+                                    <img src="{{ $swapRequest->getOfferedItem()->getImages()[0] ?? 'https://via.placeholder.com/250' }}" 
+                                    class="card-img-top"
+                                    alt="{{ $swapRequest->getOfferedItem()->getTitle() }}">
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold">{{ $swapRequest->getOfferedItem()->getTitle() }}</h6>
                                         <p class="card-text small">{{ $swapRequest->getOfferedItem()->getDescription() }}</p>

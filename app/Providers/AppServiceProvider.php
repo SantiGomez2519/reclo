@@ -3,10 +3,9 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\LocaleComposer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Share notifications with all views
         View::composer('*', function ($view) {
-            $data = $view->getData(); 
-            $viewData = $data['viewData'] ?? []; 
+            $data = $view->getData();
+            $viewData = $data['viewData'] ?? [];
 
             $user = Auth::guard('web')->user();
 

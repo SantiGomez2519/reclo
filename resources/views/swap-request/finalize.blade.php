@@ -13,8 +13,8 @@
                 <div class="card-header" style="background-color: #efe8e0ff; ">
                     <h5 class="mb-0 text-dark fw-bold">Solicited Product</h5>
                 </div>
-                @if($viewData['desiredItem']->getImage())
-                    <img src="{{ asset('storage/' . $viewData['desiredItem']->getImage()) }}" 
+                @if($viewData['desiredItem']->getImages())
+                    <img src="{{ asset('storage/' . $viewData['desiredItem']->getImages()) }}" 
                             class="card-img-top"
                             alt="{{ $viewData['desiredItem']->getTitle() }}">
                 @endif
@@ -44,8 +44,8 @@
                 <div class="card-header" style="background-color: #efe8e0ff; ">
                     <h5 class="mb-0 text-dark fw-bold">Counter offer</h5>
                 </div>
-                @if($viewData['offeredItem']->getImage())
-                    <img src="{{ asset('storage/' . $viewData['offeredItem']->getImage()) }}" 
+                @if($viewData['offeredItem']->getImages())
+                    <img src="{{ asset('storage/' . $viewData['offeredItem']->getImages()) }}" 
                             class="card-img-top"
                             alt="{{ $viewData['offeredItem']->getTitle() }}">
                 @endif
