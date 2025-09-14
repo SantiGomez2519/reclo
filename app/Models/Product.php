@@ -56,8 +56,15 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'image' => $isUpdate ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
+
+        // Validate images - either single image or multiple images
+        if ($request->hasFile('images')) {
+            $rules['images'] = $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5';
+            $rules['images.*'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        } else {
+            $rules['image'] = $isUpdate ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
 
         $request->validate($rules);
     }

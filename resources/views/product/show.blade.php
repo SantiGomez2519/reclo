@@ -20,10 +20,43 @@
 
         <div class="row">
             <div class="col-lg-6 mb-4">
-                <!-- Product Image -->
+                <!-- Product Images -->
                 <div class="card">
-                    <img src="{{ $viewData['product']->getFirstImage() }}" alt="{{ $viewData['product']->getTitle() }}"
-                        class="card-img-top" style="height: 500px; object-fit: cover;">
+                    @php
+                        $images = $viewData['product']->getImages();
+                        $imageCount = count($images);
+                    @endphp
+
+                    @if ($imageCount > 1)
+                        <!-- Multiple Images - Carousel -->
+                        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($images as $index => $imagePath)
+                                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                        <img src="{{ url('storage/' . ltrim($imagePath, '/')) }}"
+                                            alt="{{ $viewData['product']->getTitle() }} - Image {{ $index + 1 }}"
+                                            class="d-block w-100" style="height: 500px; object-fit: cover;"
+                                            onerror="this.src='{{ url('storage/images/logo.png') }}'">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    @else
+                        <!-- Single Image -->
+                        <img src="{{ $viewData['product']->getFirstImage() }}" alt="{{ $viewData['product']->getTitle() }}"
+                            class="card-img-top" style="height: 500px; object-fit: cover;"
+                            onerror="this.src='{{ url('storage/images/logo.png') }}'">
+                    @endif
                 </div>
 
                 <!-- Condition Badge -->
@@ -41,7 +74,8 @@
                     <div class="card-body">
                         <!-- Title and Seller -->
                         <h1 class="card-title display-6 fw-bold mb-2">{{ $viewData['product']->getTitle() }}</h1>
-                        <p class="text-muted fs-5 mb-3">{{ __('product.by') }} {{ $viewData['product']->seller->getName() }}
+                        <p class="text-muted fs-5 mb-3">{{ __('product.by') }}
+                            {{ $viewData['product']->seller->getName() }}
                         </p>
 
                         <!-- Price -->
