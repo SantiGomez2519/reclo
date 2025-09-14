@@ -69,7 +69,6 @@ class Product extends Model
         $request->validate($rules);
     }
 
-
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -165,7 +164,7 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    /** 
+    /**
      * Get product images as URLs or file paths
      */
     public function getImages(bool $asUrls = true): array
@@ -181,9 +180,10 @@ class Product extends Model
                         if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                             $urls[] = $imagePath;
                         } else {
-                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
+                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
                         }
                     }
+
                     return $urls;
                 } else {
                     return $images;
