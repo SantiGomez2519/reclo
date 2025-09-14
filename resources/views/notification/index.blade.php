@@ -4,9 +4,9 @@
 <div class="container">
     <h1 class="mb-4">{{ $viewData['title'] }}</h1>
 
-    @if($viewData['notifications']->count() > 0)
+    @if($viewData['allNotifications']->count() > 0)
         <div class="list-group">
-            @foreach($viewData['notifications'] as $notification)
+            @foreach($viewData['allNotifications'] as $notification)
                 <div class="list-group-item d-flex justify-content-between align-items-center
                     {{ $notification->read_at ? '' : 'list-group-item-action list-group-item-light' }}">
                     
@@ -19,11 +19,11 @@
                     </div>
 
                     @if(!$notification->read_at)
-                        <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST">
+                        <form action="{{ route('notifications.read', $notification->id) }}" method="GET">
                             @csrf
-                            @method('PATCH')
-                            <button type="submit" class="btn btn-sm btn-outline-primary">
-                                Mark as read
+                            @method('GET')
+                            <button type="submit" class="btn btn-outline-primary">
+                                View notification
                             </button>
                         </form>
                     @endif

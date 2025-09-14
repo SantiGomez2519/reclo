@@ -9,9 +9,6 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $viewData = [];
-        $viewData['notifications'] = Auth::guard('web')->user()->notifications ?? [];
-
-        return view('home.index')->with('viewData', $viewData);
+        return view('home.index');
     }
 }

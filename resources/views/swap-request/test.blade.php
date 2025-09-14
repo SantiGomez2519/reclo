@@ -5,7 +5,7 @@
     <h2>Test - SwapRequest Create</h2>
 
     {{-- Formulario para probar el método create --}}
-    <form action="{{ route('swap_request.create') }}" method="POST">
+    <form action="{{ route('swap-request.create') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -13,7 +13,7 @@
             <input type="number" name="desired_item_id" id="desired_item_id" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-custom">
             Probar Create
         </button>
     </form>

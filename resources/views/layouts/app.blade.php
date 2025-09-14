@@ -8,7 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -35,7 +34,7 @@
           <a class="nav-link active" href="#">Home</a>
           <a class="nav-link" href="#">Products</a>
           <a class="nav-link" href="#">Reviews</a>
-          <a class="nav-link" href="#">Swap</a>
+          <a class="nav-link" href="{{ route('swap-request.test') }}">Swap</a>
         </div>
 
         <!-- Search Bar -->
@@ -50,7 +49,7 @@
           <a class="nav-link active" href="{{ route('register') }}">Register</a>
           @else
           <!-- Notifications Dropdown -->
-          <li class="nav-item dropdown me-3">
+          <div class="nav-item dropdown me-3">
            <a id="notifDropdown"
               class="nav-link position-relative"
               href="#"
@@ -65,34 +64,42 @@
                 @endif
             </a>
 
-            <div class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notifDropdown" style="min-width:320px;">
+            <div class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notifDropdown" style="min-width:400px;">
               <h6 class="dropdown-header">Notifications</h6>
 
               <div class="notif-list">
                 @forelse($viewData['notifications'] as $notification)
                   <a class="dropdown-item small" href="{{ route('notifications.read', $notification->id) }}">
                     @if($notification->type === 'App\Notifications\SwapRequestCreated')
-                      📩 Nueva solicitud de swap — "{{ $notification->data['desiredItemTitle'] ?? 'Producto' }}"
+                      <i class="bi bi-envelope-plus text-primary me-1"></i>
+                      New swap request — "{{ $notification->data['desiredItemTitle'] ?? 'Producto' }}"
                       <div class="text-muted small mt-1">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</div>
+
                     @elseif($notification->type === 'App\Notifications\SwapRequestResponded')
-                      🔄 Respuesta a tu solicitud
+                      <i class="bi bi-arrow-repeat text-info me-1"></i>
+                      Swap request answered
                       <div class="text-muted small mt-1">{{ $notification->data['message'] ?? '' }}</div>
+
                     @elseif($notification->type === 'App\Notifications\SwapRequestFinalized')
-                      ✅ Intercambio finalizado
+                      <i class="bi bi-check-circle-fill text-success me-1"></i>
+                      Swap completed
                       <div class="text-muted small mt-1">{{ $notification->data['message'] ?? '' }}</div>
+
                     @else
-                      🔔 {{ $notification->data['message'] ?? 'Tienes una nueva notificación' }}
+                      <i class="bi bi-bell-fill text-warning me-1"></i>
+                      {{ $notification->data['message'] ?? 'Tienes una nueva notificación' }}
                     @endif
                   </a>
                 @empty
                   <div class="dropdown-item text-muted small">No tienes notificaciones</div>
                 @endforelse
-              </div>
+            </div>
+
 
               <div class="dropdown-divider"></div>
               <a class="dropdown-item text-center small" href="{{ route('notifications.index') }}">See all</a>
             </div>
-          </li>
+          </div>
 
           <!-- User Profile and Logout -->
           <a class="nav-link active" href="{{ route('user.profile') }}">My Profile</a>
@@ -111,7 +118,7 @@
    <!-- Session messages -->
     @if(session('status'))
     <div class="d-flex justify-content-center mt-3">
-    <div class="alert alert-success alert-dismissible fade show text-center w-50" role="alert">
+    <div class="alert alert-primary alert-dismissible fade show text-center w-50" role="alert">
         {{ session('status') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

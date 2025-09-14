@@ -32,13 +32,20 @@ class SwapRequest extends Model
         'status',
     ];
 
-    public static function validateRespond(Request $request): void
+    public static function validateRespond(Request $request)
     {
-        $request->validate([
-            'response' => 'required|in:accept,reject',
-            'offered_item_id' => 'nullable|exists:products,id',
-        ]);
+        $rules = [
+            'offered_item_id' => 'required|exists:products,id',
+        ];
+
+        $messages = [
+            'offered_item_id.required' => 'You must select a product to accept the swap request.',
+            'offered_item_id.exists'   => 'The selected product is not valid.',
+        ];
+
+        $request->validate($rules, $messages);
     }
+
 
     public static function validateFinalize(Request $request): void
     {

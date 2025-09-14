@@ -73,6 +73,16 @@ nav a:hover {
   object-fit: cover;
 }
 
+/* Disable hover effect for selectable cards */
+.selectable-card:hover {
+  transform: none;
+}
+
+/* Disable hover effect for nested cards */
+.card .card:hover {
+  transform: none;
+}
+
 /* Titles */
 h1, h2, h3, h4 {
   font-family: 'Quicksand', sans-serif;
@@ -97,11 +107,12 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
-
 .btn-success {
   background-color: var(--color-secondary) !important;
   border-color: var(--color-secondary) !important;
   color: var(--color-light) !important;
+  border-radius: 8px;
+  font-weight: 450;
 }
 
 .btn-success:hover {
@@ -112,11 +123,14 @@ h1, h2, h3, h4 {
   background-color: var(--color-danger) !important;
   border-color: var(--color-danger) !important;
   color: var(--color-light) !important;
+  border-radius: 8px;
+  font-weight: 450;
 }
 
 .btn-danger:hover {
   filter: brightness(90%);
 }
+
 /* General background */
 body {
   background-color: var(--color-light);
@@ -152,7 +166,7 @@ body {
   border-bottom: none;
 }
 
-/* Increases clickeable area in notifications dropdown toggle */
+/* Notifications dropdown */
 #notifDropdown {
     align-items: center;
     justify-content: center;
@@ -160,7 +174,6 @@ body {
     font-size: 1.2rem; 
 }
 
-/* Font in notifications dropdown */
 .dropdown-menu .dropdown-item {
     font-size: 1rem;   
     padding: 10px 15px;
@@ -168,25 +181,30 @@ body {
     font-size: 1rem !important;         
     line-height: 1.25 !important;
     padding: 10px 14px !important;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
-/* Notifications dropdown header*/
 .dropdown-menu .dropdown-header {
     font-size: 1.1rem;
     font-weight: bold;
 }
 
-/* Notifications dropdown footer */
 .dropdown-menu .no-notifications {
   color: #6c757d !important;
   font-size: 0.95rem !important;
 }
 
-/* Scroll */
 .dropdown-menu .notif-list {
   max-height: 260px;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 6px; 
 }
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #e9ecef; 
+}
+
 
