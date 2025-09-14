@@ -2,49 +2,45 @@ name: Laravel Pint
 
 on:
   push:
-    branches:
-      - dev
-      - main
+    branches: ["main", "dev"]
   pull_request:
-    branches:
-      - dev
-      - main
+    branches: ["main", "dev"]
 
 jobs:
-  pint:
+  laravel-pint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Copy Project Code
         uses: actions/checkout@v4
 
-      - name: Set up PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
           tools: composer
 
-      - name: Install dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
-
-      - name: Run Laravel Pint (Check)
-        id: pint-check
+      - name: Ensure .env file exists
         run: |
-          if ./vendor/bin/pint --test; then
-            echo "pint-changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "pint-changed=true" >> $GITHUB_OUTPUT
+          if [ ! -f .env ]; then
+            if [ -f .env.example ]; then
+              cp .env.example .env
+            else
+              echo "APP_KEY=" > .env
+            fi
           fi
 
-      - name: Run Laravel Pint (Fix)
-        if: steps.pint-check.outputs.pint-changed == 'true'
-        run: ./vendor/bin/pint
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Commit changes
-        if: steps.pint-check.outputs.pint-changed == 'true'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "style: fix code style with Laravel Pint [skip ci]"
-          git push
+      - name: Generate key
+        run: php artisan key:generate || true
+
+      - name: Execute Laravel Pint
+        run: vendor/bin/pint
+
+      - name: Commit and push changes if Pint modified files
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Style | Fix code style with Laravel Pint [skip ci]"
+          skip_fetch: true
