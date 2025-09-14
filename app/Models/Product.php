@@ -46,19 +46,20 @@ class Product extends Model
         'image',
     ];
 
-    public static function validate(Request $request): void
+    public static function validate(Request $request, bool $isUpdate = false): void
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'size' => 'required|string|max:50',
-            'condition' => 'required|string|max:50',
-            'price' => 'required|integer|gt:0',
-            'status' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+        $rules = [
+            'title' => 'required|string|max:255|min:3',
+            'description' => 'required|string|min:10|max:1000',
+            'category' => 'required|string|in:Women,Men,Vintage,Accessories,Shoes,Bags,Jewelry',
+            'color' => 'required|string|max:50',
+            'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
+            'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
+            'price' => 'required|integer|min:1|max:10000',
+            'image' => $isUpdate ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        $request->validate($rules);
     }
 
     public function getId(): int
@@ -158,7 +159,13 @@ class Product extends Model
 
     public function getImage(): string
     {
-        return $this->attributes['image'];
+        $image = $this->attributes['image'];
+
+        if (filter_var($image, FILTER_VALIDATE_URL)) {
+            return $image;
+        }
+
+        return url('storage/'.ltrim($image, '/'));
     }
 
     public function setImage(string $image): void

@@ -1,0 +1,108 @@
+<?php
+
+return [
+    'title' => 'Products - Reclo',
+    'create_title' => 'Create Product - Reclo',
+    'edit_title' => 'Edit Product - Reclo',
+    'my_products_title' => 'My Products - Reclo',
+
+    // Index page
+    'featured_finds' => 'Featured Finds',
+    'handpicked_treasures' => 'Handpicked treasures from our community',
+    'sell_your_items' => 'Sell Your Items',
+    'view_all_products' => 'View All Products',
+    'no_products_found' => 'No products found',
+    'be_first_to_list' => 'Be the first to list a product!',
+    'view_details' => 'View Details',
+
+    // Create/Edit form
+    'list_your_items' => 'List Your Items',
+    'update_product_info' => 'Update your product information',
+    'upload_photos_details' => 'Upload photos and details of your pre-loved fashion pieces',
+    'product_image' => 'Product Image',
+    'current_image' => 'Current Image',
+    'update_image_optional' => 'Update Image (optional)',
+    'click_to_upload' => 'Click to upload an image',
+    'click_to_upload_new' => 'Click to upload a new image',
+    'image_formats' => 'PNG, JPG up to 2MB',
+    'product_title' => 'Product Title',
+    'title_placeholder' => 'e.g., Vintage Denim Jacket',
+    'description' => 'Description',
+    'description_placeholder' => 'Describe your item in detail...',
+    'category' => 'Category',
+    'select_category' => 'Select a category',
+    'condition' => 'Condition',
+    'select_condition' => 'Select condition',
+    'color' => 'Color',
+    'color_placeholder' => 'e.g., Blue',
+    'size' => 'Size',
+    'select_size' => 'Select size',
+    'price' => 'Price ($)',
+    'price_placeholder' => '0',
+    'available_for_exchange' => 'This item is available for exchange',
+    'list_product' => 'List Product',
+    'update_product' => 'Update Product',
+    'cancel' => 'Cancel',
+
+    // Show page
+    'by' => 'by',
+    'description_label' => 'Description',
+    'product_details' => 'Product Details',
+    'reviews' => 'Reviews',
+    'no_reviews_yet' => 'No reviews yet. Be the first to review this product!',
+    'edit_product' => 'Edit Product',
+    'delete_product' => 'Delete Product',
+    'mark_as_sold' => 'Mark as Sold',
+    'add_to_cart' => 'Add to Cart',
+    'propose_exchange' => 'Propose Exchange',
+    'add_to_favorites' => 'Add to Favorites',
+    'please_login' => 'Please log in to interact with this product',
+    'log_in' => 'Log In',
+
+    // My Products page
+    'my_products' => 'My Products',
+    'manage_listed_items' => 'Manage your listed items',
+    'add_new_product' => 'Add New Product',
+    'available' => 'Available',
+    'sold' => 'Sold',
+    'product_sold' => 'Product sold',
+    'your_statistics' => 'Your Statistics',
+    'available_items' => 'Available Items',
+    'sold_items' => 'Sold Items',
+    'exchange_items' => 'Exchange Items',
+    'no_products_yet' => 'No products yet',
+    'start_selling' => 'Start selling by listing your first item!',
+    'list_first_product' => 'List Your First Product',
+
+    // Categories
+    'women' => 'Women',
+    'men' => 'Men',
+    'vintage' => 'Vintage',
+    'accessories' => 'Accessories',
+    'shoes' => 'Shoes',
+    'bags' => 'Bags',
+    'jewelry' => 'Jewelry',
+
+    // Conditions
+    'like_new' => 'Like New',
+    'excellent' => 'Excellent',
+    'very_good' => 'Very Good',
+    'good' => 'Good',
+    'fair' => 'Fair',
+
+    // Sizes
+    'xs' => 'XS',
+    's' => 'S',
+    'm' => 'M',
+    'l' => 'L',
+    'xl' => 'XL',
+    'xxl' => 'XXL',
+    'one_size' => 'One Size',
+
+    // Messages
+    'product_created_successfully' => 'Product created successfully!',
+    'product_updated_successfully' => 'Product updated successfully!',
+    'product_deleted_successfully' => 'Product deleted successfully!',
+    'product_marked_as_sold' => 'Product marked as sold!',
+    'are_you_sure_delete' => 'Are you sure you want to delete this product?',
+];
