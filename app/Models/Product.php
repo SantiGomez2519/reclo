@@ -49,15 +49,28 @@ class Product extends Model
     public static function validate(Request $request): void
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'size' => 'required|string|max:50',
-            'condition' => 'required|string|max:50',
-            'price' => 'required|integer|gt:0',
-            'status' => 'required|string|max:255',
+            'title' => 'required|string|max:255|min:3',
+            'description' => 'required|string|min:10|max:1000',
+            'category' => 'required|string|in:Women,Men,Vintage,Accessories,Shoes,Bags,Jewelry',
+            'color' => 'required|string|max:50',
+            'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
+            'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
+            'price' => 'required|integer|min:1|max:10000',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    }
+
+    public static function validateUpdate(Request $request): void
+    {
+        $request->validate([
+            'title' => 'required|string|max:255|min:3',
+            'description' => 'required|string|min:10|max:1000',
+            'category' => 'required|string|in:Women,Men,Vintage,Accessories,Shoes,Bags,Jewelry',
+            'color' => 'required|string|max:50',
+            'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
+            'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
+            'price' => 'required|integer|min:1|max:10000',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
     }
 
