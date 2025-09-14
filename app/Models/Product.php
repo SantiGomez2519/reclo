@@ -157,21 +157,58 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    public function getImage(): string
+    public function getFirstImage(): string
+    {
+        $images = $this->getImages();
+
+        if (empty($images)) {
+            return url('storage/images/logo.png'); // Default image
+        }
+
+        $imagePath = $images[0];
+
+        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+            return $imagePath;
+        }
+
+        return url('storage/' . ltrim($imagePath, '/'));
+    }
+
+
+    // New methods for multiple images
+    public function getImages(): array
     {
         $image = $this->attributes['image'];
 
-        if (filter_var($image, FILTER_VALIDATE_URL)) {
-            return $image;
+        if ($image) {
+            $images = json_decode($image, true);
+            return is_array($images) ? $images : [];
         }
 
-        return url('storage/'.ltrim($image, '/'));
+        return [];
     }
 
-    public function setImage(string $image): void
+    public function setImages(array $images): void
     {
-        $this->attributes['image'] = $image;
+        $this->attributes['image'] = json_encode($images);
     }
+
+    public function addImage(string $imagePath): void
+    {
+        $images = $this->getImages();
+        $images[] = $imagePath;
+        $this->setImages($images);
+    }
+
+    public function removeImage(string $imagePath): void
+    {
+        $images = $this->getImages();
+        $images = array_filter($images, function ($img) use ($imagePath) {
+            return $img !== $imagePath;
+        });
+        $this->setImages(array_values($images));
+    }
+
 
     public function getCreatedAt(): string
     {

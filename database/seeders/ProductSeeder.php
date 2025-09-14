@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
         // Get the first custom user to be the seller
         $user = CustomUser::first();
 
-        if (! $user) {
+        if (!$user) {
             $this->command->info('No custom users found. Please run CustomUserSeeder first.');
 
             return;
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 'price' => 45,
                 'status' => 'available',
                 'swap' => true,
-                'image' => 'products/vintage-jacket.jpg',
+                'image' => json_encode(['products/vintage-jacket.jpg']),
                 'seller_id' => $user->getId(),
             ],
             [
@@ -43,7 +43,7 @@ class ProductSeeder extends Seeder
                 'price' => 28,
                 'status' => 'available',
                 'swap' => false,
-                'image' => 'products/silk-scarf.jpg',
+                'image' => json_encode(['products/silk-scarf.jpg']),
                 'seller_id' => $user->getId(),
             ],
             [
@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
                 'price' => 65,
                 'status' => 'available',
                 'swap' => true,
-                'image' => 'products/leather-boots.jpg',
+                'image' => json_encode(['products/leather-boots.jpg']),
                 'seller_id' => $user->getId(),
             ],
             [
@@ -69,7 +69,7 @@ class ProductSeeder extends Seeder
                 'price' => 38,
                 'status' => 'available',
                 'swap' => true,
-                'image' => 'products/maxi-dress.jpg',
+                'image' => json_encode(['products/maxi-dress.jpg']),
                 'seller_id' => $user->getId(),
             ],
             [
@@ -82,7 +82,7 @@ class ProductSeeder extends Seeder
                 'price' => 25,
                 'status' => 'available',
                 'swap' => false,
-                'image' => 'products/white-shirt.jpg',
+                'image' => json_encode(['products/white-shirt.jpg']),
                 'seller_id' => $user->getId(),
             ],
             [
@@ -95,7 +95,7 @@ class ProductSeeder extends Seeder
                 'price' => 55,
                 'status' => 'available',
                 'swap' => true,
-                'image' => 'products/leather-bag.jpg',
+                'image' => json_encode(['products/leather-bag.jpg']),
                 'seller_id' => $user->getId(),
             ],
         ];

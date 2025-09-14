@@ -66,7 +66,7 @@ class ProductController extends Controller
 
         // Handle image upload using ImageStorage
         $imagePath = $this->imageStorage->store($request, 'products');
-        $product->setImage($imagePath);
+        $product->setImages([$imagePath]);
 
         $product->save();
 
@@ -110,14 +110,14 @@ class ProductController extends Controller
         // Handle image upload using ImageStorage
         if ($request->hasFile('image')) {
             // Delete old image if it's not the default
-            if ($product->getImage() !== 'images/logo.png') {
-                $previousImagePath = str_replace(url('storage').'/', '', $product->getImage());
+            if ($product->getFirstImage() !== 'images/logo.png') {
+                $previousImagePath = str_replace(url('storage') . '/', '', $product->getFirstImage());
                 $this->imageStorage->delete($previousImagePath);
             }
-            $product->setImage($this->imageStorage->store($request, 'products'));
+            $product->setImages([$this->imageStorage->store($request, 'products')]);
         } else {
             // Keep current image if no new image is uploaded
-            $product->setImage($request->input('current_image', $product->getImage()));
+            $product->setImages([$request->input('current_image', $product->getFirstImage())]);
         }
 
         $product->save();
@@ -131,8 +131,8 @@ class ProductController extends Controller
         $this->checkProductOwnership($product);
 
         // Delete image file using ImageStorage
-        if ($product->getImage() && $product->getImage() !== 'images/logo.png') {
-            $imagePath = str_replace(url('storage').'/', '', $product->getImage());
+        if ($product->getFirstImage() && $product->getFirstImage() !== 'images/logo.png') {
+            $imagePath = str_replace(url('storage') . '/', '', $product->getFirstImage());
             $this->imageStorage->delete($imagePath);
         }
 

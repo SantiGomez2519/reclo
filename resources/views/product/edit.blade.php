@@ -19,7 +19,7 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="current_image" value="{{ $viewData['product']->getImage() }}">
+                            <input type="hidden" name="current_image" value="{{ $viewData['product']->getFirstImage() }}">
 
                             <input type="hidden" name="storage_type" value="local">
 
@@ -29,7 +29,7 @@
                                     {{ __('product.current_image') }}
                                 </label>
                                 <div class="text-center">
-                                    <img src="{{ asset($viewData['product']->getImage()) }}"
+                                    <img src="{{ asset($viewData['product']->getFirstImage()) }}"
                                         alt="{{ $viewData['product']->getTitle() }}" class="img-fluid rounded"
                                         style="max-height: 200px;">
                                 </div>

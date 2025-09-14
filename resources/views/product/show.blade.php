@@ -22,9 +22,8 @@
             <div class="col-lg-6 mb-4">
                 <!-- Product Image -->
                 <div class="card">
-                    <img src="{{ $viewData['product']->getImage() }}"
-                        alt="{{ $viewData['product']->getTitle() }}" class="card-img-top"
-                        style="height: 500px; object-fit: cover;">
+                    <img src="{{ $viewData['product']->getFirstImage() }}" alt="{{ $viewData['product']->getTitle() }}"
+                        class="card-img-top" style="height: 500px; object-fit: cover;">
                 </div>
 
                 <!-- Condition Badge -->
