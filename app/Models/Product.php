@@ -23,7 +23,7 @@ class Product extends Model
      * $this->attributes['price'] - int - contains the product price
      * $this->attributes['status'] - string - contains the product status
      * $this->attributes['swap'] - bool - tells if the product has been swapped
-     * $this->attributes['image'] - string - contains the product image (url or path)
+     * $this->attributes['images'] - array - contains the product images (url or path)
      * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
      * $this->attributes['order_id'] - int - contains the order foreign key (nullable)
      * $this->attributes['created_at'] - timestamp - contains the product creation timestamp
@@ -46,19 +46,21 @@ class Product extends Model
         'image',
     ];
 
-    public static function validate(Request $request): void
+    public static function validate(Request $request, bool $isUpdate = false): void
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'size' => 'required|string|max:50',
-            'condition' => 'required|string|max:50',
-            'price' => 'required|integer|gt:0',
-            'status' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+        $rules = [
+            'title' => 'required|string|max:255|min:3',
+            'description' => 'required|string|min:10|max:1000',
+            'category' => 'required|string|in:Women,Men,Vintage,Accessories,Shoes,Bags,Jewelry',
+            'color' => 'required|string|max:50',
+            'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
+            'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
+            'price' => 'required|integer|min:1|max:10000',
+            'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        $request->validate($rules);
     }
 
     public function getId(): int
@@ -156,14 +158,38 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    public function getImage(): string
+    /** 
+     * Get product images as URLs or file paths
+     */
+    public function getImages(bool $asUrls = true): array
     {
-        return $this->attributes['image'];
+        $image = $this->attributes['image'];
+
+        if ($image) {
+            $images = json_decode($image, true);
+            if (is_array($images)) {
+                if ($asUrls) {
+                    $urls = [];
+                    foreach ($images as $imagePath) {
+                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                            $urls[] = $imagePath;
+                        } else {
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
+                        }
+                    }
+                    return $urls;
+                } else {
+                    return $images;
+                }
+            }
+        }
+
+        return [];
     }
 
-    public function setImage(string $image): void
+    public function setImages(array $images): void
     {
-        $this->attributes['image'] = $image;
+        $this->attributes['image'] = json_encode($images);
     }
 
     public function getCreatedAt(): string

@@ -15,11 +15,26 @@ Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
 
+// Product Routes (public)
+Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('product.index');
+
 // Customer Protected Routes
 Route::middleware('customer')->group(function () {
     Route::get('/customer/profile', 'App\Http\Controllers\CustomUserController@show')->name('user.profile');
     Route::get('/customer/profile/edit', 'App\Http\Controllers\CustomUserController@edit')->name('user.edit');
     Route::put('/customer/profile', 'App\Http\Controllers\CustomUserController@update')->name('user.update');
+
+    // Product Management Routes - Specific routes first
+    Route::get('/products/create', 'App\Http\Controllers\ProductController@create')->name('product.create');
+    Route::post('/products', 'App\Http\Controllers\ProductController@store')->name('product.store');
+    Route::get('/my-products', 'App\Http\Controllers\ProductController@myProducts')->name('product.my-products');
+
+    // Product routes with parameters - must come after specific routes
+    Route::get('/products/{id}', 'App\Http\Controllers\ProductController@show')->name('product.show');
+    Route::get('/products/{id}/edit', 'App\Http\Controllers\ProductController@edit')->name('product.edit');
+    Route::put('/products/{id}', 'App\Http\Controllers\ProductController@update')->name('product.update');
+    Route::delete('/products/{id}', 'App\Http\Controllers\ProductController@destroy')->name('product.destroy');
+    Route::patch('/products/{id}/mark-sold', 'App\Http\Controllers\ProductController@markAsSold')->name('product.mark-sold');
 
     // ----- Additional customer routes must be added here -----
 });
