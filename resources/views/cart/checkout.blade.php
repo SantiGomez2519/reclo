@@ -38,12 +38,12 @@
                                                 <small class="text-muted">{{ $item['product']->getCategory() }} -
                                                     {{ $item['product']->getSize() }}</small>
                                                 <br>
-                                                <small class="text-muted">Vendido por:
+                                                <small class="text-muted">{{ __('cart.sold_by') }}:
                                                     {{ $item['product']->seller->getName() }}</small>
                                             </div>
                                             <div class="col-md-2">
                                                 <span class="badge bg-secondary">1</span>
-                                                <small class="text-muted d-block">Único</small>
+                                                <small class="text-muted d-block">{{ __('cart.unique') }}</small>
                                             </div>
                                             <div class="col-md-2">
                                                 <span class="fw-bold">${{ number_format($item['subtotal']) }}</span>

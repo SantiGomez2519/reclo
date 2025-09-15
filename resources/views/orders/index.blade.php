@@ -82,9 +82,9 @@
                     <div class="text-center py-5">
                         <i class="fas fa-receipt fa-4x text-muted mb-4"></i>
                         <h4 class="text-muted">{{ __('cart.no_orders') }}</h4>
-                        <p class="text-muted mb-4">Comienza a comprar productos para ver tus pedidos aquí</p>
+                        <p class="text-muted mb-4">{{ __('cart.start_shopping_message') }}</p>
                         <a href="{{ route('product.index') }}" class="btn btn-primary">
-                            <i class="fas fa-shopping-bag me-2"></i>Ver Productos
+                            <i class="fas fa-shopping-bag me-2"></i>{{ __('cart.view_products') }}
                         </a>
                     </div>
                 @endif

@@ -18,22 +18,7 @@ class ShoppingCartController extends Controller
 
     public function index(): View
     {
-        $cart = session()->get('cart', []);
-        $viewData = [];
-        $viewData['cartItems'] = [];
-        $viewData['total'] = 0;
-
-        foreach ($cart as $productId => $quantity) {
-            $product = Product::find($productId);
-            if ($product && $product->getStatus() === 'available') {
-                $viewData['cartItems'][] = [
-                    'product' => $product,
-                    'quantity' => 1,
-                    'subtotal' => $product->getPrice()
-                ];
-                $viewData['total'] += $product->getPrice();
-            }
-        }
+        $viewData = $this->getCartData();
 
         return view('cart.index')->with('viewData', $viewData);
     }
@@ -74,31 +59,16 @@ class ShoppingCartController extends Controller
         return redirect()->route('cart.index')->with('success', __('cart.product_removed'));
     }
 
-
     public function clear(): RedirectResponse
     {
         session()->forget('cart');
+
         return redirect()->route('cart.index')->with('success', __('cart.cleared'));
     }
 
     public function checkout(): View|RedirectResponse
     {
-        $cart = session()->get('cart', []);
-        $viewData = [];
-        $viewData['cartItems'] = [];
-        $viewData['total'] = 0;
-
-        foreach ($cart as $productId => $quantity) {
-            $product = Product::find($productId);
-            if ($product && $product->getStatus() === 'available') {
-                $viewData['cartItems'][] = [
-                    'product' => $product,
-                    'quantity' => 1,
-                    'subtotal' => $product->getPrice()
-                ];
-                $viewData['total'] += $product->getPrice();
-            }
-        }
+        $viewData = $this->getCartData();
 
         if (empty($viewData['cartItems'])) {
             return redirect()->route('cart.index')->with('error', __('cart.empty_cart'));
@@ -113,7 +83,7 @@ class ShoppingCartController extends Controller
     public function processOrder(Request $request): RedirectResponse
     {
         $request->validate([
-            'payment_method' => 'required|in:credit_card,paypal,bank_transfer'
+            'payment_method' => 'required|in:credit_card,paypal,bank_transfer',
         ]);
 
         $cart = session()->get('cart', []);
@@ -128,7 +98,7 @@ class ShoppingCartController extends Controller
         $products = [];
         foreach ($cart as $productId => $quantity) {
             $product = Product::find($productId);
-            if (!$product || $product->getStatus() !== 'available') {
+            if (! $product || $product->getStatus() !== 'available') {
                 return redirect()->route('cart.index')->with('error', __('cart.product_not_available'));
             }
             if ($product->getSellerId() === $user->getId()) {
@@ -139,7 +109,7 @@ class ShoppingCartController extends Controller
         }
 
         // Create order
-        $order = new Order();
+        $order = new Order;
         $order->setOrderDate(now()->format('Y-m-d H:i:s'));
         $order->setTotalPrice($total);
         $order->setStatus('completed');
@@ -159,5 +129,27 @@ class ShoppingCartController extends Controller
         session()->forget('cart');
 
         return redirect()->route('orders.show', $order->getId())->with('success', __('cart.order_completed'));
+    }
+
+    private function getCartData(): array
+    {
+        $cart = session()->get('cart', []);
+        $viewData = [];
+        $viewData['cartItems'] = [];
+        $viewData['total'] = 0;
+
+        foreach ($cart as $productId => $quantity) {
+            $product = Product::find($productId);
+            if ($product && $product->getStatus() === 'available') {
+                $viewData['cartItems'][] = [
+                    'product' => $product,
+                    'quantity' => 1,
+                    'subtotal' => $product->getPrice(),
+                ];
+                $viewData['total'] += $product->getPrice();
+            }
+        }
+
+        return $viewData;
     }
 }

@@ -40,7 +40,7 @@
                                                 <small class="text-muted">{{ $item['product']->getCategory() }} -
                                                     {{ $item['product']->getSize() }}</small>
                                                 <br>
-                                                <small class="text-muted">Vendido por:
+                                                <small class="text-muted">{{ __('cart.sold_by') }}:
                                                     {{ $item['product']->seller->getName() }}</small>
                                             </div>
                                             <div class="col-md-2">
@@ -49,7 +49,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <span class="badge bg-secondary fs-6">1</span>
-                                                <small class="text-muted d-block">Único</small>
+                                                <small class="text-muted d-block">{{ __('cart.unique') }}</small>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="d-flex justify-content-between align-items-center">

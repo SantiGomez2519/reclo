@@ -58,8 +58,9 @@ return [
     'delete_product' => 'Eliminar Producto',
     'mark_as_sold' => 'Marcar como Vendido',
     'add_to_cart' => 'Agregar al Carrito',
-    'propose_exchange' => 'Proponer Intercambio',
+    'available_for_exchange' => 'Disponible para Intercambio',
     'add_to_favorites' => 'Agregar a Favoritos',
+    'propose_exchange' => 'Proponer Intercambio',
     'please_login' => 'Por favor inicia sesión para interactuar con este producto',
     'log_in' => 'Iniciar Sesión',
 

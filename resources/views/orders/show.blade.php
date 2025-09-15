@@ -17,7 +17,7 @@
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="mb-0">{{ __('cart.item') }}s del Pedido</h5>
+                                <h5 class="mb-0">{{ __('cart.order_items') }}</h5>
                             </div>
                             <div class="card-body">
                                 @foreach ($viewData['order']->products as $product)
@@ -36,7 +36,7 @@
                                                 {{ $product->getCondition() }}
                                             </small>
                                             <br>
-                                            <small class="text-muted">Vendido por:
+                                            <small class="text-muted">{{ __('cart.sold_by') }}:
                                                 {{ $product->seller->getName() }}</small>
                                         </div>
                                         <div class="col-md-2">
@@ -54,7 +54,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="mb-0">Información del Pedido</h5>
+                                <h5 class="mb-0">{{ __('cart.order_information') }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="mb-3">
@@ -91,12 +91,15 @@
 
                         <div class="card mt-3">
                             <div class="card-header">
-                                <h5 class="mb-0">Información del Comprador</h5>
+                                <h5 class="mb-0">{{ __('cart.buyer_information') }}</h5>
                             </div>
                             <div class="card-body">
-                                <p class="mb-1"><strong>Nombre:</strong> {{ $viewData['order']->buyer->getName() }}</p>
-                                <p class="mb-1"><strong>Email:</strong> {{ $viewData['order']->buyer->getEmail() }}</p>
-                                <p class="mb-0"><strong>Teléfono:</strong> {{ $viewData['order']->buyer->getPhone() }}
+                                <p class="mb-1"><strong>{{ __('cart.name') }}:</strong>
+                                    {{ $viewData['order']->buyer->getName() }}</p>
+                                <p class="mb-1"><strong>{{ __('cart.email') }}:</strong>
+                                    {{ $viewData['order']->buyer->getEmail() }}</p>
+                                <p class="mb-0"><strong>{{ __('cart.phone') }}:</strong>
+                                    {{ $viewData['order']->buyer->getPhone() }}
                                 </p>
                             </div>
                         </div>
