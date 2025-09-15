@@ -27,7 +27,7 @@ class ShoppingCartController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        if ($product->getStatus() !== 'available') {
+        if (!$product->getAvailable()) {
             return redirect()->back()->with('error', __('cart.product_not_available'));
         }
 
@@ -98,7 +98,7 @@ class ShoppingCartController extends Controller
         $products = [];
         foreach ($cart as $productId => $quantity) {
             $product = Product::find($productId);
-            if (! $product || $product->getStatus() !== 'available') {
+            if (!$product || !$product->getAvailable()) {
                 return redirect()->route('cart.index')->with('error', __('cart.product_not_available'));
             }
             if ($product->getSellerId() === $user->getId()) {
@@ -120,7 +120,7 @@ class ShoppingCartController extends Controller
         // Update products and mark as sold
         foreach ($products as $item) {
             $product = $item['product'];
-            $product->setStatus('sold');
+            $product->setAvailable(false);
             $product->setOrderId($order->getId());
             $product->save();
         }
@@ -140,7 +140,7 @@ class ShoppingCartController extends Controller
 
         foreach ($cart as $productId => $quantity) {
             $product = Product::find($productId);
-            if ($product && $product->getStatus() === 'available') {
+            if ($product && $product->getAvailable()) {
                 $viewData['cartItems'][] = [
                     'product' => $product,
                     'quantity' => 1,
