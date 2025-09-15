@@ -18,6 +18,10 @@ return [
     'pending' => 'Pendiente',
     'accept' => 'Aceptar',
     'reject' => 'Rechazar',
+    'my_swap_requests' => 'Mis Solicitudes de Intercambio',
+    'confirm_swap_request' => 'Confirma tu solicitud de intercambio',
+    'swap_counter_offer' => 'Contraoferta de intercambio',
+    'someone_wants_to_swap' => '¡Alguien quiere intercambiar contigo!',
 ];
 
 

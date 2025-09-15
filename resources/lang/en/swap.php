@@ -18,6 +18,10 @@ return [
     'pending' => 'Pending',
     'accept' => 'Accept',
     'reject' => 'Reject',
+    'my_swap_requests' => 'My Swap Requests',
+    'confirm_swap_request' => 'Confirm your swap request',
+    'swap_counter_offer' => 'Swap counter-offer',
+    'someone_wants_to_swap' => 'Someone wants to Swap with you!',
 ];
 
 

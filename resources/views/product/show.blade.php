@@ -171,10 +171,11 @@
                                             </div>
                                             @if ($viewData['product']->getSwap())
                                                 <div class="col-6">
-                                                    <button class="btn btn-success w-100">
+                                                    <a href="{{ route('swap-request.create', ['id' => $viewData['product']->getId()]) }}"
+                                                        class="btn btn-success w-100">
                                                         <i class="fas fa-exchange-alt me-2"></i>
                                                         {{ __('product.propose_exchange') }}
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             @endif
                                         </div>

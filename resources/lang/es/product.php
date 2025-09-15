@@ -52,6 +52,7 @@ return [
     'by' => 'por',
     'description_label' => 'Descripción',
     'product_details' => 'Detalles del Producto',
+    'sold_by' => 'Vendido por',
     'reviews' => 'Reseñas',
     'no_reviews_yet' => 'Aún no hay reseñas. ¡Sé el primero en reseñar este producto!',
     'edit_product' => 'Editar Producto',
