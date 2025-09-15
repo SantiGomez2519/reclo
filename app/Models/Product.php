@@ -21,7 +21,7 @@ class Product extends Model
      * $this->attributes['size'] - string - contains the product size
      * $this->attributes['condition'] - string - contains the product condition
      * $this->attributes['price'] - int - contains the product price
-     * $this->attributes['status'] - string - contains the product status
+     * $this->attributes['available'] - boolean - contains if the product is available for sale (default: true)
      * $this->attributes['swap'] - bool - tells if the product has been swapped
      * $this->attributes['images'] - array - contains the product images (url or path)
      * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
@@ -42,7 +42,6 @@ class Product extends Model
         'size',
         'condition',
         'price',
-        'status',
         'image',
     ];
 
@@ -144,14 +143,14 @@ class Product extends Model
         $this->attributes['price'] = $price;
     }
 
-    public function getStatus(): string
+    public function getAvailable(): bool
     {
-        return $this->attributes['status'];
+        return $this->attributes['available'];
     }
 
-    public function setStatus(string $status): void
+    public function setAvailable(bool $available): void
     {
-        $this->attributes['status'] = $status;
+        $this->attributes['available'] = $available;
     }
 
     public function getSwap(): bool
