@@ -36,6 +36,18 @@ Route::middleware('customer')->group(function () {
     Route::delete('/products/{id}', 'App\Http\Controllers\ProductController@destroy')->name('product.destroy');
     Route::patch('/products/{id}/mark-sold', 'App\Http\Controllers\ProductController@markAsSold')->name('product.mark-sold');
 
+    // Shopping Cart Routes
+    Route::get('/cart', 'App\Http\Controllers\ShoppingCartController@index')->name('cart.index');
+    Route::post('/cart/add/{id}', 'App\Http\Controllers\ShoppingCartController@add')->name('cart.add');
+    Route::delete('/cart/remove/{id}', 'App\Http\Controllers\ShoppingCartController@remove')->name('cart.remove');
+    Route::delete('/cart/clear', 'App\Http\Controllers\ShoppingCartController@clear')->name('cart.clear');
+    Route::get('/cart/checkout', 'App\Http\Controllers\ShoppingCartController@checkout')->name('cart.checkout');
+    Route::post('/cart/process-order', 'App\Http\Controllers\ShoppingCartController@processOrder')->name('cart.process-order');
+
+    // Order Routes
+    Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('orders.index');
+    Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('orders.show');
+
     // ----- Additional customer routes must be added here -----
 
     // ----- Swap Routes -----

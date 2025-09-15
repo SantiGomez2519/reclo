@@ -139,7 +139,7 @@
                                                                 <img src="{{ $product->getImages()[0] }}"
                                                                     alt="{{ $product->getTitle() }}"
                                                                     class="img-thumbnail customer-product-img"
-                                                                    onerror="this.src='{{ asset('storage/images/logo.png') }}'">
+                                                                    onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                                                             </div>
                                                         @else
                                                             <div

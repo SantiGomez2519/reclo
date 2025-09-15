@@ -32,7 +32,7 @@
                                                         <img src="{{ $imageUrl }}"
                                                             alt="{{ $viewData['product']->getTitle() }}"
                                                             class="d-block w-100 img-fluid rounded shadow-sm"
-                                                            onerror="this.src='{{ asset('storage/images/logo.png') }}'">
+                                                            onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -49,7 +49,7 @@
                                         <img src="{{ $viewData['product']->getImages()[0] }}"
                                             alt="{{ $viewData['product']->getTitle() }}"
                                             class="img-fluid rounded shadow-sm"
-                                            onerror="this.src='{{ asset('storage/images/logo.png') }}'">
+                                            onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                                     @endif
                                 @else
                                     <div class="text-center p-5 bg-light rounded shadow-sm">

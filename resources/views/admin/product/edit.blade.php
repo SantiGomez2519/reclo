@@ -214,7 +214,7 @@
                                                 <div class="col-md-3 mb-2">
                                                     <img src="{{ $imageUrl }}" alt="{{ __('admin.current_image') }}"
                                                         class="img-thumbnail current-image-preview"
-                                                        onerror="this.src='{{ asset('storage/images/logo.png') }}'">
+                                                        onerror="this.src='{{ asset('images/default-product.jpg') }}'">
                                                 </div>
                                             @endforeach
                                         </div>

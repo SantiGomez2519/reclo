@@ -59,8 +59,9 @@ return [
     'delete_product' => 'Delete Product',
     'mark_as_sold' => 'Mark as Sold',
     'add_to_cart' => 'Add to Cart',
-    'propose_exchange' => 'Propose Exchange',
+    'available_for_exchange' => 'Available for Exchange',
     'add_to_favorites' => 'Add to Favorites',
+    'propose_exchange' => 'Propose Exchange',
     'please_login' => 'Please log in to interact with this product',
     'log_in' => 'Log In',
 
