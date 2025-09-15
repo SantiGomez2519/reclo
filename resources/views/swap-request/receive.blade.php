@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
 
-                <h2 class="mb-2">{{ $viewData['title'] }}</h2>
+                <h2 class="mb-2">{{ __('swap.someone_wants_to_swap') }}</h2>
                 <p class="text-muted mb-0">{{ __('swap.propose_intro', ['name' => $viewData['initiator']]) }}</p>
                 <hr class="mb-4">
 

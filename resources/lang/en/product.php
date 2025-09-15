@@ -52,6 +52,7 @@ return [
     'by' => 'by',
     'description_label' => 'Description',
     'product_details' => 'Product Details',
+    'sold_by' => 'Sold by',
     'reviews' => 'Reviews',
     'no_reviews_yet' => 'No reviews yet. Be the first to review this product!',
     'edit_product' => 'Edit Product',

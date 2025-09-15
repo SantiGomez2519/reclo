@@ -22,6 +22,7 @@ return [
 
     'toggle_navigation' => 'Toggle navigation',
     'close' => 'Close',
+    'view_all' => 'See all',
 
     'footer_text' => '© 2025 Reclo - Second-Hand Store | Made with Laravel',
 ];

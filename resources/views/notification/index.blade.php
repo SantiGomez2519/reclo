@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="mb-4">{{ $viewData['title'] ?? __('notification.title') }}</h1>
+        <h1 class="mb-4">{{ __('notification.title') }}</h1>
 
         @if ($viewData['allNotifications']->count() > 0)
             <div class="list-group">
@@ -12,7 +12,7 @@
                     {{ $notification->read_at ? '' : 'list-group-item-action list-group-item-light' }}">
 
                         <div>
-                            <strong>{{ $notification->data['message'] ?? __('notification.new_notification') }}</strong>
+                            <strong>{{ $notification->translated_message ?? __('notification.new_notification') }}</strong>
                             <br>
                             <small class="text-muted">
                                 {{ $notification->created_at->diffForHumans() }}

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">{{ $viewData['title'] }}</h2>
+        <h2 class="mb-4">{{ __('swap.swap_counter_offer') }}</h2>
         <p class="text-muted mb-0">{{ __('swap.responded_intro', ['name' => $viewData['responder']]) }}</p>
         <hr class="mb-4">
 

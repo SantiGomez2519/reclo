@@ -16,10 +16,46 @@ class NotificationController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['title'] = 'All your notifications';
-        $viewData['allNotifications'] = Auth::guard('web')->user()->notifications;
+        $notifications = Auth::guard('web')->user()->notifications;
+
+        // Add translated messages to each notification without mutating data attribute
+        $notifications->each(function ($notification) {
+            $notification->translated_message = $this->getTranslatedMessage($notification);
+        });
+
+        $viewData['allNotifications'] = $notifications;
 
         return view('notification.index')->with('viewData', $viewData);
+    }
+
+    private function getTranslatedMessage($notification): string
+    {
+        switch ($notification->type) {
+            case 'App\Notifications\SwapRequestCreated':
+                return __('notification.swap_request_created');
+
+            case 'App\Notifications\SwapRequestResponded':
+                $status = $notification->data['status'] ?? 'pending';
+                if (strtolower($status) === 'accepted') {
+                    return __('notification.swap_request_accepted', [
+                        'desired' => $notification->data['desiredItemTitle'] ?? __('product.title'),
+                        'offered' => $notification->data['offeredItemTitle'] ?? __('product.title'),
+                    ]);
+                } elseif (strtolower($status) === 'rejected') {
+                    return __('notification.swap_request_rejected', [
+                        'desired' => $notification->data['desiredItemTitle'] ?? __('product.title'),
+                        'offered' => $notification->data['offeredItemTitle'] ?? __('product.title'),
+                    ]);
+                } else {
+                    return __('notification.swap_request_responded');
+                }
+
+            case 'App\Notifications\SwapRequestFinalized':
+                return __('notification.swap_request_finalized');
+
+            default:
+                return $notification->data['message'] ?? __('notification.new_notification');
+        }
     }
 
     public function read(string $id): RedirectResponse
