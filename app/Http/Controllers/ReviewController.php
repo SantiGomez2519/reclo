@@ -9,10 +9,10 @@ class ReviewController extends Controller
 {
     // Here it goes the methods that are not implemented yet
 
-    // Note: Remember to validate the request in the model
+    // Note: Remember to validate the request in the model using unified validation
     // public function save(Request $request): View
     // {
-    //    Model::validate($request);
-    //    Model::create($request->only(['attribute1', 'attribute2', 'attribute3']));
+    //    Review::validate($request, false); // false for creation, true for update
+    //    Review::create($request->only(['attribute1', 'attribute2', 'attribute3']));
     // }
 }

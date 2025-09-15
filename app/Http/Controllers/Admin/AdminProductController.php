@@ -3,24 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\ImageStorage;
 use App\Models\CustomUser;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class ProductController extends Controller
+class AdminProductController extends Controller
 {
-    public function __construct()
+    private ImageStorage $imageStorage;
+
+    public function __construct(ImageStorage $imageStorage)
     {
         $this->middleware('admin');
+        $this->imageStorage = $imageStorage;
     }
 
     public function index(): View
     {
         $viewData = [];
-        $viewData['products'] = Product::with('seller')->paginate(10);
+        $viewData['products'] = Product::with('seller')->get();
 
         return view('admin.product.index')->with('viewData', $viewData);
     }
@@ -43,7 +46,7 @@ class ProductController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        Product::validateAdmin($request);
+        Product::validate($request, false);
 
         $product = new Product;
         $product->setTitle($request->input('title'));
@@ -57,11 +60,10 @@ class ProductController extends Controller
         $product->setSellerId($request->input('seller_id'));
         $product->setSwap(false);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time().'_'.uniqid().'.'.$image->getClientOriginalExtension();
-            $image->storeAs('products', $imageName, 'public');
-            $product->setImage('products/'.$imageName);
+        // Handle image upload using dependency injection
+        if ($request->hasFile('images')) {
+            $imagePaths = $this->imageStorage->store($request, 'products');
+            $product->setImages($imagePaths);
         }
 
         $product->save();
@@ -82,7 +84,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        Product::validateAdminUpdate($request);
+        Product::validate($request, true);
 
         $product->setTitle($request->input('title'));
         $product->setDescription($request->input('description'));
@@ -94,16 +96,17 @@ class ProductController extends Controller
         $product->setStatus($request->input('status'));
         $product->setSellerId($request->input('seller_id'));
 
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->getImage()) {
-                Storage::disk('public')->delete($product->getImage());
+        // Handle image upload using dependency injection
+        if ($request->hasFile('images')) {
+            // Delete old images
+            $oldImages = $product->getImages(false);
+            if (! empty($oldImages)) {
+                $this->imageStorage->deleteMultiple($oldImages);
             }
 
-            $image = $request->file('image');
-            $imageName = time().'_'.uniqid().'.'.$image->getClientOriginalExtension();
-            $image->storeAs('products', $imageName, 'public');
-            $product->setImage('products/'.$imageName);
+            // Store new images
+            $imagePaths = $this->imageStorage->store($request, 'products');
+            $product->setImages($imagePaths);
         }
 
         $product->save();
@@ -115,9 +118,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // Delete associated image if exists
-        if ($product->getImage()) {
-            Storage::disk('public')->delete($product->getImage());
+        // Delete associated images using dependency injection
+        $images = $product->getImages(false);
+        if (! empty($images)) {
+            $this->imageStorage->deleteMultiple($images);
         }
 
         $product->delete();
