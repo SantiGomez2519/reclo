@@ -92,8 +92,6 @@ return [
 
     // Product status
     'status_available' => 'Available',
-    'status_sold' => 'Sold',
-    'status_pending' => 'Pending',
     'status_unavailable' => 'Unavailable',
 
     // Customers
@@ -147,7 +145,6 @@ return [
     'minimum_characters_if_changing' => 'Minimum 8 characters required (if changing password)',
     'select_category' => 'Select Category',
     'select_condition' => 'Select Condition',
-    'select_status' => 'Select Status',
     'select_seller' => 'Select Seller',
     'select_payment_method' => 'Select Payment Method',
     'select_size' => 'Select Size',

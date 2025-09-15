@@ -55,7 +55,6 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'status' => 'required|string|in:available,sold,unavailable',
             'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
@@ -63,6 +62,11 @@ class Product extends Model
         // seller_id validation for admin
         if ($request->has('seller_id')) {
             $rules['seller_id'] = 'required|exists:custom_users,id';
+        }
+
+        // available flag (admin forms)
+        if ($request->has('available')) {
+            $rules['available'] = 'required|boolean';
         }
 
         $request->validate($rules);
@@ -179,7 +183,7 @@ class Product extends Model
                         if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                             $urls[] = $imagePath;
                         } else {
-                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
                         }
                     }
 

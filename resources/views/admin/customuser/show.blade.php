@@ -153,8 +153,8 @@
                                                     <td>${{ number_format($product->getPrice()) }}</td>
                                                     <td>
                                                         <span
-                                                            class="badge {{ $product->getStatus() === 'available' ? 'bg-success' : 'bg-secondary' }}">
-                                                            {{ __('admin.status_' . $product->getStatus()) }}
+                                                            class="badge {{ $product->getAvailable() ? 'bg-success' : 'bg-secondary' }}">
+                                                            {{ $product->getAvailable() ? __('admin.status_available') : __('admin.status_unavailable') }}
                                                         </span>
                                                     </td>
                                                     <td>

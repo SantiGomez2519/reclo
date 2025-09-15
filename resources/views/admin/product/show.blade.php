@@ -90,8 +90,8 @@
                                             <strong class="text-muted">{{ __('admin.status') }}:</strong>
                                             <p class="mb-1">
                                                 <span
-                                                    class="badge {{ $viewData['product']->getStatus() === 'available' ? 'bg-success' : ($viewData['product']->getStatus() === 'sold' ? 'bg-danger' : 'bg-warning') }}">
-                                                    {{ __('admin.status_' . $viewData['product']->getStatus()) }}
+                                                    class="badge {{ $viewData['product']->getAvailable() ? 'bg-success' : 'bg-secondary' }}">
+                                                    {{ $viewData['product']->getAvailable() ? __('admin.status_available') : __('admin.status_unavailable') }}
                                                 </span>
                                             </p>
                                         </div>

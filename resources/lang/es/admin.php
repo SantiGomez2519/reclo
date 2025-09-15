@@ -92,8 +92,6 @@ return [
 
     // Product status
     'status_available' => 'Disponible',
-    'status_sold' => 'Vendido',
-    'status_pending' => 'Pendiente',
     'status_unavailable' => 'No Disponible',
 
     // Customers
@@ -147,7 +145,6 @@ return [
     'minimum_characters_if_changing' => 'Se requieren mínimo 8 caracteres (si cambias la contraseña)',
     'select_category' => 'Seleccionar Categoría',
     'select_condition' => 'Seleccionar Condición',
-    'select_status' => 'Seleccionar Estado',
     'select_seller' => 'Seleccionar Vendedor',
     'select_payment_method' => 'Seleccionar Método de Pago',
     'select_size' => 'Seleccionar Talla',

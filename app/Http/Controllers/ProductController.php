@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['products'] = Product::with('seller')->where('status', 'available')->get();
+        $viewData['products'] = Product::with('seller')->where('available', true)->get();
 
         return view('product.index')->with('viewData', $viewData);
     }
@@ -60,7 +60,7 @@ class ProductController extends Controller
         $product->setSize($request->size);
         $product->setCondition($request->condition);
         $product->setPrice($request->price);
-        $product->setStatus('available');
+        $product->setAvailable(true);
         $product->setSwap($request->has('swap'));
         $product->setSellerId(Auth::guard('web')->id());
 
@@ -143,7 +143,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $this->checkProductOwnership($product);
 
-        $product->setStatus('sold');
+        $product->setAvailable(false);
         $product->save();
 
         return redirect()->back()->with('success', __('product.product_marked_as_sold'));

@@ -56,7 +56,7 @@ class AdminProductController extends Controller
         $product->setSize($request->input('size'));
         $product->setCondition($request->input('condition'));
         $product->setPrice($request->input('price'));
-        $product->setStatus($request->input('status'));
+        $product->setAvailable($request->boolean('available'));
         $product->setSellerId($request->input('seller_id'));
         $product->setSwap(false);
 
@@ -93,14 +93,14 @@ class AdminProductController extends Controller
         $product->setSize($request->input('size'));
         $product->setCondition($request->input('condition'));
         $product->setPrice($request->input('price'));
-        $product->setStatus($request->input('status'));
+        $product->setAvailable($request->boolean('available'));
         $product->setSellerId($request->input('seller_id'));
 
         // Handle image upload using dependency injection
         if ($request->hasFile('images')) {
             // Delete old images
             $oldImages = $product->getImages(false);
-            if (! empty($oldImages)) {
+            if (!empty($oldImages)) {
                 $this->imageStorage->deleteMultiple($oldImages);
             }
 
@@ -120,7 +120,7 @@ class AdminProductController extends Controller
 
         // Delete associated images using dependency injection
         $images = $product->getImages(false);
-        if (! empty($images)) {
+        if (!empty($images)) {
             $this->imageStorage->deleteMultiple($images);
         }
 
