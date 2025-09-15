@@ -23,7 +23,6 @@ class SwapRequestController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['title'] = 'Your Swap Requests';
         $viewData['swapRequests'] = SwapRequest::where('initiator_id', Auth::guard('web')->user()->getId())
             ->orWhereHas('desiredItem', function ($query) {
                 $query->where('seller_id', Auth::guard('web')->user()->getId());
@@ -34,11 +33,11 @@ class SwapRequestController extends Controller
         return view('swap-request.index')->with('viewData', $viewData);
     }
 
-    public function create(Request $request): View|RedirectResponse
+    public function create(int $id): View|RedirectResponse
     {
-        $desiredItem = Product::find($request->desired_item_id);
+        $desiredItem = Product::find($id);
 
-        if (! $desiredItem || ! $desiredItem->getSwap() || ! $desiredItem->getAvailable()) {
+        if (!$desiredItem || !$desiredItem->getSwap() || !$desiredItem->getAvailable()) {
             return redirect()->route('home.index')
                 ->with('status', 'The desired product is not available for swap.');
         }
@@ -54,7 +53,6 @@ class SwapRequestController extends Controller
         }
 
         $viewData = [];
-        $viewData['title'] = 'Confirm your swap request';
         $viewData['desiredItem'] = $desiredItem;
 
         return view('swap-request.create')->with('viewData', $viewData);
@@ -103,7 +101,6 @@ class SwapRequestController extends Controller
         $initiator = CustomUser::find($swapRequest->getInitiatorId())->getName();
 
         $viewData = [];
-        $viewData['title'] = 'Someone wants to Swap with you!';
         $viewData['swapRequest'] = $swapRequest;
         $viewData['desiredItem'] = $swapRequest->getDesiredItem();
         $viewData['initiatorProducts'] = $initiatorProducts;
@@ -156,7 +153,6 @@ class SwapRequestController extends Controller
         $responder = CustomUser::find($swapRequest->getDesiredItem()->getSellerId())->getName();
 
         $viewData = [];
-        $viewData['title'] = 'Swap counter-offer';
         $viewData['swapRequest'] = $swapRequest;
         $viewData['desiredItem'] = $desiredItem;
         $viewData['offeredItem'] = $offeredItem;
@@ -207,10 +203,5 @@ class SwapRequestController extends Controller
         $swapRequest->save();
 
         return redirect()->route('swap-request.index')->with('status', 'Swap request closed successfully.');
-    }
-
-    public function test(): View
-    {
-        return view('swap-request.test');
     }
 }

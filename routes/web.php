@@ -51,14 +51,14 @@ Route::middleware('customer')->group(function () {
     // ----- Additional customer routes must be added here -----
 
     // ----- Swap Routes -----
-    Route::post('/swap-request/create', 'App\Http\Controllers\SwapRequestController@create')->name('swap-request.create');
+    Route::get('/swap-request/create/{id}', 'App\\Http\\Controllers\\SwapRequestController@create')->name('swap-request.create');
     Route::post('/swap-request/store', 'App\Http\Controllers\SwapRequestController@store')->name('swap-request.store');
     Route::get('/swap-request/{id}/receive', 'App\Http\Controllers\SwapRequestController@receive')->name('swap-request.receive');
     Route::post('/swap-request/{id}/respond', 'App\Http\Controllers\SwapRequestController@respond')->name('swap-request.respond');
     Route::get('/swap-request/{id}/finalize', 'App\Http\Controllers\SwapRequestController@finalize')->name('swap-request.finalize');
     Route::post('/swap-request/{id}/close', 'App\Http\Controllers\SwapRequestController@close')->name('swap-request.close');
     Route::get('/swap-request', 'App\Http\Controllers\SwapRequestController@index')->name('swap-request.index');
-    Route::get('/swap-request/test', 'App\Http\Controllers\SwapRequestController@test')->name('swap-request.test'); // For testing purposes only
+
 
     // ----- Notifications Routes -----
     Route::get('/notifications', 'App\Http\Controllers\NotificationController@index')->name('notifications.index');

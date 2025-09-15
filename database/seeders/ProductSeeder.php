@@ -10,14 +10,17 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // Get the first custom user to be the seller
-        $user = CustomUser::first();
+        // Get custom users to be the sellers
+        $users = CustomUser::all();
 
-        if (!$user) {
-            $this->command->info('No custom users found. Please run CustomUserSeeder first.');
+        if ($users->count() < 2) {
+            $this->command->info('Not enough custom users found. Please run CustomUserSeeder first.');
 
             return;
         }
+
+        $user1 = $users->first(); // John Customer
+        $user2 = $users->skip(1)->first(); // Jane Customer
 
         $products = [
             [
@@ -31,7 +34,7 @@ class ProductSeeder extends Seeder
                 'available' => true,
                 'swap' => true,
                 'image' => json_encode(['products/black-jogger.webp', 'products/black-jogger2.webp', 'products/black-jogger3.webp']),
-                'seller_id' => $user->getId(),
+                'seller_id' => $user1->getId(),
             ],
             [
                 'title' => 'Vintage Hoodie',
@@ -44,7 +47,7 @@ class ProductSeeder extends Seeder
                 'available' => true,
                 'swap' => false,
                 'image' => json_encode(['products/hodie1.webp', 'products/hodie2.webp', 'products/hodie3.webp']),
-                'seller_id' => $user->getId(),
+                'seller_id' => $user1->getId(),
             ],
             [
                 'title' => 'Designer Jacket',
@@ -57,7 +60,7 @@ class ProductSeeder extends Seeder
                 'available' => true,
                 'swap' => true,
                 'image' => json_encode(['products/jacket.webp', 'products/jacket2.webp', 'products/jacket3.webp']),
-                'seller_id' => $user->getId(),
+                'seller_id' => $user1->getId(),
             ],
             [
                 'title' => 'Classic T-Shirt',
@@ -70,7 +73,7 @@ class ProductSeeder extends Seeder
                 'available' => true,
                 'swap' => false,
                 'image' => json_encode(['products/t-shirt.webp', 'products/t-shirt2.webp', 'products/t-shirt3.webp']),
-                'seller_id' => $user->getId(),
+                'seller_id' => $user1->getId(),
             ],
             [
                 'title' => 'Vintage Washed Denim',
@@ -83,7 +86,20 @@ class ProductSeeder extends Seeder
                 'available' => true,
                 'swap' => true,
                 'image' => json_encode(['products/washed.webp', 'products/washed2.webp', 'products/washed3.webp']),
-                'seller_id' => $user->getId(),
+                'seller_id' => $user1->getId(),
+            ],
+            [
+                'title' => 'Boxy White Shirt',
+                'description' => 'Trendy boxy fit white shirt with relaxed silhouette. Perfect for layering or wearing on its own. Made from premium cotton with a modern oversized cut.',
+                'category' => 'Women',
+                'color' => 'White',
+                'size' => 'M',
+                'condition' => 'Like New',
+                'price' => 28,
+                'available' => true,
+                'swap' => true,
+                'image' => json_encode(['products/boxy-white.webp', 'products/boxy-white2.webp', 'products/boxy-white3.webp']),
+                'seller_id' => $user2->getId(),
             ],
         ];
 
