@@ -44,6 +44,8 @@ class CustomUser extends Authenticatable
 
     protected $casts = [
         'password' => 'hashed',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public static function validate(Request $request, bool $isUpdate = false, ?int $userId = null): void
@@ -127,14 +129,14 @@ class CustomUser extends Authenticatable
         $this->attributes['payment_method'] = $payment_method;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): mixed
     {
-        return $this->attributes['created_at'];
+        return $this->created_at;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): mixed
     {
-        return $this->attributes['updated_at'];
+        return $this->updated_at;
     }
 
     // Relationships

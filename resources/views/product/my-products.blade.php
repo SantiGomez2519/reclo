@@ -29,8 +29,8 @@
 
                             <!-- Status Badge -->
                             <span
-                                class="position-absolute top-0 start-0 m-2 badge {{ $product->getStatus() === 'available' ? 'bg-success' : 'bg-danger' }}">
-                                {{ $product->getStatus() === 'available' ? __('product.available') : __('product.sold') }}
+                                class="position-absolute top-0 start-0 m-2 badge {{ $product->getAvailable() ? 'bg-success' : 'bg-danger' }}">
+                                {{ $product->getAvailable() ? __('product.available') : __('product.sold') }}
                             </span>
 
                             <!-- Condition Badge -->
@@ -57,7 +57,7 @@
                                     {{ __('product.view_details') }}
                                 </a>
 
-                                @if ($product->getStatus() === 'available')
+                                @if ($product->getAvailable())
                                     <div class="row g-2">
                                         <div class="col-6">
                                             <a href="{{ route('product.edit', $product->getId()) }}"
@@ -110,12 +110,12 @@
                             <div class="row text-center">
                                 <div class="col-md-4">
                                     <div class="h2 text-primary fw-bold">
-                                        {{ $viewData['products']->where('status', 'available')->count() }}</div>
+                                        {{ $viewData['products']->where('available', true)->count() }}</div>
                                     <div class="text-muted">{{ __('product.available_items') }}</div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="h2 text-success fw-bold">
-                                        {{ $viewData['products']->where('status', 'sold')->count() }}</div>
+                                        {{ $viewData['products']->where('available', false)->count() }}</div>
                                     <div class="text-muted">{{ __('product.sold_items') }}</div>
                                 </div>
                                 <div class="col-md-4">

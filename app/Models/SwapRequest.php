@@ -13,7 +13,7 @@ class SwapRequest extends Model
      * $this->attributes['id'] - int - contains the swap request primary key (id)
      * $this->attributes['date_created'] - string - contains the swap request creation date
      * $this->attributes['date_accepted'] - string - contains the swap request acceptance date
-     * $this->attributes['status'] - string - contains the swap request status
+     * $this->attributes['status'] - string - contains the swap request status (Pending, Counter Proposed, Accepted, Rejected)
      * $this->attributes['initiator_id'] - int - contains the initiator (CustomUser) foreign key
      * $this->attributes['offered_item_id'] - int - contains the offered item (Product) foreign key (nullable)
      * $this->attributes['desired_item_id'] - int - contains the desired item (Product) foreign key
@@ -24,18 +24,26 @@ class SwapRequest extends Model
      * $this->desiredItem - Product - contains the associated desired product
      */
     protected $fillable = [
+        'initiator_id',
+        'desired_item_id',
+        'status',
         'date_created',
         'date_accepted',
         'status',
     ];
 
-    public static function validate(Request $request): void
+    public static function validateRespond(Request $request)
     {
-        $request->validate([
-            'date_created' => 'required',
-            'date_accepted' => 'nullable',
-            'status' => 'required|string|max:255',
-        ]);
+        $rules = [
+            'offered_item_id' => 'required|exists:products,id',
+        ];
+
+        $messages = [
+            'offered_item_id.required' => 'You must select a product to accept the swap request.',
+            'offered_item_id.exists' => 'The selected product is not valid.',
+        ];
+
+        $request->validate($rules, $messages);
     }
 
     public function getId(): int

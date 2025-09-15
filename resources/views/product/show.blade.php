@@ -147,7 +147,7 @@
                                             </div>
                                         </div>
 
-                                        @if ($viewData['product']->getStatus() === 'available')
+                                        @if ($viewData['product']->getAvailable())
                                             <form action="{{ route('product.mark-sold', $viewData['product']->getId()) }}"
                                                 method="POST">
                                                 @csrf

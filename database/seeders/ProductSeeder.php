@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
         // Get the first custom user to be the seller
         $user = CustomUser::first();
 
-        if (! $user) {
+        if (!$user) {
             $this->command->info('No custom users found. Please run CustomUserSeeder first.');
 
             return;
@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 'size' => 'L',
                 'condition' => 'Excellent',
                 'price' => 35,
-                'status' => 'available',
+                'available' => true,
                 'swap' => true,
                 'image' => json_encode(['products/black-jogger.webp', 'products/black-jogger2.webp', 'products/black-jogger3.webp']),
                 'seller_id' => $user->getId(),
@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
                 'size' => 'M',
                 'condition' => 'Very Good',
                 'price' => 42,
-                'status' => 'available',
+                'available' => true,
                 'swap' => false,
                 'image' => json_encode(['products/hodie1.webp', 'products/hodie2.webp', 'products/hodie3.webp']),
                 'seller_id' => $user->getId(),
@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
                 'size' => 'M',
                 'condition' => 'Like New',
                 'price' => 85,
-                'status' => 'available',
+                'available' => true,
                 'swap' => true,
                 'image' => json_encode(['products/jacket.webp', 'products/jacket2.webp', 'products/jacket3.webp']),
                 'seller_id' => $user->getId(),
@@ -67,7 +67,7 @@ class ProductSeeder extends Seeder
                 'size' => 'L',
                 'condition' => 'Good',
                 'price' => 18,
-                'status' => 'available',
+                'available' => true,
                 'swap' => false,
                 'image' => json_encode(['products/t-shirt.webp', 'products/t-shirt2.webp', 'products/t-shirt3.webp']),
                 'seller_id' => $user->getId(),
@@ -80,7 +80,7 @@ class ProductSeeder extends Seeder
                 'size' => 'M',
                 'condition' => 'Good',
                 'price' => 55,
-                'status' => 'available',
+                'available' => true,
                 'swap' => true,
                 'image' => json_encode(['products/washed.webp', 'products/washed2.webp', 'products/washed3.webp']),
                 'seller_id' => $user->getId(),

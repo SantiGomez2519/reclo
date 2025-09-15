@@ -75,22 +75,24 @@ return [
     'image_not_found' => 'Imagen no encontrada',
 
     // Product categories
-    'category_clothing' => 'Ropa',
-    'category_shoes' => 'Zapatos',
-    'category_accessories' => 'Accesorios',
-    'category_other' => 'Otro',
+    'category_Women' => 'Mujeres',
+    'category_Men' => 'Hombres',
+    'category_Vintage' => 'Vintage',
+    'category_Accessories' => 'Accesorios',
+    'category_Shoes' => 'Zapatos',
+    'category_Bags' => 'Bolsos',
+    'category_Jewelry' => 'Joyas',
 
     // Product conditions
-    'condition_new' => 'Nuevo',
-    'condition_like_new' => 'Como Nuevo',
-    'condition_good' => 'Bueno',
-    'condition_fair' => 'Regular',
-    'condition_poor' => 'Malo',
+    'condition_Like New' => 'Como Nuevo',
+    'condition_Excellent' => 'Excelente',
+    'condition_Very Good' => 'Muy Bueno',
+    'condition_Good' => 'Bueno',
+    'condition_Fair' => 'Regular',
 
     // Product status
     'status_available' => 'Disponible',
-    'status_sold' => 'Vendido',
-    'status_pending' => 'Pendiente',
+    'status_unavailable' => 'No Disponible',
 
     // Customers
     'customers' => 'Clientes',
@@ -143,14 +145,18 @@ return [
     'minimum_characters_if_changing' => 'Se requieren mínimo 8 caracteres (si cambias la contraseña)',
     'select_category' => 'Seleccionar Categoría',
     'select_condition' => 'Seleccionar Condición',
-    'select_status' => 'Seleccionar Estado',
     'select_seller' => 'Seleccionar Vendedor',
     'select_payment_method' => 'Seleccionar Método de Pago',
+    'select_size' => 'Seleccionar Talla',
+    'one_size' => 'Talla Única',
 
     // File upload
     'accepted_formats' => 'Formatos aceptados: JPG, JPEG, PNG. Tamaño máximo: 2MB',
     'leave_empty_keep_image' => 'Deja vacío para mantener la imagen actual.',
     'current_image' => 'Imagen actual:',
+    'product_images' => 'Imágenes del Producto',
+    'current_images' => 'Imágenes Actuales',
+    'images_help' => 'Formatos aceptados: JPG, JPEG, PNG. Tamaño máximo: 2MB cada una.',
 
     // Confirmations and warnings
     'confirm_delete' => 'Confirmar Eliminación',

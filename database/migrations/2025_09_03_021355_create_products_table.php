@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('size');
             $table->string('condition');
             $table->integer('price');
-            $table->string('status');
+            $table->boolean('available')->default(true);
             $table->boolean('swap');
             $table->string('image');
             $table->timestamps();

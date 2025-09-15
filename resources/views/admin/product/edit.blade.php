@@ -169,23 +169,14 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="status" class="form-label">{{ __('admin.status') }}</label>
-                                        <select class="form-select @error('status') is-invalid @enderror" id="status"
-                                            name="status" required>
-                                            <option value="">{{ __('admin.select_status') }}</option>
-                                            <option value="available"
-                                                {{ old('status', $viewData['product']->getStatus()) == 'available' ? 'selected' : '' }}>
-                                                {{ __('admin.status_available') }}</option>
-                                            <option value="sold"
-                                                {{ old('status', $viewData['product']->getStatus()) == 'sold' ? 'selected' : '' }}>
-                                                {{ __('admin.status_sold') }}</option>
-                                            <option value="unavailable"
-                                                {{ old('status', $viewData['product']->getStatus()) == 'unavailable' ? 'selected' : '' }}>
-                                                {{ __('admin.status_unavailable') }}</option>
-                                        </select>
-                                        @error('status')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="form-check mt-4">
+                                        <input class="form-check-input @error('available') is-invalid @enderror"
+                                            type="checkbox" id="available" name="available" value="1"
+                                            {{ old('available', $viewData['product']->getAvailable()) ? 'checked' : '' }}>
+                                        <label class="form-check-label"
+                                            for="available">{{ __('admin.status_available') }}</label>
+                                        @error('available')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>

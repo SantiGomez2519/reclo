@@ -21,7 +21,7 @@ class Product extends Model
      * $this->attributes['size'] - string - contains the product size
      * $this->attributes['condition'] - string - contains the product condition
      * $this->attributes['price'] - int - contains the product price
-     * $this->attributes['status'] - string - contains the product status
+     * $this->attributes['available'] - boolean - contains if the product is available for sale (default: true)
      * $this->attributes['swap'] - bool - tells if the product has been swapped
      * $this->attributes['images'] - array - contains the product images (url or path)
      * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
@@ -42,7 +42,6 @@ class Product extends Model
         'size',
         'condition',
         'price',
-        'status',
         'image',
     ];
 
@@ -56,7 +55,6 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'status' => 'required|string|in:available,sold,unavailable',
             'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
@@ -64,6 +62,11 @@ class Product extends Model
         // seller_id validation for admin
         if ($request->has('seller_id')) {
             $rules['seller_id'] = 'required|exists:custom_users,id';
+        }
+
+        // available flag (admin forms)
+        if ($request->has('available')) {
+            $rules['available'] = 'required|boolean';
         }
 
         $request->validate($rules);
@@ -144,14 +147,14 @@ class Product extends Model
         $this->attributes['price'] = $price;
     }
 
-    public function getStatus(): string
+    public function getAvailable(): bool
     {
-        return $this->attributes['status'];
+        return $this->attributes['available'];
     }
 
-    public function setStatus(string $status): void
+    public function setAvailable(bool $available): void
     {
-        $this->attributes['status'] = $status;
+        $this->attributes['available'] = $available;
     }
 
     public function getSwap(): bool
@@ -180,7 +183,7 @@ class Product extends Model
                         if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                             $urls[] = $imagePath;
                         } else {
-                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
                         }
                     }
 
