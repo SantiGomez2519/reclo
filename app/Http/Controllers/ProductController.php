@@ -35,13 +35,49 @@ class ProductController extends Controller
         }
     }
 
-    public function index(): View
-    {
-        $viewData = [];
-        $viewData['products'] = Product::with('seller')->where('status', 'available')->get();
-
-        return view('product.index')->with('viewData', $viewData);
+    public function index(Request $request)
+{
+    $query = Product::with('seller')->where('available', true);
+    
+    // Búsqueda por keyword (FR8)
+    if ($request->has('search') && !empty($request->search)) {
+        $searchTerm = $request->search;
+        $query->where(function($q) use ($searchTerm) {
+            $q->where('title', 'like', '%'.$searchTerm.'%')
+              ->orWhere('description', 'like', '%'.$searchTerm.'%');
+        });
     }
+    
+    // Filtros (FR7)
+    if ($request->has('category') && !empty($request->category)) {
+        $query->where('category', $request->category);
+    }
+    
+    if ($request->has('size') && !empty($request->size)) {
+        $query->where('size', $request->size);
+    }
+    
+    if ($request->has('condition') && !empty($request->condition)) {
+        $query->where('condition', $request->condition);
+    }
+    
+    if ($request->has('min_price') && !empty($request->min_price)) {
+        $query->where('price', '>=', $request->min_price);
+    }
+    
+    if ($request->has('max_price') && !empty($request->max_price)) {
+        $query->where('price', '<=', $request->max_price);
+    }
+    
+    $viewData = [];
+    $viewData['products'] = $query->get();
+    $viewData['filters'] = $request->all();
+    $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
+    $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
+    $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
+    
+    return view('product.index')->with('viewData', $viewData);
+}
 
     public function create(): View
     {
