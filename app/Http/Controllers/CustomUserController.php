@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomUser;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +19,24 @@ class CustomUserController extends Controller
 
     public function show(): View
     {
-        $viewData = [];
-        $viewData['user'] = Auth::guard('web')->user();
+        $user = Auth::guard('web')->user(); 
 
+        $viewData = [];
+        $viewData['user'] = $user;
+        
+        // FR16: Historial de ventas (productos vendidos por este usuario)
+        $viewData['salesHistory'] = Product::where('seller_id', $user->id)
+            ->where('available', false)
+            ->with(['order.buyer', 'review']) // Cargar relación order y su buyer
+            ->orderBy('updated_at', 'desc')
+            ->get();
+            
+        // FR17: Historial de compras (órdenes donde este usuario es el comprador)
+        $viewData['purchaseHistory'] = Order::where('buyer_id', $user->id)
+            ->with(['products.seller', 'products.review']) // Cargar productos con sus vendedores y reviews
+            ->orderBy('order_date', 'desc')
+            ->get();
+            
         return view('user.profile')->with('viewData', $viewData);
     }
 
