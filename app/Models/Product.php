@@ -42,7 +42,7 @@ class Product extends Model
         'size',
         'condition',
         'price',
-        'status',
+        'available',
         'image',
     ];
 
@@ -140,12 +140,12 @@ class Product extends Model
 
     public function getStatus(): string
     {
-        return $this->attributes['status'];
+        return $this->attributes['available'];
     }
 
     public function setStatus(string $status): void
     {
-        $this->attributes['status'] = $status;
+        $this->attributes['available'] = true;
     }
 
     public function getSwap(): bool
