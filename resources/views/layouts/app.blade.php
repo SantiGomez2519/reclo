@@ -46,10 +46,11 @@
                 </div>
 
                 <!-- Search Bar -->
-                <form class="d-flex" role="search" action="#" method="GET">
-                    <input class="form-control me-2" type="search" name="q"
+                <form class="d-flex" role="search" action="{{ route('product.index') }}" method="GET">
+                    <input class="form-control me-2" type="search" name="search"
                         placeholder="{{ __('layout.search_placeholder') }}"
-                        aria-label="{{ __('home.search_aria_label') }}">
+                        aria-label="{{ __('home.search_aria_label') }}"
+                        value="{{ request('search') }}">
                     <button class="btn btn-outline-light" type="submit">{{ __('layout.search_button') }}</button>
                 </form>
                 <div class="vr bg-white mx-2 d-none d-lg-block"></div>
