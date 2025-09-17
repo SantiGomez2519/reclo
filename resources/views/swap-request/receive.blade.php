@@ -17,10 +17,11 @@
                                 <div class="card-header" style="background-color: #efe8e0ff; ">
                                     <h5 class="mb-0 text-dark fw-bold">{{ __('swap.solicited_product') }}</h5>
                                 </div>
-                                @php $desiredUrl = $viewData['desiredItem']->getImages()[0] ?? asset('storage/images/logo.png'); @endphp
-                                <img src="{{ $desiredUrl }}" class="card-img-top"
-                                    onerror="this.src='{{ asset('storage/images/logo.png') }}'"
-                                    alt="{{ $viewData['desiredItem']->getTitle() }}">
+                                
+                                <img src="{{ $viewData['desiredItem']->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                                    class="card-img-top img-limit" alt="{{ $viewData['desiredItem']->getTitle() }}">
+                                
+               
                                 <div class="card-body">
                                     <h5 class="card-title fw-bold">{{ $viewData['desiredItem']->getTitle() }}</h5>
                                     <p class="card-text">{{ $viewData['desiredItem']->getDescription() }}</p>
@@ -70,11 +71,8 @@
                                                                     style="cursor: pointer;">
                                                                     <div class="row align-items-center">
                                                                         <div class="col-md-4">
-                                                                            @php $prodUrl = $product->getImages()[0] ?? asset('storage/images/logo.png'); @endphp
-                                                                            <img src="{{ $prodUrl }}"
-                                                                                class="img-fluid rounded"
-                                                                                onerror="this.src='{{ asset('storage/images/logo.png') }}'"
-                                                                                alt="{{ $product->getTitle() }}">
+                                                                            <img src="{{ $product->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                                                                                class="card-img-top" alt="{{ $product->getTitle() }}">
                                                                         </div>
                                                                         <div class="col-md-8">
                                                                             <h6 class="card-title fw-bold">

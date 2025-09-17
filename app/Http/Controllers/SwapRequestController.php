@@ -33,13 +33,39 @@ class SwapRequestController extends Controller
         return view('swap-request.index')->with('viewData', $viewData);
     }
 
+    public function show(int $id): View|RedirectResponse
+    {
+        $swapRequest = SwapRequest::findOrFail($id);
+
+        if ($swapRequest->getInitiatorId() !== Auth::guard('web')->user()->getId() &&
+            $swapRequest->getDesiredItem()->getSellerId() !== Auth::guard('web')->user()->getId()) {
+            abort(403, __('swap.not_authorized'));
+        }
+
+        $desiredItem = Product::find($swapRequest->getDesiredItemId());
+        $offeredItem = Product::find($swapRequest->getOfferedItemId());
+        
+
+        $initiator = CustomUser::find($swapRequest->getInitiatorId())->getName();
+        $responder = CustomUser::find($swapRequest->getDesiredItem()->getSellerId())->getName();
+
+        $viewData = [];
+        $viewData['swapRequest'] = $swapRequest;
+        $viewData['desiredItem'] = $desiredItem;
+        $viewData['offeredItem'] = $offeredItem;
+        $viewData['initiator'] = $initiator;
+        $viewData['responder'] = $responder;
+
+        return view('swap-request.show')->with('viewData', $viewData);
+    }
+
     public function create(int $id): View|RedirectResponse
     {
         $desiredItem = Product::find($id);
 
-        if (!$desiredItem || !$desiredItem->getSwap() || !$desiredItem->getAvailable()) {
+        if (! $desiredItem || ! $desiredItem->getSwap() || ! $desiredItem->getAvailable()) {
             return redirect()->route('home.index')
-                ->with('status', 'The desired product is not available for swap.');
+                ->with('status', __('swap.product_not_available'));
         }
 
         $offeredItems = Product::where('seller_id', Auth::guard('web')->user()->getId())
@@ -49,7 +75,7 @@ class SwapRequestController extends Controller
 
         if ($offeredItems->isEmpty()) {
             return redirect()->route('home.index')
-                ->with('status', 'You don\'t have any products to offer for a swap.');
+                ->with('status', __('swap.dont_have_products'));
         }
 
         $viewData = [];
@@ -69,7 +95,7 @@ class SwapRequestController extends Controller
 
         if ($existingSwap) {
             return redirect()->route('home.index')
-                ->with('status', 'Error: You already made a swap request for this product.');
+                ->with('status', __('swap.already_requested'));
         }
 
         $swapRequest = SwapRequest::create([
@@ -82,15 +108,19 @@ class SwapRequestController extends Controller
         $desiredItem->seller->notify(new SwapRequestCreated($swapRequest));
 
         return redirect()->route('home.index')
-            ->with('status', 'Swap request created successfully.');
+            ->with('status', __('swap.success'));
     }
 
-    public function receive(int $id): View
+    public function receive(int $id): View|RedirectResponse
     {
         $swapRequest = SwapRequest::findOrFail($id);
 
+        if ($swapRequest->getInitiatorId() === Auth::guard('web')->user()->getId()) {
+             return redirect()->route('swap-request.show', $swapRequest->getId());
+        }
+
         if ($swapRequest->getDesiredItem()->getSellerId() !== Auth::guard('web')->user()->getId()) {
-            abort(403, 'No autorizado');
+            abort(403, __('swap.not_authorized'));
         }
 
         $initiatorProducts = Product::where('seller_id', $swapRequest->getInitiatorId())
@@ -114,12 +144,12 @@ class SwapRequestController extends Controller
         $swapRequest = SwapRequest::findOrFail($id);
 
         if ($swapRequest->getDesiredItem()->getSellerId() !== Auth::guard('web')->user()->getId()) {
-            abort(403, 'No autorizado');
+            abort(403, __('swap.not_authorized'));
         }
 
         if ($swapRequest->getStatus() !== 'Pending') {
             return redirect()->route('home.index')
-                ->with('status', 'Error: This swap request has already been responded to.');
+                ->with('status', __('swap.already_responded'));
         }
 
         if ($request->response === 'reject') {
@@ -136,15 +166,19 @@ class SwapRequestController extends Controller
         $swapRequest->save();
 
         return redirect()->route('home.index', ['id' => $swapRequest->getId()])
-            ->with('status', 'Answer registered succesfully.');
+            ->with('status', __('swap.answer_registered'));
     }
 
-    public function finalize(int $id): View
+    public function finalize(int $id): View|RedirectResponse
     {
         $swapRequest = SwapRequest::findOrFail($id);
 
+        if ($swapRequest->getDesiredItem()->getSellerId() === Auth::guard('web')->user()->getId()) {
+             return redirect()->route('swap-request.show', $swapRequest->getId());
+        }
+
         if ($swapRequest->getInitiatorId() !== Auth::guard('web')->user()->getId()) {
-            abort(403, 'No autorizado');
+            abort(403, __('swap.not_authorized'));
         }
 
         $desiredItem = Product::find($swapRequest->getDesiredItemId());
@@ -171,10 +205,10 @@ class SwapRequestController extends Controller
 
         if ($swapRequest->getStatus() !== 'Counter Proposed') {
             $message = match ($swapRequest->getStatus()) {
-                'Pending' => 'Error: This swap request is still pending and cannot be finalized yet.',
-                'Accepted' => 'Error: This swap request has already been accepted.',
-                'Rejected' => 'Error: This swap request has already been rejected.',
-                default => 'Error: This swap request cannot be finalized.',
+                'Pending' => __('swap.still_pending'),
+                'Accepted' => __('swap.already_accepted'),
+                'Rejected' => __('swap.already_rejected'),
+                default => __('swap.error_finalizing'),
             };
 
             return redirect()->route('home.index')
@@ -196,12 +230,30 @@ class SwapRequestController extends Controller
             $offeredItem->setAvailable(false);
             $offeredItem->save();
 
+            $relatedSwaps = SwapRequest::where(function ($query) use ($desiredItem, $offeredItem) {
+                $query->where('offered_item_id', $desiredItem->getId())
+                    ->orWhere('desired_item_id', $desiredItem->getId())
+                    ->orWhere('offered_item_id', $offeredItem->getId())
+                    ->orWhere('desired_item_id', $offeredItem->getId());
+            })
+                ->where('id', '!=', $swapRequest->getId())
+                ->whereNotIn('status', ['Rejected', 'Accepted'])
+                ->get();
+
+            foreach ($relatedSwaps as $relatedSwap) {
+                $relatedSwap->setStatus('Rejected');
+                $relatedSwap->save();
+
+                $relatedSwap->getInitiator()->notify(new SwapRequestFinalized($relatedSwap));
+                $relatedSwap->getDesiredItem()->seller->notify(new SwapRequestFinalized($relatedSwap));
+            }
+
             $swapRequest->getDesiredItem()->seller->notify(new SwapRequestFinalized($swapRequest));
             $swapRequest->getOfferedItem()->seller->notify(new SwapRequestFinalized($swapRequest));
         }
 
         $swapRequest->save();
 
-        return redirect()->route('swap-request.index')->with('status', 'Swap request closed successfully.');
+        return redirect()->route('swap-request.index')->with('status', __('swap.success_finalizing'));
     }
 }
