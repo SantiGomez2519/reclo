@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ImageStorage;
 use App\Models\Product;
+use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,12 +11,9 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    private ImageStorage $imageStorage;
-
-    public function __construct(ImageStorage $imageStorage)
+    public function __construct()
     {
         $this->middleware('auth:web')->except(['index', 'show']);
-        $this->imageStorage = $imageStorage;
     }
 
     public function index(): View
@@ -48,8 +45,9 @@ class ProductController extends Controller
         $product->setSwap($request->has('swap'));
         $product->setSellerId(Auth::guard('web')->id());
 
-        // Handle image upload using ImageStorage
-        $imagePaths = $this->imageStorage->store($request, 'products');
+        // Handle image upload
+        $imageStorage = new ImageLocalStorage();
+        $imagePaths = $imageStorage->store($request, 'products');
         $product->setImages($imagePaths);
 
         $product->save();
@@ -91,8 +89,9 @@ class ProductController extends Controller
         $product->setPrice($request->price);
         $product->setSwap($request->has('swap'));
 
-        // Handle image upload using ImageStorage
-        $this->handleImageUpload($request, $product);
+        // Handle image upload
+        $imageStorage = new ImageLocalStorage();
+        $imageStorage->handleImageUpload($request, $product);
 
         $product->save();
 
@@ -104,8 +103,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->checkProductOwnership();
 
-        // Delete image files using ImageStorage
-        $this->deleteOldImages($product->getImages(false));
+        // Delete image files
+        $imageStorage = new ImageLocalStorage();
+        $imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
 
@@ -133,26 +133,4 @@ class ProductController extends Controller
         return redirect()->back()->with('success', __('product.product_marked_as_sold'));
     }
 
-    private function handleImageUpload(Request $request, Product $product): void
-    {
-        if ($request->hasFile('images')) {
-            // Delete old images if they're not the default
-            $this->deleteOldImages($product->getImages(false));
-            $imagePaths = $this->imageStorage->store($request, 'products');
-            $product->setImages($imagePaths);
-        } else {
-            // Keep current images if no new images are uploaded
-            $currentImages = $product->getImages(false);
-            $product->setImages($currentImages);
-        }
-    }
-
-    private function deleteOldImages(array $images): void
-    {
-        foreach ($images as $imagePath) {
-            if ($imagePath !== 'images/default-product.jpg') {
-                $this->imageStorage->delete($imagePath);
-            }
-        }
-    }
 }

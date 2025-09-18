@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\ImageStorage;
 use App\Models\CustomUser;
 use App\Models\Product;
+use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AdminProductController extends Controller
 {
-    private ImageStorage $imageStorage;
-
-    public function __construct(ImageStorage $imageStorage)
+    public function __construct()
     {
         $this->middleware('admin');
-        $this->imageStorage = $imageStorage;
     }
 
     public function index(): View
@@ -60,9 +57,10 @@ class AdminProductController extends Controller
         $product->setSellerId($request->input('seller_id'));
         $product->setSwap(false);
 
-        // Handle image upload using dependency injection
+        // Handle image upload
         if ($request->hasFile('images')) {
-            $imagePaths = $this->imageStorage->store($request, 'products');
+            $imageStorage = new ImageLocalStorage();
+            $imagePaths = $imageStorage->store($request, 'products');
             $product->setImages($imagePaths);
         }
 
@@ -96,17 +94,10 @@ class AdminProductController extends Controller
         $product->setAvailable($request->boolean('available'));
         $product->setSellerId($request->input('seller_id'));
 
-        // Handle image upload using dependency injection
+        // Handle image upload
         if ($request->hasFile('images')) {
-            // Delete old images
-            $oldImages = $product->getImages(false);
-            if (!empty($oldImages)) {
-                $this->imageStorage->deleteMultiple($oldImages);
-            }
-
-            // Store new images
-            $imagePaths = $this->imageStorage->store($request, 'products');
-            $product->setImages($imagePaths);
+            $imageStorage = new ImageLocalStorage();
+            $imageStorage->handleImageUpload($request, $product);
         }
 
         $product->save();
@@ -118,11 +109,9 @@ class AdminProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // Delete associated images using dependency injection
-        $images = $product->getImages(false);
-        if (!empty($images)) {
-            $this->imageStorage->deleteMultiple($images);
-        }
+        // Delete associated images
+        $imageStorage = new ImageLocalStorage();
+        $imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
 
