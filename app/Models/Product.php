@@ -56,7 +56,7 @@ class Product extends Model
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
             'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
 
         // seller_id validation for admin
@@ -202,13 +202,6 @@ class Product extends Model
         $this->attributes['image'] = json_encode($images);
     }
 
-    public function checkProductOwnership(): void
-    {
-        if ($this->getSellerId() !== auth('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
-    }
-
     public function getCreatedAt(): string
     {
         return $this->attributes['created_at'];
@@ -314,5 +307,12 @@ class Product extends Model
     public function setSwapRequestsOffered(Collection $swapRequestsOffered): void
     {
         $this->swapRequestsOffered = $swapRequestsOffered;
+    }
+
+    public function checkProductOwnership(): void
+    {
+        if ($this->getSellerId() !== auth('web')->id()) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
