@@ -41,15 +41,7 @@
                     <a class="nav-link" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
                     @auth
                         <a class="nav-link" href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
-                        <a class="nav-link position-relative" href="{{ route('cart.index') }}">
-                            <i class="fas fa-shopping-cart me-1"></i>{{ __('cart.title') }}
-                            @if ($cartCount > 0)
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $cartCount }}
-                                </span>
-                            @endif
-                        </a>
+
                         <a class="nav-link" href="{{ route('orders.index') }}">
                             <i class="fas fa-receipt me-1"></i>{{ __('cart.order_details') }}
                         </a>
@@ -103,6 +95,17 @@
                     <a class="nav-link active" href="{{ route('login') }}">{{ __('layout.login') }}</a>
                     <a class="nav-link active" href="{{ route('register') }}">{{ __('layout.register') }}</a>
                 @else
+                    <!-- Shopping Cart -->
+                    <a class="nav-link position-relative cart-icon" href="{{ route('cart.index') }}">
+                        <i class="bi bi-cart fs-4 text-white"></i>
+                        @if ($cartCount > 0)
+                            <span 
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
+                                {{ $cartCount }}
+                            </span>
+                        @endif
+                    </a>
+
                     <!-- Notifications Dropdown -->
                     <div class="nav-item dropdown me-3">
                         <a id="notifDropdown" class="nav-link position-relative" href="#" role="button"
@@ -110,7 +113,7 @@
                             <i class="bi bi-bell" style="font-size: 1.4rem;"></i>
                             @if (count($viewData['notifications']) > 0)
                                 <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
                                     {{ count($viewData['notifications']) }}
                                 </span>
                             @endif
@@ -134,12 +137,20 @@
                                         @elseif($notification->type === 'App\Notifications\SwapRequestResponded')
                                             <i class="bi bi-arrow-repeat text-info me-1"></i>
                                             {{ __('notification.new_notification') }}
-                                            <div class="text-muted small mt-1">{{ $notification->data['message'] ?? '' }}
+                                            <div class="text-muted small mt-1">
+                                                {{ __($notification->data['translation_key']) }}
                                             </div>
                                         @elseif($notification->type === 'App\Notifications\SwapRequestFinalized')
                                             <i class="bi bi-check-circle-fill text-success me-1"></i>
                                             {{ __('notification.new_notification') }}
-                                            <div class="text-muted small mt-1">{{ $notification->data['message'] ?? '' }}
+                                            <div class="text-muted small mt-1">
+                                                {{ __($notification->data['translation_key'], $notification->data['translation_params']) }}
+                                            </div>
+                                        @elseif($notification->type === 'App\Notifications\ProductSold')
+                                            <i class="bi bi-cart-fill text-success me-1"></i>
+                                            {{ __('notification.new_notification') }}
+                                            <div class="text-muted small mt-1">
+                                                {{ __( $notification->data['translation_key'], $notification->data['translation_params']) ?? '' }}
                                             </div>
                                         @else
                                             <i class="bi bi-bell-fill text-warning me-1"></i>

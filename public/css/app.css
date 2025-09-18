@@ -224,7 +224,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 2px 5px;
-    font-size: 1.2rem; 
+    font-size: 1rem; 
 }
 
 .dropdown-menu .dropdown-item {
@@ -258,6 +258,18 @@ body {
 .dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus {
   background-color: #e9ecef; 
+}
+
+/* Shoping cart logo */
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    padding: 2px 5px;
+    transition: color 0.3s ease;
+    font-size: 1rem; 
+}
+a.cart-icon:hover i {
+    color: var(--color-accent) !important; 
 }
 
 /* Image size limit for product images in swap requests */

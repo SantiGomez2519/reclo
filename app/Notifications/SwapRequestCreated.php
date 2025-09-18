@@ -26,7 +26,7 @@ class SwapRequestCreated extends Notification
         return [
             'swap_request_id' => $this->swapRequest->getId(),
             'desiredItemTitle' => $this->swapRequest->getDesiredItem()->getTitle(),
-            'message' => 'Someone has created a swap request for one of your products.',
+            'translation_key' => 'notification.swap_request_created',
         ];
     }
 }

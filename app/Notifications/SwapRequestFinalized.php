@@ -23,19 +23,27 @@ class SwapRequestFinalized extends Notification
 
     public function toDatabase($notifiable)
     {
-
-        $desiredTitle = $this->swapRequest->getDesiredItem()->getTitle() ?? 'Producto solicitado';
-        $offeredTitle = $this->swapRequest->getOfferedItem()?->getTitle() ?? 'Producto ofrecido';
+        $desiredTitle = $this->swapRequest->getDesiredItem()?->getTitle() ?? __('notification.desired_item');
+        $offeredTitle = $this->swapRequest->getOfferedItem()?->getTitle() ?? __('notification.offered_item');
 
         if ($this->swapRequest->getStatus() === 'Accepted') {
-            $message = 'The swap between "'.$desiredTitle.'" and "'.$offeredTitle.'" has been ACCEPTED.';
+            $translationKey = 'notification.swap_request_accepted';
+            $translationParams = [
+                'desired' => $desiredTitle,
+                'offered' => $offeredTitle,
+            ];
         } else {
-            $message = 'The swap request of "'.$desiredTitle.'" has been REJECTED.';
+            $translationKey = 'notification.swap_request_rejected';
+            $translationParams = [
+                'desired' => $desiredTitle,
+            ];
         }
 
         return [
-            'swap_request_id' => $this->swapRequest->getId(),
-            'message' => $message,
+            'swap_request_id'   => $this->swapRequest->getId(),
+            'translation_key'   => $translationKey,
+            'translation_params'=> $translationParams,
         ];
     }
+
 }

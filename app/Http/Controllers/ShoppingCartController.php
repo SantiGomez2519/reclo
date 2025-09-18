@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Notifications\ProductSold;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -123,6 +124,15 @@ class ShoppingCartController extends Controller
             $product->setAvailable(false);
             $product->setOrderId($order->getId());
             $product->save();
+        }
+
+        // Notify sellers
+        foreach ($products as $item) {
+            $product = $item['product'];
+            $seller = $product->getSeller();
+            if ($seller) {
+                $seller->notify(new ProductSold($product));
+            }
         }
 
         // Clear cart

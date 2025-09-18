@@ -23,13 +23,20 @@ class SwapRequestResponded extends Notification
 
     public function toDatabase($notifiable)
     {
+        $offeredTitle = optional($this->swapRequest->getOfferedItem())->getTitle();
+
+        if ($this->swapRequest->getStatus() === 'Counter Proposed') {
+            $translationKey = 'notification.swap_request_counter_offered';
+        } else {
+            $translationKey = 'notification.swap_request_responded';
+        }
+
         return [
-            'swap_request_id' => $this->swapRequest->getId(),
-            'offeredItemTitle' => optional($this->swapRequest->getOfferedItem())->getTitle(),
-            'status' => $this->swapRequest->getStatus(),
-            'message' => $this->swapRequest->getStatus() === 'Counter Proposed'
-                ? 'The item owner has proposed a counter offer.'
-                : 'The item owner has responded your swap request.',
+            'swap_request_id'   => $this->swapRequest->getId(),
+            'offeredItemTitle'  => optional($this->swapRequest->getOfferedItem())->getTitle(),
+            'status'            => $this->swapRequest->getStatus(),
+            'translation_key'   => $translationKey,
         ];
     }
+
 }

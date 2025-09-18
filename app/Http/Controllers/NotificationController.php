@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Notifications\SwapRequestCreated;
+use App\Notifications\SwapRequestResponded;
+use App\Notifications\SwapRequestFinalized;
+use App\Notifications\ProductSold;
+
 
 class NotificationController extends Controller
 {
@@ -31,10 +36,10 @@ class NotificationController extends Controller
     private function getTranslatedMessage($notification): string
     {
         switch ($notification->type) {
-            case 'App\Notifications\SwapRequestCreated':
+            case SwapRequestCreated::class:
                 return __('notification.swap_request_created');
 
-            case 'App\Notifications\SwapRequestResponded':
+            case SwapRequestResponded::class:
                 $status = $notification->data['status'] ?? 'pending';
                 if (strtolower($status) === 'accepted') {
                     return __('notification.swap_request_accepted', [
@@ -50,7 +55,7 @@ class NotificationController extends Controller
                     return __('notification.swap_request_responded');
                 }
 
-            case 'App\Notifications\SwapRequestFinalized':
+            case SwapRequestFinalized::class:
                 return __('notification.swap_request_finalized');
 
             default:
@@ -64,12 +69,14 @@ class NotificationController extends Controller
         $notification->markAsRead();
 
         switch ($notification->type) {
-            case 'App\Notifications\SwapRequestCreated':
+            case SwapRequestCreated::class:
                 return redirect()->route('swap-request.receive', $notification->data['swap_request_id']);
-            case 'App\Notifications\SwapRequestResponded':
+            case SwapRequestResponded::class:
                 return redirect()->route('swap-request.finalize', $notification->data['swap_request_id']);
-            case 'App\Notifications\SwapRequestFinalized':
+            case SwapRequestFinalized::class:
                 return redirect()->route('swap-request.index')->with('status', 'Swap request finalized successfully.');
+            case ProductSold::class:
+                return redirect()->route('product.my-products')->with('status', 'View your orders for details.');
             default:
                 return redirect()->route('notification.index');
         }
