@@ -23,5 +23,3 @@ return [
     'swap_counter_offer' => 'Contraoferta de intercambio',
     'someone_wants_to_swap' => '¡Alguien quiere intercambiar contigo!',
 ];
-
-

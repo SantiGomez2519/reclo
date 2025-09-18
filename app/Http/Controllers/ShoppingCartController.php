@@ -27,7 +27,7 @@ class ShoppingCartController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        if (!$product->getAvailable()) {
+        if (! $product->getAvailable()) {
             return redirect()->back()->with('error', __('cart.product_not_available'));
         }
 
@@ -98,7 +98,7 @@ class ShoppingCartController extends Controller
         $products = [];
         foreach ($cart as $productId => $quantity) {
             $product = Product::find($productId);
-            if (!$product || !$product->getAvailable()) {
+            if (! $product || ! $product->getAvailable()) {
                 return redirect()->route('cart.index')->with('error', __('cart.product_not_available'));
             }
             if ($product->getSellerId() === $user->getId()) {

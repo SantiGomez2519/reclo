@@ -46,7 +46,7 @@ class ProductController extends Controller
         $product->setSellerId(Auth::guard('web')->id());
 
         // Handle image upload
-        $imageStorage = new ImageLocalStorage();
+        $imageStorage = new ImageLocalStorage;
         $imagePaths = $imageStorage->store($request, 'products');
         $product->setImages($imagePaths);
 
@@ -91,7 +91,7 @@ class ProductController extends Controller
         $product->setSwap($request->has('swap'));
 
         // Handle image upload
-        $imageStorage = new ImageLocalStorage();
+        $imageStorage = new ImageLocalStorage;
         $imageStorage->handleImageUpload($request, $product);
 
         $product->save();
@@ -105,7 +105,7 @@ class ProductController extends Controller
         $product->checkProductOwnership();
 
         // Delete image files
-        $imageStorage = new ImageLocalStorage();
+        $imageStorage = new ImageLocalStorage;
         $imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
@@ -133,5 +133,4 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', __('product.product_marked_as_sold'));
     }
-
 }

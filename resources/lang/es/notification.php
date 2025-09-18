@@ -11,5 +11,3 @@ return [
     'swap_request_rejected' => 'El intercambio entre ":desired" y ":offered" ha sido RECHAZADO.',
     'swap_request_finalized' => 'Intercambio completado',
 ];
-
-

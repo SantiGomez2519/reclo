@@ -59,7 +59,7 @@ class AdminProductController extends Controller
 
         // Handle image upload
         if ($request->hasFile('images')) {
-            $imageStorage = new ImageLocalStorage();
+            $imageStorage = new ImageLocalStorage;
             $imagePaths = $imageStorage->store($request, 'products');
             $product->setImages($imagePaths);
         }
@@ -96,7 +96,7 @@ class AdminProductController extends Controller
 
         // Handle image upload
         if ($request->hasFile('images')) {
-            $imageStorage = new ImageLocalStorage();
+            $imageStorage = new ImageLocalStorage;
             $imageStorage->handleImageUpload($request, $product);
         }
 
@@ -110,7 +110,7 @@ class AdminProductController extends Controller
         $product = Product::findOrFail($id);
 
         // Delete associated images
-        $imageStorage = new ImageLocalStorage();
+        $imageStorage = new ImageLocalStorage;
         $imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
