@@ -23,5 +23,3 @@ return [
     'swap_counter_offer' => 'Swap counter-offer',
     'someone_wants_to_swap' => 'Someone wants to Swap with you!',
 ];
-
-

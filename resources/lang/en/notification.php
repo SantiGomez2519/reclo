@@ -11,5 +11,3 @@ return [
     'swap_request_rejected' => 'The swap between ":desired" and ":offered" has been REJECTED.',
     'swap_request_finalized' => 'Swap completed',
 ];
-
-

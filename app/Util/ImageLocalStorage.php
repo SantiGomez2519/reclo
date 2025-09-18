@@ -2,11 +2,11 @@
 
 namespace App\Util;
 
-use App\Interfaces\ImageStorage;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ImageLocalStorage implements ImageStorage
+class ImageLocalStorage
 {
     public function store(Request $request, string $folder = ''): array
     {
@@ -37,6 +37,29 @@ class ImageLocalStorage implements ImageStorage
     {
         foreach ($paths as $path) {
             $this->delete($path);
+        }
+    }
+
+    public function handleImageUpload(Request $request, Product $product): void
+    {
+        if ($request->hasFile('images')) {
+            // Delete old images if they're not the default
+            $this->deleteOldImages($product->getImages(false));
+            $imagePaths = $this->store($request, 'products');
+            $product->setImages($imagePaths);
+        } else {
+            // Keep current images if no new images are uploaded
+            $currentImages = $product->getImages(false);
+            $product->setImages($currentImages);
+        }
+    }
+
+    public function deleteOldImages(array $images): void
+    {
+        foreach ($images as $imagePath) {
+            if ($imagePath !== 'images/default-product.jpg') {
+                $this->delete($imagePath);
+            }
         }
     }
 }
