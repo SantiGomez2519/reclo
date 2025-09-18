@@ -19,22 +19,6 @@ class ProductController extends Controller
         $this->imageStorage = $imageStorage;
     }
 
-    private function getFormData(): array
-    {
-        return [
-            'categories' => ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'],
-            'conditions' => ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'],
-            'sizes' => ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'],
-        ];
-    }
-
-    private function checkProductOwnership(Product $product): void
-    {
-        if ($product->getSellerId() !== Auth::guard('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
-    }
-
     public function index(): View
     {
         $viewData = [];
@@ -45,7 +29,7 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        return view('product.create')->with('viewData', $this->getFormData());
+        return view('product.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -84,9 +68,9 @@ class ProductController extends Controller
     public function edit(int $id): View
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
-        $viewData = array_merge($this->getFormData(), ['product' => $product]);
+        $viewData['product'] = $product;
 
         return view('product.edit')->with('viewData', $viewData);
     }
@@ -94,7 +78,7 @@ class ProductController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
         Product::validate($request, true);
 
@@ -118,7 +102,7 @@ class ProductController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
         // Delete image files using ImageStorage
         $this->deleteOldImages($product->getImages(false));
@@ -141,7 +125,7 @@ class ProductController extends Controller
     public function markAsSold(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
         $product->setAvailable(false);
         $product->save();

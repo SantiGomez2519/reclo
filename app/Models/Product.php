@@ -202,6 +202,13 @@ class Product extends Model
         $this->attributes['image'] = json_encode($images);
     }
 
+    public function checkProductOwnership(): void
+    {
+        if ($this->getSellerId() !== auth('web')->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    }
+
     public function getCreatedAt(): string
     {
         return $this->attributes['created_at'];
