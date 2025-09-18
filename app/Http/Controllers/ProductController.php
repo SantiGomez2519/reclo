@@ -65,6 +65,7 @@ class ProductController extends Controller
 
     public function edit(int $id): View
     {
+        $viewData = [];
         $product = Product::findOrFail($id);
         $product->checkProductOwnership();
 
