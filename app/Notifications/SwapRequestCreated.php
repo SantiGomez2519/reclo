@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use App\Models\SwapRequest;
 use App\Models\CustomUser;
+use App\Models\SwapRequest;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
 class SwapRequestCreated extends Notification
@@ -31,5 +31,4 @@ class SwapRequestCreated extends Notification
             'translation_key' => 'notification.swap_request_created',
         ];
     }
-
 }

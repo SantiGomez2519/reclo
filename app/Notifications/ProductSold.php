@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use App\Models\Product;
 use App\Models\CustomUser;
+use App\Models\Product;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
 class ProductSold extends Notification
@@ -32,5 +32,4 @@ class ProductSold extends Notification
             'translation_params' => ['product' => $this->product->title],
         ];
     }
-
 }

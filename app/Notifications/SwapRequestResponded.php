@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use App\Models\SwapRequest;
 use App\Models\CustomUser;
+use App\Models\SwapRequest;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
 class SwapRequestResponded extends Notification
@@ -34,11 +34,10 @@ class SwapRequestResponded extends Notification
         }
 
         return [
-            'swap_request_id'   => $this->swapRequest->getId(),
-            'offeredItemTitle'  => optional($this->swapRequest->getOfferedItem())->getTitle(),
-            'status'            => $this->swapRequest->getStatus(),
-            'translation_key'   => $translationKey,
+            'swap_request_id' => $this->swapRequest->getId(),
+            'offeredItemTitle' => optional($this->swapRequest->getOfferedItem())->getTitle(),
+            'status' => $this->swapRequest->getStatus(),
+            'translation_key' => $translationKey,
         ];
     }
-
 }

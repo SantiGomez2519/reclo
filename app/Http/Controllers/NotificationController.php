@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\ProductSold;
+use App\Notifications\SwapRequestCreated;
+use App\Notifications\SwapRequestFinalized;
+use App\Notifications\SwapRequestResponded;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use App\Notifications\SwapRequestCreated;
-use App\Notifications\SwapRequestResponded;
-use App\Notifications\SwapRequestFinalized;
-use App\Notifications\ProductSold;
-
 
 class NotificationController extends Controller
 {

@@ -44,7 +44,6 @@ class SwapRequestController extends Controller
 
         $desiredItem = Product::find($swapRequest->getDesiredItemId());
         $offeredItem = Product::find($swapRequest->getOfferedItemId());
-        
 
         $initiator = CustomUser::find($swapRequest->getInitiatorId())->getName();
         $responder = CustomUser::find($swapRequest->getDesiredItem()->getSellerId())->getName();
@@ -116,7 +115,7 @@ class SwapRequestController extends Controller
         $swapRequest = SwapRequest::findOrFail($id);
 
         if ($swapRequest->getInitiatorId() === Auth::guard('web')->user()->getId()) {
-             return redirect()->route('swap-request.show', $swapRequest->getId());
+            return redirect()->route('swap-request.show', $swapRequest->getId());
         }
 
         if ($swapRequest->getDesiredItem()->getSellerId() !== Auth::guard('web')->user()->getId()) {
@@ -174,7 +173,7 @@ class SwapRequestController extends Controller
         $swapRequest = SwapRequest::findOrFail($id);
 
         if ($swapRequest->getDesiredItem()->getSellerId() === Auth::guard('web')->user()->getId()) {
-             return redirect()->route('swap-request.show', $swapRequest->getId());
+            return redirect()->route('swap-request.show', $swapRequest->getId());
         }
 
         if ($swapRequest->getInitiatorId() !== Auth::guard('web')->user()->getId()) {
