@@ -35,49 +35,18 @@ class ProductController extends Controller
         }
     }
 
-    public function index(Request $request)
-{
-    $query = Product::with('seller')->where('available', true);
-    
-    // Búsqueda por keyword (FR8)
-    if ($request->has('search') && !empty($request->search)) {
-        $searchTerm = $request->search;
-        $query->where(function($q) use ($searchTerm) {
-            $q->where('title', 'like', '%'.$searchTerm.'%')
-              ->orWhere('description', 'like', '%'.$searchTerm.'%');
-        });
+   public function index(): View
+    {
+        $viewData = [];
+        $viewData['products'] = Product::with('seller')->where('available', true)->get();
+
+        $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
+        $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
+        $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
+        $viewData['filters'] = [];
+
+        return view('product.index')->with('viewData', $viewData);
     }
-    
-    // Filtros (FR7)
-    if ($request->has('category') && !empty($request->category)) {
-        $query->where('category', $request->category);
-    }
-    
-    if ($request->has('size') && !empty($request->size)) {
-        $query->where('size', $request->size);
-    }
-    
-    if ($request->has('condition') && !empty($request->condition)) {
-        $query->where('condition', $request->condition);
-    }
-    
-    if ($request->has('min_price') && !empty($request->min_price)) {
-        $query->where('price', '>=', $request->min_price);
-    }
-    
-    if ($request->has('max_price') && !empty($request->max_price)) {
-        $query->where('price', '<=', $request->max_price);
-    }
-    
-    $viewData = [];
-    $viewData['products'] = $query->get();
-    $viewData['filters'] = $request->all();
-    $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
-    $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
-    $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
-    
-    return view('product.index')->with('viewData', $viewData);
-}
 
     public function create(): View
     {
@@ -184,6 +153,64 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', __('product.product_marked_as_sold'));
     }
+
+    public function search(Request $request): View
+{
+    $viewData = [];
+    
+    $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
+    $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
+    $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
+    $viewData['filters'] = $request->all();
+
+    $productsQuery = Product::with('seller')->where('available', true);
+
+    if ($request->has('search') && !empty($request->search)) {
+        $keyword = strtolower($request->search);
+        $keywordsArray = explode(' ', $keyword);
+
+        $productsQuery->where(function ($query) use ($keywordsArray, $keyword) {
+            foreach ($keywordsArray as $word) {
+                $singularWord = rtrim($word, 's');
+                $query->orWhere('title', 'LIKE', '%'.$word.'%')
+                    ->orWhere('title', 'LIKE', '%'.$singularWord.'%')
+                    ->orWhere('description', 'LIKE', '%'.$word.'%')
+                    ->orWhere('description', 'LIKE', '%'.$singularWord.'%');
+            }
+
+            $query->orWhere('title', 'LIKE', '%'.str_replace(' ', '', $keyword).'%')
+                ->orWhere('description', 'LIKE', '%'.str_replace(' ', '', $keyword).'%');
+        });
+    }
+
+    if ($request->has('category') && !empty($request->category)) {
+        $productsQuery->where('category', $request->category);
+    }
+
+    if ($request->has('size') && !empty($request->size)) {
+        $productsQuery->where('size', $request->size);
+    }
+
+    if ($request->has('condition') && !empty($request->condition)) {
+        $productsQuery->where('condition', $request->condition);
+    }
+
+    if ($request->has('min_price') && !empty($request->min_price)) {
+        $productsQuery->where('price', '>=', (int)$request->min_price);
+    }
+
+    if ($request->has('max_price') && !empty($request->max_price)) {
+        $productsQuery->where('price', '<=', (int)$request->max_price);
+    }
+
+    $products = $productsQuery->get();
+
+    $viewData['title'] = __('Product.results_for') . ($request->search ?? '');
+    $viewData['products'] = $products;
+    $viewData['searchTerm'] = $request->search ?? '';
+
+    return view('product.search')->with('viewData', $viewData);
+}
 
     private function handleImageUpload(Request $request, Product $product): void
     {
