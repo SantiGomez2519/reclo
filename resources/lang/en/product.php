@@ -151,4 +151,8 @@ return [
     'email' => 'Email',
     'payment_method' => 'Payment Method',
     'member_since' => 'Member since',
+    'showing_results_for' => 'Showing results for:',
+    'try_different_filters' => 'Try different filters or search terms',
+    'clear_all_filters' => 'Clear All Filters',
+    'no_products_found' => 'No products found',
 ];
