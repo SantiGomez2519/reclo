@@ -41,7 +41,6 @@ Follow these steps to set up the project locally:
 2. **Install dependencies**
     ```bash
    composer install
-   npm install && npm run dev
 
 3. **Set up environment file**
    Copy the .env.example file and update it with your local configuration:
