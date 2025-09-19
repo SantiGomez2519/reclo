@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Models\SwapRequest;
+use App\Models\CustomUser;
 use Illuminate\Notifications\Notification;
 
 class SwapRequestResponded extends Notification
@@ -11,17 +13,17 @@ class SwapRequestResponded extends Notification
 
     private $swapRequest;
 
-    public function __construct($swapRequest)
+    public function __construct(SwapRequest $swapRequest)
     {
         $this->swapRequest = $swapRequest;
     }
 
-    public function via($notifiable)
+    public function via(CustomUser $notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    public function toDatabase(CustomUser $notifiable): array
     {
         $offeredTitle = optional($this->swapRequest->getOfferedItem())->getTitle();
 

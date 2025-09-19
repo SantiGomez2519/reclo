@@ -27,5 +27,24 @@ class ViewServiceProvider extends ServiceProvider
             }
             $view->with('cartCount', $cartCount);
         });
+
+        view()->composer('layouts.app', function ($view) {
+            $user = auth()->guard('web')->user();
+            $notifications = $user
+                ? $user->unreadNotifications
+                : collect();
+            $view->with('notifications', $notifications);
+        });
+
+        view()->composer('layouts.app', function ($view) {
+            $user = auth()->guard('web')->user();
+            $notificationTypes = [
+                'swap_request_created' => 'App\Notifications\SwapRequestCreated',
+                'swap_request_responded' => 'App\Notifications\SwapRequestResponded',
+                'swap_request_finalized' => 'App\Notifications\SwapRequestFinalized',
+                'product_sold' => 'App\Notifications\ProductSold',
+            ];
+            $view->with('notificationTypes', $notificationTypes);
+        });
     }
 }

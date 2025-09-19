@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Models\SwapRequest;
+use App\Models\CustomUser;
 use Illuminate\Notifications\Notification;
 
 class SwapRequestCreated extends Notification
@@ -11,17 +13,17 @@ class SwapRequestCreated extends Notification
 
     private $swapRequest;
 
-    public function __construct($swapRequest)
+    public function __construct(SwapRequest $swapRequest)
     {
         $this->swapRequest = $swapRequest;
     }
 
-    public function via($notifiable)
+    public function via(CustomUser $notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    public function toDatabase(CustomUser $notifiable): array
     {
         return [
             'swap_request_id' => $this->swapRequest->getId(),
@@ -29,4 +31,5 @@ class SwapRequestCreated extends Notification
             'translation_key' => 'notification.swap_request_created',
         ];
     }
+
 }

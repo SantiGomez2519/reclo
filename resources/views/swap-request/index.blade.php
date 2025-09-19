@@ -9,7 +9,7 @@
         @if ($viewData['swapRequests']->count() > 0)
             @foreach ($viewData['swapRequests'] as $swapRequest)
                 <div class="card shadow-sm mb-4">
-                    <div class="card-header border-0" ">
+                    <div class="card-header border-0">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold">Swap Request #{{ $swapRequest->getId() }}</span>
                             <div>
@@ -90,7 +90,7 @@
                                                         class="badge bg-light text-dark">{{ $swapRequest->getOfferedItem()->getCategory() }}</span>
                                                 @endif
                                             </div>
-                                            <p class="small text-muted mb-0">Owner:
+                                            <p class="small text-muted mb-0">{{ __('product.sold_by') }}:
                                                 {{ $swapRequest->getOfferedItem()->getSeller()->getName() }}</p>
                                         </div>
                                     </div>

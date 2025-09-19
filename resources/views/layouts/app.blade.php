@@ -111,10 +111,10 @@
                         <a id="notifDropdown" class="nav-link position-relative" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-bell" style="font-size: 1.4rem;"></i>
-                            @if (count($viewData['notifications']) > 0)
+                            @if (count($notifications) > 0)
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
-                                    {{ count($viewData['notifications']) }}
+                                    {{ count($notifications) }}
                                 </span>
                             @endif
                         </a>
@@ -124,29 +124,29 @@
                             <h6 class="dropdown-header">{{ __('notification.title') }}</h6>
 
                             <div class="notif-list">
-                                @forelse($viewData['notifications'] as $notification)
+                                @forelse($notifications as $notification)
                                     <a class="dropdown-item small"
                                         href="{{ route('notifications.read', $notification->id) }}">
-                                        @if ($notification->type === 'App\Notifications\SwapRequestCreated')
+                                        @if ($notification->type === $notificationTypes['swap_request_created'])
                                             <i class="bi bi-envelope-plus text-primary me-1"></i>
                                             {{ __('notification.new_notification') }} —
                                             "{{ $notification->data['desiredItemTitle'] ?? 'Product' }}"
                                             <div class="text-muted small mt-1">
-                                                {{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                                                {{ $notification->created_at->diffForHumans() }}
                                             </div>
-                                        @elseif($notification->type === 'App\Notifications\SwapRequestResponded')
+                                        @elseif($notification->type === $notificationTypes['swap_request_responded'])
                                             <i class="bi bi-arrow-repeat text-info me-1"></i>
                                             {{ __('notification.new_notification') }}
                                             <div class="text-muted small mt-1">
                                                 {{ __($notification->data['translation_key']) }}
                                             </div>
-                                        @elseif($notification->type === 'App\Notifications\SwapRequestFinalized')
+                                        @elseif($notification->type === $notificationTypes['swap_request_finalized'])
                                             <i class="bi bi-check-circle-fill text-success me-1"></i>
                                             {{ __('notification.new_notification') }}
                                             <div class="text-muted small mt-1">
                                                 {{ __($notification->data['translation_key'], $notification->data['translation_params']) }}
                                             </div>
-                                        @elseif($notification->type === 'App\Notifications\ProductSold')
+                                        @elseif($notification->type === $notificationTypes['product_sold'])
                                             <i class="bi bi-cart-fill text-success me-1"></i>
                                             {{ __('notification.new_notification') }}
                                             <div class="text-muted small mt-1">
@@ -161,7 +161,6 @@
                                     <div class="dropdown-item text-muted small">{{ __('notification.none') }}</div>
                                 @endforelse
                             </div>
-
 
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-center small"

@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Models\Product;
+use App\Models\CustomUser;
 use Illuminate\Notifications\Notification;
 
 class ProductSold extends Notification
@@ -11,17 +13,17 @@ class ProductSold extends Notification
 
     private $product;
 
-    public function __construct($product)
+    public function __construct(Product $product)
     {
         $this->product = $product;
     }
 
-    public function via($notifiable)
+    public function via(CustomUser $notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    public function toDatabase(CustomUser $notifiable): array
     {
         return [
             'product_id' => $this->product->getId(),
@@ -30,4 +32,5 @@ class ProductSold extends Notification
             'translation_params' => ['product' => $this->product->title],
         ];
     }
+
 }
