@@ -40,10 +40,6 @@ class ProductController extends Controller
         $viewData = [];
         $viewData['products'] = Product::with('seller')->where('available', true)->get();
 
-        $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
-        $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
-        $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
-        $viewData['filters'] = [];
 
         return view('product.index')->with('viewData', $viewData);
     }
@@ -155,7 +151,7 @@ class ProductController extends Controller
     }
 
     public function search(Request $request): View
-{
+    {
     $viewData = [];
     
     $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
@@ -210,7 +206,7 @@ class ProductController extends Controller
     $viewData['searchTerm'] = $request->search ?? '';
 
     return view('product.search')->with('viewData', $viewData);
-}
+    }
 
     private function handleImageUpload(Request $request, Product $product): void
     {

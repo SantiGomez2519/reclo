@@ -74,10 +74,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-center">
-                                    <div class="border rounded p-2 bg-light">
-                                        <h5 class="mb-1 text-success">{{ $viewData['salesHistory']->count() }}</h5>
-                                        <small class="text-muted">{{ __('Sales') }}</small>
-                                    </div>
+                                    <a href="{{ route('user.sales-history') }}" class="text-decoration-none">
+                                        <div class="border rounded p-2 bg-light">
+                                            <h5 class="mb-1 text-success">{{ $viewData['purchaseHistory']->count() }}</h5>
+                                            <small class="text-muted">{{ __('Sales') }}</small>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -88,11 +90,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="purchases-tab" data-bs-toggle="tab" href="#purchases" role="tab">
                                 <i class="fas fa-shopping-bag me-1"></i>{{ __('product.my_purchases') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab">
-                                <i class="fas fa-store me-1"></i>{{ __('product.my_sales') }}
                             </a>
                         </li>
                     </ul>
@@ -153,72 +150,6 @@
                                     <i class="fas fa-shopping-bag fa-3x text-muted mb-3"></i>
                                     <h5 class="text-muted">{{ __('product.no_purchases_yet') }}</h5>
                                     <p class="text-muted">{{ __('product.your_purchase_history') }}</p>
-                                </div>
-                            @endforelse
-                        </div>
-
-                        <!-- FR16: Historial de Ventas -->
-                        <div class="tab-pane fade" id="sales" role="tabpanel">
-                            @forelse($viewData['salesHistory'] as $product)
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <img src="{{ $product->getImages()[0] ?? asset('storage/images/logo.png') }}" 
-                                                     alt="{{ $product->title }}" 
-                                                     class="img-fluid rounded" 
-                                                     style="height: 120px; object-fit: cover; width: 100%;">
-                                            </div>
-                                            <div class="col-md-7">
-                                                <h5 class="card-title">{{ $product->title }}</h5>
-                                                <div class="row mb-2">
-                                                    <div class="col-md-6">
-                                                        <strong>{{ __('Price:') }}</strong> ${{ number_format($product->price, 0) }}
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong>{{ __('product.sold_on') }}:</strong> {{ $product->updated_at->format('M j, Y') }}
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-md-6">
-                                                        <strong>{{ __('product.buyer') }}:</strong> {{ $product->order->buyer->name ?? __('Unknown') }}
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <strong>{{ __('product.category') }}:</strong> 
-                                                        <span class="badge bg-primary">{{ $product->category }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <strong>{{ __('product.condition') }}:</strong> 
-                                                        <span class="badge bg-info">{{ $product->condition }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 text-center">
-                                                @if($product->review)
-                                                    <div class="rating">
-                                                        <h6>{{ __('Rating:') }}</h6>
-                                                        @for($i = 1; $i <= 5; $i++)
-                                                            <i class="fas fa-star {{ $i <= $product->review->rating ? 'text-warning' : 'text-muted' }}"></i>
-                                                        @endfor
-                                                        <p class="text-muted small mt-2">"{{ Str::limit($product->review->comment, 50) }}"</p>
-                                                    </div>
-                                                @else
-                                                    <div class="text-muted">
-                                                        <i class="fas fa-comment-slash fa-2x mb-2"></i>
-                                                        <p class="small">{{ __('No rating yet') }}</p>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="text-center py-4">
-                                    <i class="fas fa-store-slash fa-3x text-muted mb-3"></i>
-                                    <h5 class="text-muted">{{ __('product.no_sales_yet') }}</h5>
-                                    <p class="text-muted">{{ __('product.your_sales_history') }}</p>
                                 </div>
                             @endforelse
                         </div>

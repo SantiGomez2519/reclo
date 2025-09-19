@@ -20,7 +20,7 @@
         <div class="card shadow-sm mb-5">
             <div class="card-body">
                 <form method="GET" action="{{ route('product.search') }}">
-                    <!-- Search Input - Lo mejor de la Vista 2 -->
+                    <!-- Search Input -->
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label class="form-label small text-muted mb-1">{{ __('product.search_keyword') }}</label>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <!-- Filter Options - Lo mejor de la Vista 1 -->
+                    <!-- Filter Options  -->
                     <div class="row mb-3">
                         <div class="col-md-3 mb-2">
                             <label class="form-label small text-muted mb-1">{{ __('product.category') }}</label>
@@ -83,23 +83,16 @@
                                    value="{{ $viewData['filters']['min_price'] ?? '' }}">
                         </div>
 
-                        <div class="col-md-2 mb-2">
+                        <div class="col-md-3 mb-2">
                             <label class="form-label small text-muted mb-1">{{ __('product.max_price') }}</label>
                             <input type="number" name="max_price" class="form-control" 
                                    placeholder="$10000" max="10000" 
                                    value="{{ $viewData['filters']['max_price'] ?? '' }}">
                         </div>
-
-                        <div class="col-md-1 mb-2 d-flex align-items-end">
-                            <a href="{{ route('product.index') }}" class="btn btn-outline-dark w-100" 
-                               title="{{ __('product.clear_filters') }}">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
                     </div>
 
-                    <!-- Action Buttons - Mejorado -->
-                    <div class="row">
+                    <!-- Action Buttons  -->
+                    <div class="row justify-content-center">
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-dark w-100">
                                 <i class="fas fa-filter me-2"></i>
@@ -117,7 +110,7 @@
             </div>
         </div>
 
-        <!-- Results Count - Mejorado -->
+        <!-- Results Count  -->
         @if(isset($viewData['filters']) && count(array_filter($viewData['filters'])))
             <div class="alert alert-info mb-4">
                 <i class="fas fa-info-circle me-2"></i>
@@ -143,7 +136,7 @@
             </div>
         @endif
 
-        <!-- Products Grid - Mantenido -->
+        <!-- Products Grid  -->
         <div class="row g-4 mb-4">
             @forelse($viewData['products'] as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6">

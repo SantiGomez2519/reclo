@@ -23,14 +23,7 @@ class CustomUserController extends Controller
 
         $viewData = [];
         $viewData['user'] = $user;
-        
-        // FR16: Historial de ventas (productos vendidos por este usuario)
-        $viewData['salesHistory'] = Product::where('seller_id', $user->id)
-            ->where('available', false)
-            ->with(['order.buyer', 'review']) // Cargar relación order y su buyer
-            ->orderBy('updated_at', 'desc')
-            ->get();
-            
+                    
         // FR17: Historial de compras (órdenes donde este usuario es el comprador)
         $viewData['purchaseHistory'] = Order::where('buyer_id', $user->id)
             ->with(['products.seller', 'products.review']) // Cargar productos con sus vendedores y reviews
@@ -62,5 +55,20 @@ class CustomUserController extends Controller
         $user->save();
 
         return redirect()->route('user.profile')->with('status', 'Profile updated successfully!');
+    }
+
+    public function salesHistory(): View
+    {
+        $user = Auth::guard('web')->user();
+
+        $viewData = [];
+        $viewData['user'] = $user;
+        $viewData['salesHistory'] = Product::where('seller_id', $user->id)
+            ->where('available', false)
+            ->with(['order.buyer', 'review'])
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return view('user.sales')->with('viewData', $viewData);
     }
 }

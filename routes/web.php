@@ -37,6 +37,8 @@ Route::middleware('customer')->group(function () {
     Route::delete('/products/{id}', 'App\Http\Controllers\ProductController@destroy')->name('product.destroy');
     Route::patch('/products/{id}/mark-sold', 'App\Http\Controllers\ProductController@markAsSold')->name('product.mark-sold');
 
+    Route::get('/customer/sales-history', 'App\Http\Controllers\CustomUserController@salesHistory')->name('user.sales-history');
+
     // ----- Additional customer routes must be added here -----
 });
 
