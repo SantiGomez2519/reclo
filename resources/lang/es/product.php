@@ -150,4 +150,10 @@ return [
     'phone' => 'Teléfono',
     'payment_method' => 'Método de Pago',  
     'member_since' => 'Miembro desde',
+    'showing_results_for' => 'Mostrando resultados para:',
+    'try_different_filters' => 'Intenta con diferentes filtros o términos de búsqueda',
+    'clear_all_filters' => 'Limpiar Todos los Filtros',
+    'reset_filters' => 'Restablecer Filtros',
+    'search_keyword' => 'Palabra clave de búsqueda',
+    'no_products_found' => 'No se encontraron productos',
 ];

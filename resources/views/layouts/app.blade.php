@@ -46,7 +46,7 @@
                 </div>
 
                 <!-- Search Bar -->
-                <form class="d-flex" role="search" action="{{ route('product.index') }}" method="GET">
+                <form class="d-flex" role="search" action="{{ route('product.search') }}" method="GET">
                     <input class="form-control me-2" type="search" name="search"
                         placeholder="{{ __('layout.search_placeholder') }}"
                         aria-label="{{ __('home.search_aria_label') }}"
