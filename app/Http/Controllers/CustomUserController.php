@@ -23,12 +23,6 @@ class CustomUserController extends Controller
 
         $viewData = [];
         $viewData['user'] = $user;
-                    
-        // FR17: Historial de compras (órdenes donde este usuario es el comprador)
-        $viewData['purchaseHistory'] = Order::where('buyer_id', $user->id)
-            ->with(['products.seller', 'products.review']) // Cargar productos con sus vendedores y reviews
-            ->orderBy('order_date', 'desc')
-            ->get();
             
         return view('user.profile')->with('viewData', $viewData);
     }
