@@ -17,6 +17,7 @@ Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register'
 
 // Product Routes (public)
 Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('product.index');
+Route::get('/products/search', 'App\Http\Controllers\ProductController@search')->name('product.search');
 
 // Customer Protected Routes
 Route::middleware('customer')->group(function () {
