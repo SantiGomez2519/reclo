@@ -13,10 +13,8 @@
                     <div class="card-header" style="background-color: #efe8e0ff; ">
                         <h5 class="mb-0 text-dark fw-bold">{{ __('swap.solicited_product') }}</h5>
                     </div>
-                    @php $desiredUrl = $viewData['desiredItem']->getImages()[0] ?? asset('storage/images/logo.png'); @endphp
-                    <img src="{{ $desiredUrl }}" class="card-img-top"
-                        onerror="this.src='{{ asset('storage/images/logo.png') }}'"
-                        alt="{{ $viewData['desiredItem']->getTitle() }}">
+                    <img src="{{ $viewData['desiredItem']->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                        class="card-img-top img-limit" alt="{{ $viewData['desiredItem']->getTitle() }}">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{{ $viewData['desiredItem']->getTitle() }}</h5>
                         <p class="card-text">{{ $viewData['desiredItem']->getDescription() }}</p>
@@ -44,10 +42,8 @@
                     <div class="card-header" style="background-color: #efe8e0ff; ">
                         <h5 class="mb-0 text-dark fw-bold">{{ __('swap.counter_offer') }}</h5>
                     </div>
-                    @php $offeredUrl = $viewData['offeredItem']->getImages()[0] ?? asset('storage/images/logo.png'); @endphp
-                    <img src="{{ $offeredUrl }}" class="card-img-top"
-                        onerror="this.src='{{ asset('storage/images/logo.png') }}'"
-                        alt="{{ $viewData['offeredItem']->getTitle() }}">
+                    <img src="{{ $viewData['offeredItem']->getImages()[0] ?? asset('storage/images/logo.png') }}"
+                        class="card-img-top img-limit" alt="{{ $viewData['offeredItem']->getTitle() }}">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{{ $viewData['offeredItem']->getTitle() }}</h5>
                         <p class="card-text">{{ $viewData['offeredItem']->getDescription() }}</p>

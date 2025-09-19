@@ -39,8 +39,8 @@ class SwapRequest extends Model
         ];
 
         $messages = [
-            'offered_item_id.required' => 'You must select a product to accept the swap request.',
-            'offered_item_id.exists' => 'The selected product is not valid.',
+            'offered_item_id.required' => __('swap.select_product_to_offer'),
+            'offered_item_id.exists' => __('swap.product_not_available'),
         ];
 
         $request->validate($rules, $messages);

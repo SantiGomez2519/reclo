@@ -58,6 +58,7 @@ Route::middleware('customer')->group(function () {
     Route::get('/swap-request/{id}/finalize', 'App\Http\Controllers\SwapRequestController@finalize')->name('swap-request.finalize');
     Route::post('/swap-request/{id}/close', 'App\Http\Controllers\SwapRequestController@close')->name('swap-request.close');
     Route::get('/swap-request', 'App\Http\Controllers\SwapRequestController@index')->name('swap-request.index');
+    Route::get('/swap-request/{id}/show', 'App\Http\Controllers\SwapRequestController@show')->name('swap-request.show');
 
     // ----- Notifications Routes -----
     Route::get('/notifications', 'App\Http\Controllers\NotificationController@index')->name('notifications.index');

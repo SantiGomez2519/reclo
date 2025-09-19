@@ -12,7 +12,13 @@
                     {{ $notification->read_at ? '' : 'list-group-item-action list-group-item-light' }}">
 
                         <div>
-                            <strong>{{ $notification->translated_message ?? __('notification.new_notification') }}</strong>
+                            <strong>
+                                @if ($notification->data['translation_params'] ?? false)
+                                    {{ __($notification->data['translation_key'], $notification->data['translation_params']) }}
+                                @else
+                                    {{ __($notification->data['translation_key']) }}
+                                @endif
+                            </strong>
                             <br>
                             <small class="text-muted">
                                 {{ $notification->created_at->diffForHumans() }}

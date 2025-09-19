@@ -3,7 +3,7 @@
 @section('content')
     <div class="container py-4">
         <h2 class="mb-4">{{ __('swap.confirm_swap_request') }}</h2>
-        <p class="text-muted mb-0">{{ __('swap.propose_intro', ['name' => $viewData['desiredItem']->seller->getName()]) }}
+        <p class="text-muted mb-0">{{ __('swap.create_intro', ['name' => $viewData['desiredItem']->seller->getName()]) }}
         </p>
         <hr class="mb-4">
 
@@ -14,6 +14,10 @@
                     <div class="card-header border-0" style="background-color: #efe8e0ff; ">
                         <h4 class="mb-0 text-dark">{{ __('product.product_details') }}</h4>
                     </div>
+
+                    <img src="{{ $viewData['desiredItem']->getImages()[0] ?? 'https://via.placeholder.com/250' }}"
+                        class="card-img-top img-limit" alt="{{ $viewData['desiredItem']->getTitle() }}">
+
                     <div class="card-body">
 
                         <h5 class="fw-bold">{{ $viewData['desiredItem']->getTitle() }}</h5>
@@ -42,7 +46,7 @@
                             <div>
                                 <span class="fw-bold">{{ __('product.sold_by') }}:
                                     {{ $viewData['desiredItem']->seller->getName() }}</span><br>
-                                <small class="text-muted">{{ __('home.member_since') ?? 'Member since' }}
+                                <small class="text-muted">{{ __('home.member_since') }}
                                     {{ \Carbon\Carbon::parse($viewData['desiredItem']->seller->getCreatedAt())->format('Y') }}</small>
                             </div>
                         </div>
@@ -55,7 +59,7 @@
                                 <button type="submit" class="btn btn-success px-4">{{ __('swap.accept') }}</button>
                             </form>
                             <a href="{{ route('home.index') }}"
-                                class="btn btn-danger px-4">{{ __('layout.cancel') ?? 'Cancel' }}</a>
+                                class="btn btn-danger px-4">{{ __('swap.cancel') }}</a>
                         </div>
 
                     </div>

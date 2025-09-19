@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\CustomUser;
+use App\Models\SwapRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
@@ -11,22 +13,22 @@ class SwapRequestCreated extends Notification
 
     private $swapRequest;
 
-    public function __construct($swapRequest)
+    public function __construct(SwapRequest $swapRequest)
     {
         $this->swapRequest = $swapRequest;
     }
 
-    public function via($notifiable)
+    public function via(CustomUser $notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    public function toDatabase(CustomUser $notifiable): array
     {
         return [
             'swap_request_id' => $this->swapRequest->getId(),
             'desiredItemTitle' => $this->swapRequest->getDesiredItem()->getTitle(),
-            'message' => 'Someone has created a swap request for one of your products.',
+            'translation_key' => 'notification.swap_request_created',
         ];
     }
 }

@@ -224,7 +224,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 2px 5px;
-    font-size: 1.2rem; 
+    font-size: 1rem; 
 }
 
 .dropdown-menu .dropdown-item {
@@ -259,3 +259,49 @@ body {
 .dropdown-menu .dropdown-item:focus {
   background-color: #e9ecef; 
 }
+
+/* Shoping cart logo */
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    padding: 2px 5px;
+    transition: color 0.3s ease;
+    font-size: 1rem; 
+}
+a.cart-icon:hover i {
+    color: var(--color-accent) !important; 
+}
+
+/* Image size limit for product images in swap requests */
+.img-limit {
+    max-width: 400px;   
+    max-height: 400px;  
+    width: auto;      
+    height: auto;  
+    display: block;
+    margin: 0 auto;     
+}
+
+.btn-swap {
+    display: inline-block;
+    padding: 0.25em 0.65em;   /* mismo padding que el badge */
+    font-size: 1rem;          /* igual que fs-6 */
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;          
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.40rem;   
+    background-color: transparent;
+    border: 2px solid #fff;   
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-swap:hover {
+    background-color: #ffc107; /* amarillo bootstrap (warning) */
+    border-color: #ffc107;
+    color: #fff;              /* texto oscuro para contraste */
+}
+

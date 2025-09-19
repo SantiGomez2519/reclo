@@ -9,16 +9,26 @@
         @if ($viewData['swapRequests']->count() > 0)
             @foreach ($viewData['swapRequests'] as $swapRequest)
                 <div class="card shadow-sm mb-4">
-                    <div class="card-header border-0" style="background-color: #b1cfa7ff; ">
+                    <div class="card-header border-0">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold">Swap Request #{{ $swapRequest->getId() }}</span>
                             <div>
                                 @if ($swapRequest->getStatus() === 'Accepted')
                                     <span class="badge bg-success fs-6">{{ __('swap.accepted') }}</span>
+                                    <a href="{{ route('swap-request.show', ['id' => $swapRequest->getId()]) }}" 
+                                    class="btn btn-swap">{{ __('swap.view_request')}}</a>
                                 @elseif($swapRequest->getStatus() === 'Rejected')
                                     <span class="badge bg-danger fs-6">{{ __('swap.rejected') }}</span>
-                                @else
+                                    <a href="{{ route('swap-request.show', ['id' => $swapRequest->getId()]) }}" 
+                                    class="btn btn-swap">{{ __('swap.view_request')}}</a>
+                                @elseif($swapRequest->getStatus() === 'Pending')
                                     <span class="badge bg-warning fs-6">{{ __('swap.pending') }}</span>
+                                    <a href="{{ route('swap-request.receive', ['id' => $swapRequest->getId()]) }}" 
+                                    class="btn btn-swap">{{ __('swap.view_request')}}</a>
+                                @else
+                                    <span class="badge bg-warning fs-6">{{ __('swap.counter_offered') }}</span>
+                                    <a href="{{ route('swap-request.finalize', ['id' => $swapRequest->getId()]) }}" 
+                                    class="btn btn-swap">{{ __('swap.view_request')}}</a>
                                 @endif
                             </div>
                         </div>
@@ -32,7 +42,7 @@
                                         <h5 class="mb-0 text-dark">{{ __('swap.solicited_product') }}</h5>
                                     </div>
                                     <img src="{{ $swapRequest->getDesiredItem()->getImages()[0] ?? 'https://via.placeholder.com/250' }}"
-                                        class="card-img-top" alt="{{ $swapRequest->getDesiredItem()->getTitle() }}">
+                                        class="card-img-top img-limit" alt="{{ $swapRequest->getDesiredItem()->getTitle() }}">
                                     <div class="card-body">
                                         <h6 class="card-title fw-bold">{{ $swapRequest->getDesiredItem()->getTitle() }}</h6>
                                         <p class="card-text small">{{ $swapRequest->getDesiredItem()->getDescription() }}
@@ -62,7 +72,7 @@
                                             <h5 class="mb-0 text-dark">{{ __('swap.counter_offer') }}</h5>
                                         </div>
                                         <img src="{{ $swapRequest->getOfferedItem()->getImages()[0] ?? 'https://via.placeholder.com/250' }}"
-                                            class="card-img-top" alt="{{ $swapRequest->getOfferedItem()->getTitle() }}">
+                                            class="card-img-top img-limit" alt="{{ $swapRequest->getOfferedItem()->getTitle() }}">
                                         <div class="card-body">
                                             <h6 class="card-title fw-bold">{{ $swapRequest->getOfferedItem()->getTitle() }}
                                             </h6>
@@ -80,7 +90,7 @@
                                                         class="badge bg-light text-dark">{{ $swapRequest->getOfferedItem()->getCategory() }}</span>
                                                 @endif
                                             </div>
-                                            <p class="small text-muted mb-0">Owner:
+                                            <p class="small text-muted mb-0">{{ __('product.sold_by') }}:
                                                 {{ $swapRequest->getOfferedItem()->getSeller()->getName() }}</p>
                                         </div>
                                     </div>
@@ -90,7 +100,7 @@
                                             <h5 class="mb-0 text-dark">{{ __('swap.counter_offer') }}</h5>
                                         </div>
                                         <div class="card-body d-flex align-items-center justify-content-center">
-                                            <div class="alert alert-warning mb-0">{{ __('swap.no_products_available') }}
+                                            <div class="alert alert-warning mb-0">{{ __('swap.no_counter_offer') }}
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +116,7 @@
             @endforeach
         @else
             <div class="alert alert-info">
-                {{ __('notification.none') }}
+                {{ __('swap.none') }}
             </div>
         @endif
 
