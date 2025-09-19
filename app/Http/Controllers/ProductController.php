@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ImageStorage;
 use App\Models\Product;
+use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,41 +11,22 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    private ImageStorage $imageStorage;
-
-    public function __construct(ImageStorage $imageStorage)
+    public function __construct()
     {
         $this->middleware('auth:web')->except(['index', 'show']);
-        $this->imageStorage = $imageStorage;
-    }
-
-    private function getFormData(): array
-    {
-        return [
-            'categories' => ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'],
-            'conditions' => ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'],
-            'sizes' => ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'],
-        ];
-    }
-
-    private function checkProductOwnership(Product $product): void
-    {
-        if ($product->getSellerId() !== Auth::guard('web')->id()) {
-            abort(403, 'Unauthorized action.');
-        }
     }
 
     public function index(): View
     {
         $viewData = [];
-        $viewData['products'] = Product::with('seller')->where('status', 'available')->get();
+        $viewData['products'] = Product::with('seller')->where('available', true)->get();
 
         return view('product.index')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        return view('product.create')->with('viewData', $this->getFormData());
+        return view('product.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -60,12 +41,13 @@ class ProductController extends Controller
         $product->setSize($request->size);
         $product->setCondition($request->condition);
         $product->setPrice($request->price);
-        $product->setStatus('available');
+        $product->setAvailable(true);
         $product->setSwap($request->has('swap'));
         $product->setSellerId(Auth::guard('web')->id());
 
-        // Handle image upload using ImageStorage
-        $imagePaths = $this->imageStorage->store($request, 'products');
+        // Handle image upload
+        $imageStorage = new ImageLocalStorage;
+        $imagePaths = $imageStorage->store($request, 'products');
         $product->setImages($imagePaths);
 
         $product->save();
@@ -83,10 +65,11 @@ class ProductController extends Controller
 
     public function edit(int $id): View
     {
+        $viewData = [];
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
-        $viewData = array_merge($this->getFormData(), ['product' => $product]);
+        $viewData['product'] = $product;
 
         return view('product.edit')->with('viewData', $viewData);
     }
@@ -94,7 +77,7 @@ class ProductController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
         Product::validate($request, true);
 
@@ -107,8 +90,9 @@ class ProductController extends Controller
         $product->setPrice($request->price);
         $product->setSwap($request->has('swap'));
 
-        // Handle image upload using ImageStorage
-        $this->handleImageUpload($request, $product);
+        // Handle image upload
+        $imageStorage = new ImageLocalStorage;
+        $imageStorage->handleImageUpload($request, $product);
 
         $product->save();
 
@@ -118,10 +102,11 @@ class ProductController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
-        // Delete image files using ImageStorage
-        $this->deleteOldImages($product->getImages(false));
+        // Delete image files
+        $imageStorage = new ImageLocalStorage;
+        $imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
 
@@ -141,34 +126,11 @@ class ProductController extends Controller
     public function markAsSold(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
-        $this->checkProductOwnership($product);
+        $product->checkProductOwnership();
 
-        $product->setStatus('sold');
+        $product->setAvailable(false);
         $product->save();
 
         return redirect()->back()->with('success', __('product.product_marked_as_sold'));
-    }
-
-    private function handleImageUpload(Request $request, Product $product): void
-    {
-        if ($request->hasFile('images')) {
-            // Delete old images if they're not the default
-            $this->deleteOldImages($product->getImages(false));
-            $imagePaths = $this->imageStorage->store($request, 'products');
-            $product->setImages($imagePaths);
-        } else {
-            // Keep current images if no new images are uploaded
-            $currentImages = $product->getImages(false);
-            $product->setImages($currentImages);
-        }
-    }
-
-    private function deleteOldImages(array $images): void
-    {
-        foreach ($images as $imagePath) {
-            if ($imagePath !== 'images/logo.png') {
-                $this->imageStorage->delete($imagePath);
-            }
-        }
     }
 }
