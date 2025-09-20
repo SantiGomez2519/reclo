@@ -25,6 +25,7 @@ Route::middleware('customer')->group(function () {
     Route::put('/customer/profile', 'App\Http\Controllers\CustomUserController@update')->name('user.update');
 
     // Product Management Routes - Specific routes first
+    Route::get('/products/search', 'App\Http\Controllers\ProductController@search')->name('product.search');
     Route::get('/products/create', 'App\Http\Controllers\ProductController@create')->name('product.create');
     Route::post('/products', 'App\Http\Controllers\ProductController@store')->name('product.store');
     Route::get('/my-products', 'App\Http\Controllers\ProductController@myProducts')->name('product.my-products');

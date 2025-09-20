@@ -4,17 +4,6 @@
 
 @section('content')
     <div class="container py-4">
-        <!-- Header Section -->
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-dark mb-3">{{ __('product.featured_finds') }}</h1>
-            <p class="lead text-muted mb-4">{{ __('product.handpicked_treasures') }}</p>
-            @auth
-                <a href="{{ route('product.create') }}" class="btn btn-dark btn-lg">
-                    <i class="fas fa-plus me-2"></i>
-                    {{ __('product.sell_your_items') }}
-                </a>
-            @endauth
-        </div>
 
         <!-- Search and Filters Section -->
         <div class="card shadow-sm mb-5">
