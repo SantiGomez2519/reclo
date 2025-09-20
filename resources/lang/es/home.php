@@ -21,4 +21,8 @@ return [
     'alt_accounts' => 'Cuentas',
     'alt_ratings' => 'Calificaciones',
     'alt_search' => 'Búsqueda',
+    'search_aria_label' => 'Buscar',
+    'go_home' => 'Ir al Inicio',
+    'last_updated' => 'Última actualización',
+    'member_since' => 'Miembro desde',
 ];

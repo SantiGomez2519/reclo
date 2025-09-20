@@ -1,128 +1,256 @@
 /* 🎨 Admin Color palette - using same variables as main app */
 :root {
-  --color-primary: #6D9DC5;   /* Dusty Blue */
-  --color-secondary: #88B490; /* Sage Green */
-  --color-accent: #8B6B4E;    /* Warm Coffee */
-  --color-light: #F7F5F2;     /* Light Neutral */
-  --color-dark: #2E2E2E;      /* Charcoal */
+    --color-primary: #6d9dc5; /* Dusty Blue */
+    --color-secondary: #88b490; /* Sage Green */
+    --color-accent: #8b6b4e; /* Warm Coffee */
+    --color-light: #f7f5f2; /* Light Neutral */
+    --color-dark: #2e2e2e; /* Charcoal */
 }
 
 /* Admin-specific styling */
 .admin-header {
-  background-color: var(--color-accent) !important;
-  color: var(--color-light);
-  padding: 0.8rem 1.2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 800;
-  font-size: larger;
+    background-color: var(--color-accent) !important;
+    color: var(--color-light);
+    padding: 0.8rem 1.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-family: "Quicksand", sans-serif;
+    font-weight: 800;
+    font-size: larger;
 }
 
 .admin-header .navbar-brand {
-  color: var(--color-light) !important;
-  font-weight: 700;
+    color: var(--color-light) !important;
+    font-weight: 700;
 }
 
 .admin-header .nav-link {
-  color: var(--color-light) !important;
-  margin: 0 12px;
-  transition: color 0.3s ease;
+    color: var(--color-light) !important;
+    margin: 0 12px;
+    transition: color 0.3s ease;
 }
 
 .admin-header .nav-link:hover {
-  color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
 }
 
 .admin-card {
-  border: none;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  background-color: var(--color-light);
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    background-color: var(--color-light);
 }
 
 .admin-card .card-header {
-  background-color: var(--color-accent);
-  color: var(--color-light);
-  font-weight: 600;
-  border-bottom: none;
+    background-color: var(--color-accent);
+    color: var(--color-light);
+    font-weight: 600;
+    border-bottom: none;
 }
 
 .admin-body {
-  background-color: var(--color-light);
-  font-family: 'Quicksand', sans-serif;
-  color: var(--color-dark);
-  margin: 0;
-  padding: 0;
+    background-color: var(--color-light);
+    font-family: "Quicksand", sans-serif;
+    color: var(--color-dark);
+    margin: 0;
+    padding: 0;
 }
 
 .admin-badge {
-  background-color: var(--color-primary) !important;
+    background-color: var(--color-primary) !important;
 }
 
 .admin-btn-primary {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-light);
-  font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-family: 'Quicksand', sans-serif;
-  transition: all 0.3s ease;
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-light);
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: "Quicksand", sans-serif;
+    transition: all 0.3s ease;
 }
 
 .admin-btn-primary:hover {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-light);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-light);
 }
 
 .admin-alert {
-  border-radius: 8px;
-  border: none;
+    border-radius: 8px;
+    border: none;
 }
 
 .admin-dashboard-card {
-  border: none;
-  border-radius: 12px;
-  transition: transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .admin-dashboard-card:hover {
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
 /* Admin form enhancements - consistent with main app */
-.admin-body .form-control:focus, 
+.admin-body .form-control:focus,
 .admin-body .form-select:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 0.2rem rgba(139, 107, 78, 0.25);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 0.2rem rgba(139, 107, 78, 0.25);
 }
 
 /* Admin titles */
-.admin-body h1, 
-.admin-body h2, 
-.admin-body h3, 
+.admin-body h1,
+.admin-body h2,
+.admin-body h3,
 .admin-body h4 {
-  font-family: 'Quicksand', sans-serif;
-  color: var(--color-dark);
-  font-weight: 700;
+    font-family: "Quicksand", sans-serif;
+    color: var(--color-dark);
+    font-weight: 700;
 }
 
 /* Admin logout button styling */
 .admin-logout-btn {
-  background: none;
-  border: none;
-  color: var(--color-light) !important;
-  margin: 0 12px;
-  transition: color 0.3s ease;
-  text-decoration: none;
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 800;
-  font-size: larger;
+    background: none;
+    border: none;
+    color: var(--color-light) !important;
+    margin: 0 12px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 800;
+    font-size: larger;
 }
 
 .admin-logout-btn:hover {
-  color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+}
+
+/* Product thumbnail styling */
+.product-thumbnail {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.product-thumbnail img,
+.product-thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Product image fallback */
+.no-image-placeholder {
+    width: 50px;
+    height: 50px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Product detail image */
+.product-detail-image {
+    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.image-fallback-container {
+    display: none;
+}
+
+/* Inline form styling */
+.inline-form {
+    display: inline;
+}
+
+/* Current image preview */
+.current-image-preview {
+    max-width: 150px;
+}
+
+/* Customer show product container */
+.customer-product-thumbnail {
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.customer-product-thumbnail img,
+.customer-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.customer-product-fallback {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.customer-product-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.icon-small {
+    font-size: 16px;
+}
+
+/* Table cell vertical alignment */
+.admin-body table td {
+    vertical-align: middle;
+}
+
+.admin-body table th {
+    vertical-align: middle;
+}
+
+/* Language Selector Styles */
+.flag-icon {
+    display: inline-block;
+    width: 16px;
+    height: 12px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 2px;
+    margin-right: 4px;
+}
+
+.flag-icon-us {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxNiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjEyIiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEuMzMzMzMiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHk9IjIuNjY2NjciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjQiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHk9IjUuMzMzMzMiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjYuNjY2NjciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHk9IjgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjkuMzMzMzMiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHk9IjEwLjY2NjciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxLjMzMzMzIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEyIiB3aWR0aD0iMTYiIGhlaWdodD0iMS4zMzMzMyIgZmlsbD0iI0ZGMDAwMCIvPgo8cmVjdCB3aWR0aD0iNi42NjY2NyIgaGVpZ2h0PSI3LjMzMzMzIiBmaWxsPSIjMDAwMDAwIi8+CjxwYXRoIGQ9Ik0wIDBMMTYgNk0xNiAwTDAgNiIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjAuNSIvPgo8L3N2Zz4K");
+}
+
+.flag-icon-es {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxNiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjEyIiBmaWxsPSIjQ0MwMDAwIi8+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSI0IiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjQiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0IiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHk9IjgiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0IiBmaWxsPSIjRkZGRkZGIi8+Cjwvc3ZnPgo=");
+}
+
+.dropdown-item.active {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.dropdown-item:hover {
+    background-color: var(--color-light);
+    color: var(--color-dark);
 }

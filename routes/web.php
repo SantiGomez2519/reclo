@@ -45,7 +45,7 @@ Route::middleware('customer')->group(function () {
     Route::post('/cart/process-order', 'App\Http\Controllers\ShoppingCartController@processOrder')->name('cart.process-order');
 
     // Order Routes
-    Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('orders.index'); 
+    Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('orders.index');
     Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('orders.show');
 
     // ----- Additional customer routes must be added here -----

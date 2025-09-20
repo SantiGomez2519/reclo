@@ -24,7 +24,7 @@ class RegisterController extends Controller
 
     public function register(Request $request): RedirectResponse
     {
-        CustomUser::validate($request);
+        CustomUser::validate($request, false);
         $user = $this->create($request->all());
         $this->guard()->login($user);
 
