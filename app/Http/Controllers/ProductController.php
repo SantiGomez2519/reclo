@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Review;
 use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -57,8 +58,15 @@ class ProductController extends Controller
 
     public function show(int $id): View
     {
+        $product = Product::findOrFail($id);
+
+        $sellerProducts = Product::where('seller_id', $product->getSellerId())->pluck('id');
+
+        $sellerRatingAvg = Review::whereIn('product_id', $sellerProducts)->avg('rating');
+
         $viewData = [];
-        $viewData['product'] = Product::with(['seller', 'review'])->findOrFail($id);
+        $viewData['product'] = $product;
+        $viewData['sellerRatingAvg'] = $sellerRatingAvg;
 
         return view('product.show')->with('viewData', $viewData);
     }

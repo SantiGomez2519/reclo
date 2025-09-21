@@ -25,7 +25,7 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
-        <!-- Removed container padding to eliminate left border space -->
+        <!-- Container -->
         <div class="container-fluid px-2">
             <a class="navbar-brand fw-bold" href="{{ route('home.index') }}">
                 <img src="{{ asset('images/logo.png') }}" alt="{{ __('layout.app_name') }}" height="40">
@@ -37,7 +37,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <!-- Reorganized navigation links with better spacing and centering -->
+                <!-- Navigation links -->
                 <div class="navbar-nav me-auto d-flex justify-content-center">
                     <a class="nav-link px-3" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
                     @auth
@@ -48,10 +48,9 @@
                         </a>
                         <a class="nav-link px-3" href="{{ route('swap-request.index') }}">{{ __('layout.nav_swap') }}</a>
                     @endauth
-                    <a class="nav-link px-3" href="#">{{ __('layout.nav_reviews') }}</a>
                 </div>
 
-                <!-- Expanded search bar to take more space and removed max-width constraint -->
+                <!-- Expanded search bar -->
                 <div class="d-flex align-items-center mx-3 flex-grow-1">
                     <form class="d-flex w-100" role="search" action="{{ route('product.search') }}" method="GET">
                         <input class="form-control me-2 flex-grow-1" type="search" name="search"
@@ -60,14 +59,13 @@
                             style="min-width: 300px;">
                         <button class="btn btn-outline-light" type="submit">
                             <i class="bi bi-search"></i>
-                            <span class="d-none d-md-inline ms-1">{{ __('layout.search_button') }}</span>
                         </button>
                     </form>
                 </div>
 
                 <div class="vr bg-white mx-2 d-none d-lg-block"></div>
 
-                <!-- Better organized right-side elements with consistent spacing -->
+                <!-- Right-side elements -->
                 <div class="d-flex align-items-center">
                     <!-- Language Switcher -->
                     <div class="dropdown-language nav-item dropdown me-2">
@@ -99,14 +97,14 @@
 
                     <!-- Auth -->
                     @guest('web')
-                        <!-- Centered auth buttons with better spacing -->
+                        <!-- Auth buttons -->
                         <div class="d-flex align-items-center gap-2">
                             <a class="btn btn-outline-light btn-sm"
                                 href="{{ route('login') }}">{{ __('layout.login') }}</a>
-                            <a class="btn btn-outline-light btn-sm" href="{{ route('register') }}">{{ __('layout.register') }}</a>
+                            <a class="btn btn-light btn-sm text-dark" href="{{ route('register') }}">{{ __('layout.register') }}</a>
                         </div>
                     @else
-                        <!-- Better organized user actions with consistent spacing -->
+                        <!-- User actions -->
                         <div class="d-flex align-items-center gap-2">
                             <!-- Shopping Cart -->
                             <a class="nav-link position-relative cart-icon p-2" href="{{ route('cart.index') }}">

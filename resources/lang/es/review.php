@@ -15,4 +15,8 @@ return [
     'leave_review' => 'Dejar una reseña',
     'reviewed' => 'Reseñado',
     'thank_message' => '¡Gracias por dejar tu reseña!',
+    'seller_no_reviews' => 'El vendedor aún no tiene reseñas.',
+    'seller_rating' => 'Calificación del vendedor',
+    'seller_rating_info' => 'Promedio de calificaciones de compradores:',
+    'stars' => 'estrellas',
 ];

@@ -50,11 +50,13 @@ return [
 
     // Show page
     'by' => 'por',
+    'buyer' => 'Comprador: ',
     'description_label' => 'Descripción',
     'product_details' => 'Detalles del Producto',
     'sold_by' => 'Vendido por',
     'reviews' => 'Reseñas',
-    'no_reviews_yet' => 'Aún no hay reseñas. ¡Sé el primero en reseñar este producto!',
+    'review' => 'Reseña',
+    'no_reviews_yet' => 'Aún no hay reseñas.',
     'edit_product' => 'Editar Producto',
     'delete_product' => 'Eliminar Producto',
     'mark_as_sold' => 'Marcar como Vendido',

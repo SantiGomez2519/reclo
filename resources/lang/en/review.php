@@ -15,5 +15,8 @@ return [
     'leave_review' => 'Leave a Review',
     'reviewed' => 'Reviewed',
     'thank_message' => 'Thank you for leaving a review!',
-    
+    'seller_no_reviews' => 'This seller has no reviews yet.',
+    'seller_rating' => 'Seller rating',
+    'seller_rating_info' => 'Average buyer ratings: ',
+    'stars' => 'stars',
 ];

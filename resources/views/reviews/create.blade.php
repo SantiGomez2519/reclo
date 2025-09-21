@@ -59,7 +59,7 @@
                                 @endif
 
                                 <div class="mt-4 text-center">
-                                    <button type="submit" class="btn btn-custom">
+                                    <button type="submit" class="btn btn-primary">
                                         {{ __('review.send_review') }}
                                     </button>
                                 </div>
