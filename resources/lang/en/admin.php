@@ -1,0 +1,240 @@
+<?php
+
+return [
+    // Common terms
+    'actions' => 'Actions',
+    'view' => 'View',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'create' => 'Create',
+    'update' => 'Update',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'back' => 'Back',
+    'confirm' => 'Confirm',
+    'close' => 'Close',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'search' => 'Search',
+    'filter' => 'Filter',
+    'loading' => 'Loading...',
+    'no_data' => 'No data available',
+    'required' => 'Required',
+    'optional' => 'Optional',
+
+    // Status and alerts
+    'success' => 'Success',
+    'error' => 'Error',
+    'warning' => 'Warning',
+    'info' => 'Information',
+    'created_successfully' => 'Created successfully',
+    'updated_successfully' => 'Updated successfully',
+    'deleted_successfully' => 'Deleted successfully',
+
+    // Common fields
+    'id' => 'ID',
+    'name' => 'Name',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'created_at' => 'Created',
+    'updated_at' => 'Updated',
+    'status' => 'Status',
+    'image' => 'Image',
+    'description' => 'Description',
+    'price' => 'Price',
+    'category' => 'Category',
+
+    // Navigation
+    'back_to_list' => 'Back to List',
+    'back_to_dashboard' => 'Back to Dashboard',
+    'dashboard' => 'Dashboard',
+    'home' => 'Home',
+
+    // Products
+    'products' => 'Products',
+    'product' => 'Product',
+    'product_details' => 'Product Details',
+    'product_management' => 'Product Management',
+    'create_product' => 'Create Product',
+    'edit_product' => 'Edit Product',
+    'view_product' => 'View Product',
+    'delete_product' => 'Delete Product',
+    'no_products' => 'No products found',
+    'products_list' => 'Products List',
+    'product_title' => 'Product Title',
+    'product_image' => 'Product Image',
+    'product_price' => 'Price ($)',
+    'product_category' => 'Category',
+    'product_condition' => 'Condition',
+    'product_color' => 'Color',
+    'product_size' => 'Size',
+    'product_status' => 'Status',
+    'product_seller' => 'Seller',
+    'seller_information' => 'Seller Information',
+    'no_image_available' => 'No image available',
+    'image_not_found' => 'Image not found',
+
+    // Product categories
+    'category_Women' => 'Women',
+    'category_Men' => 'Men',
+    'category_Vintage' => 'Vintage',
+    'category_Accessories' => 'Accessories',
+    'category_Shoes' => 'Shoes',
+    'category_Bags' => 'Bags',
+    'category_Jewelry' => 'Jewelry',
+
+    // Product conditions
+    'condition_Like New' => 'Like New',
+    'condition_Excellent' => 'Excellent',
+    'condition_Very Good' => 'Very Good',
+    'condition_Good' => 'Good',
+    'condition_Fair' => 'Fair',
+
+    // Product status
+    'status_available' => 'Available',
+    'status_unavailable' => 'Unavailable',
+
+    // Customers
+    'customers' => 'Customers',
+    'customer' => 'Customer',
+    'customer_details' => 'Customer Details',
+    'customer_management' => 'Customer Management',
+    'create_customer' => 'Create Customer',
+    'edit_customer' => 'Edit Customer',
+    'view_customer' => 'View Customer',
+    'delete_customer' => 'Delete Customer',
+    'no_customers' => 'No customers found',
+    'customers_list' => 'Customers List',
+    'customer_name' => 'Customer Name',
+    'customer_email' => 'Email Address',
+    'customer_phone' => 'Phone Number',
+    'customer_payment_method' => 'Payment Method',
+    'customer_registered' => 'Registered',
+    'member_since' => 'Member Since',
+    'personal_information' => 'Personal Information',
+    'activity_summary' => 'Activity Summary',
+    'recent_activity' => 'Recent Activity',
+    'no_activity' => 'No Activity Yet',
+    'no_activity_description' => 'This customer hasn\'t listed any products, made any orders, or written any reviews yet.',
+
+    // Customer activity
+    'products_listed' => 'Products Listed',
+    'orders_made' => 'Orders Made',
+    'reviews_written' => 'Reviews Written',
+    'recent_products' => 'Recent Products',
+    'recent_orders' => 'Recent Orders',
+    'recent_reviews' => 'Recent Reviews',
+
+    // Payment methods
+    'payment_credit_card' => 'Credit Card',
+    'payment_debit_card' => 'Debit Card',
+    'payment_paypal' => 'PayPal',
+    'payment_bank_transfer' => 'Bank Transfer',
+
+    // Forms
+    'full_name' => 'Full Name',
+    'phone_number' => 'Phone Number',
+    'email_address' => 'Email Address',
+    'payment_method' => 'Payment Method',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
+    'new_password' => 'New Password',
+    'password_update' => 'Password Update',
+    'leave_empty_keep_password' => 'Leave password fields empty to keep the current password unchanged.',
+    'minimum_characters' => 'Minimum 8 characters required',
+    'minimum_characters_if_changing' => 'Minimum 8 characters required (if changing password)',
+    'select_category' => 'Select Category',
+    'select_condition' => 'Select Condition',
+    'select_seller' => 'Select Seller',
+    'select_payment_method' => 'Select Payment Method',
+    'select_size' => 'Select Size',
+    'one_size' => 'One Size',
+
+    // File upload
+    'accepted_formats' => 'Accepted formats: JPG, JPEG, PNG. Max size: 2MB',
+    'leave_empty_keep_image' => 'Leave empty to keep current image.',
+    'current_image' => 'Current image:',
+    'product_images' => 'Product Images',
+    'current_images' => 'Current Images',
+    'images_help' => 'Accepted formats: JPG, JPEG, PNG. Max size: 2MB each.',
+
+    // Confirmations and warnings
+    'confirm_delete' => 'Confirm Delete',
+    'delete_confirmation' => 'Are you sure you want to delete this :item? This action cannot be undone.',
+    'delete_customer_confirmation' => 'Are you sure you want to delete customer :name?',
+    'delete_customer_warning' => 'This action cannot be undone and will fail if the customer has existing products or orders.',
+    'cannot_delete_customer' => 'Cannot delete customer with existing products or orders.',
+
+    // Notes and information
+    'note' => 'Note',
+    'customer_login_note' => 'The customer will be able to log in using the email and password provided here. Make sure to inform them of their login credentials.',
+    'swap_available' => 'Swap Available',
+    'swap_yes' => 'Yes',
+    'swap_no' => 'No',
+
+    // Pagination and counts
+    'showing_results' => 'Showing :from to :to of :total results',
+    'showing_first' => 'Showing :count of :total :items',
+    'view_seller_profile' => 'View Seller Profile',
+
+    // Time and dates
+    'last_updated' => 'Last Updated',
+    'date_format' => 'M d, Y',
+    'datetime_format' => 'M d, Y H:i',
+
+    // Placeholders
+    'start_by_creating' => 'Start by creating your first :item.',
+
+    // Additional unique keys
+    'back_to_product' => 'Back to Product',
+    'image_upload_help' => 'Accepted formats: JPG, JPEG, PNG. Max size: 2MB. Leave empty to keep current image.',
+    'update_product' => 'Update Product',
+    'update_customer' => 'Update Customer',
+    'admin_login' => 'Admin Login',
+    'passwords_do_not_match' => 'Passwords do not match',
+    'image_load_error' => 'Image load error for',
+    'back_to_customers' => 'Back to Customers',
+    'customer_id' => 'Customer ID',
+    'order_id' => 'Order ID',
+    'date' => 'Date',
+    'total' => 'Total',
+    'no_activity_yet' => 'No Activity Yet',
+    'showing_products' => 'Showing :shown of :total products',
+    'showing_orders' => 'Showing :shown of :total orders',
+    'showing_reviews' => 'Showing :shown of :total reviews',
+
+    // Controller Messages
+    'product_created_successfully' => 'Product created successfully.',
+    'product_updated_successfully' => 'Product updated successfully.',
+    'product_deleted_successfully' => 'Product deleted successfully.',
+    'customer_created_successfully' => 'Customer created successfully.',
+    'customer_updated_successfully' => 'Customer updated successfully.',
+    'customer_deleted_successfully' => 'Customer deleted successfully.',
+
+    // Dashboard specific
+    'welcome_back' => 'Welcome back, ',
+    'successfully_logged_in' => 'You are successfully logged in to the admin panel.',
+    'system_status' => 'System Status:',
+    'dual_auth_active' => 'Dual authentication system is active.',
+    'customer_auth' => 'Customer authentication:',
+    'admin_auth' => 'Admin authentication:',
+    'active' => 'Active',
+    'customuser_model' => '(CustomUser model)',
+    'user_model' => '(User model)',
+    'quick_actions' => 'Quick Actions',
+    'view_customer_site' => 'View Customer Site',
+    'manage_users' => 'Manage Users',
+    'system_settings' => 'System Settings',
+    'feature_coming_soon' => 'Feature coming soon!',
+    'manage_customuser_accounts' => 'Manage CustomUser accounts',
+    'manage_all_products' => 'Manage all products in the marketplace',
+    'view_all_users' => 'View All Users',
+    'create_new_user' => 'Create New User',
+    'view_all_products' => 'View All Products',
+    'create_new_product' => 'Create New Product',
+
+    // Layout specific
+    'admin_panel' => 'Admin',
+    'logout' => 'Logout',
+    'back_to_customer_site' => 'Back to Customer Site',
+];

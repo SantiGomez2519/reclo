@@ -44,27 +44,34 @@ class CustomUser extends Authenticatable
 
     protected $casts = [
         'password' => 'hashed',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-    public static function validate(Request $request): void
+    public static function validate(Request $request, bool $isUpdate = false, ?int $userId = null): void
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
-            'email' => 'required|email|unique:custom_users,email|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|max:255',
             'payment_method' => 'required|string|max:255',
-        ]);
-    }
+        ];
 
-    public static function validateUpdate(Request $request, int $userId): void
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255|unique:custom_users,email,'.$userId,
-            'payment_method' => 'required|string|max:255',
-        ]);
+        // Add email uniqueness rule
+        if ($isUpdate && $userId) {
+            $rules['email'] .= '|unique:custom_users,email,'.$userId;
+        } elseif (! $isUpdate) {
+            $rules['email'] .= '|unique:custom_users,email';
+        }
+
+        // Add password validation for creation
+        if (! $isUpdate) {
+            $rules['password'] = 'required|string|min:8|confirmed';
+        } elseif ($request->filled('password')) {
+            $rules['password'] = 'string|min:8|confirmed';
+        }
+
+        $request->validate($rules);
     }
 
     public function getId(): int
@@ -122,14 +129,14 @@ class CustomUser extends Authenticatable
         $this->attributes['payment_method'] = $payment_method;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): mixed
     {
-        return $this->attributes['created_at'];
+        return $this->created_at;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): mixed
     {
-        return $this->attributes['updated_at'];
+        return $this->updated_at;
     }
 
     // Relationships

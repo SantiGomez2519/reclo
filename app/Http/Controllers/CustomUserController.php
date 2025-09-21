@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomUser;
-use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,11 +18,17 @@ class CustomUserController extends Controller
 
     public function show(): View
     {
-        $user = Auth::guard('web')->user(); 
+        $user = Auth::guard('web')->user();
 
         $viewData = [];
         $viewData['user'] = $user;
-            
+
+        $viewData['salesHistory'] = Product::where('seller_id', $user->getId())
+            ->whereNotNull('order_id')
+            ->with(['order.buyer', 'review'])
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         return view('user.profile')->with('viewData', $viewData);
     }
 
@@ -39,7 +44,7 @@ class CustomUserController extends Controller
     {
         $user = Auth::guard('web')->user();
 
-        CustomUser::validateUpdate($request, $user->getId());
+        CustomUser::validate($request, true, $user->getId());
 
         $user->setName($request->name);
         $user->setPhone($request->phone);
@@ -49,20 +54,5 @@ class CustomUserController extends Controller
         $user->save();
 
         return redirect()->route('user.profile')->with('status', 'Profile updated successfully!');
-    }
-
-    public function salesHistory(): View
-    {
-        $user = Auth::guard('web')->user();
-
-        $viewData = [];
-        $viewData['user'] = $user;
-        $viewData['salesHistory'] = Product::where('seller_id', $user->id)
-            ->where('available', false)
-            ->with(['order.buyer', 'review'])
-            ->orderBy('updated_at', 'desc')
-            ->get();
-
-        return view('user.sales')->with('viewData', $viewData);
     }
 }

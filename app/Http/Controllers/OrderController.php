@@ -2,17 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    // Here it goes the methods that are not implemented yet
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+    }
 
-    // Note: Remember to validate the request in the model
-    // public function save(Request $request): View
-    // {
-    //    Model::validate($request);
-    //    Model::create($request->only(['attribute1', 'attribute2', 'attribute3']));
-    // }
+    public function index(): View
+    {
+        $viewData = [];
+        $viewData['orders'] = Order::where('buyer_id', Auth::guard('web')->id())
+            ->with('products')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('orders.index')->with('viewData', $viewData);
+    }
+
+    public function show(int $id): View
+    {
+        $order = Order::where('buyer_id', Auth::guard('web')->id())
+            ->with('products')
+            ->findOrFail($id);
+
+        $viewData = [];
+        $viewData['order'] = $order;
+
+        return view('orders.show')->with('viewData', $viewData);
+    }
 }
