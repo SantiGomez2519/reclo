@@ -27,7 +27,7 @@ return [
     'swap_counter_offer' => 'Contraoferta de intercambio',
     'someone_wants_to_swap' => '¡Alguien quiere intercambiar contigo!',
 
-    'select_product_to_offer' => 'Debes seleccionar un producto para aceptar la solicitud de intercambio.',
+    'must_select_product_to_offer' => 'Debes seleccionar un producto para aceptar la solicitud de intercambio.',
     'product_not_available' => 'Error: El producto deseado no está disponible para intercambio.',
     'dont_have_products' => 'Error: Para enviar una solicitud de intercambio debes tener productos disponibles para intercambio.',
     'already_requested' => 'Error: Ya has realizado una solicitud de intercambio para este producto.',

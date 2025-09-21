@@ -45,4 +45,5 @@ return [
     'your_sales_history_empty' => 'Your sales history will appear here',
     'unknown' => 'Unknown',
     'profile_info_message' => 'This is your profile information. You can edit your details by clicking the "Edit Profile" button.',
+    'profile_updated_successfully' => 'Profile updated successfully!',
 ];

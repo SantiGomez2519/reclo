@@ -28,7 +28,7 @@
         <!-- Removed container padding to eliminate left border space -->
         <div class="container-fluid px-2">
             <a class="navbar-brand fw-bold" href="{{ route('home.index') }}">
-                <img src="{{ asset('images/logo.png') }}" alt="Reclo" height="40">
+                <img src="{{ asset('images/logo.png') }}" alt="{{ __('layout.app_name') }}" height="40">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -42,7 +42,8 @@
                     <a class="nav-link px-3" href="{{ route('home.index') }}">{{ __('layout.nav_home') }}</a>
                     <a class="nav-link px-3" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
                     @auth
-                        <a class="nav-link px-3" href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
+                        <a class="nav-link px-3"
+                            href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
                         <a class="nav-link px-3" href="{{ route('orders.index') }}">
                             <i class="fas fa-receipt me-1"></i>{{ __('cart.order_details') }}
                         </a>
@@ -56,8 +57,8 @@
                     <form class="d-flex w-100" role="search" action="{{ route('product.search') }}" method="GET">
                         <input class="form-control me-2 flex-grow-1" type="search" name="search"
                             placeholder="{{ __('layout.search_placeholder') }}"
-                            aria-label="{{ __('home.search_aria_label') }}"
-                            value="{{ request('search') }}" style="min-width: 300px;">
+                            aria-label="{{ __('home.search_aria_label') }}" value="{{ request('search') }}"
+                            style="min-width: 300px;">
                         <button class="btn btn-outline-light" type="submit">
                             <i class="bi bi-search"></i>
                             <span class="d-none d-md-inline ms-1">{{ __('layout.search_button') }}</span>
@@ -71,8 +72,8 @@
                 <div class="d-flex align-items-center">
                     <!-- Language Switcher -->
                     <div class="dropdown-language nav-item dropdown me-2">
-                        <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button" id="languageDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button"
+                            id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ $currentLocale === 'en' ? __('layout.language_english') : __('layout.language_spanish') }}
                         </button>
 
@@ -101,7 +102,8 @@
                     @guest('web')
                         <!-- Centered auth buttons with better spacing -->
                         <div class="d-flex align-items-center gap-2">
-                            <a class="btn btn-outline-light btn-sm" href="{{ route('login') }}">{{ __('layout.login') }}</a>
+                            <a class="btn btn-outline-light btn-sm"
+                                href="{{ route('login') }}">{{ __('layout.login') }}</a>
                             <a class="btn btn-light btn-sm" href="{{ route('register') }}">{{ __('layout.register') }}</a>
                         </div>
                     @else
@@ -111,7 +113,7 @@
                             <a class="nav-link position-relative cart-icon p-2" href="{{ route('cart.index') }}">
                                 <i class="bi bi-cart fs-5 text-white"></i>
                                 @if ($cartCount > 0)
-                                    <span 
+                                    <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
                                         {{ $cartCount }}
                                     </span>
@@ -162,7 +164,7 @@
                                                     <i class="bi bi-cart-fill text-success me-1"></i>
                                                     {{ __('notification.new_notification') }}
                                                     <div class="text-muted small mt-1">
-                                                        {{ __( $notification->data['translation_key'], $notification->data['translation_params']) ?? '' }}
+                                                        {{ __($notification->data['translation_key'], $notification->data['translation_params']) ?? '' }}
                                                     </div>
                                                 @else
                                                     <i class="bi bi-bell-fill text-warning me-1"></i>
@@ -170,7 +172,8 @@
                                                 @endif
                                             </a>
                                         @empty
-                                            <div class="dropdown-item text-muted small">{{ __('notification.none') }}</div>
+                                            <div class="dropdown-item text-muted small">{{ __('notification.none') }}
+                                            </div>
                                         @endforelse
                                     </div>
 
@@ -181,7 +184,8 @@
                             </div>
 
                             <!-- User Profile and Logout -->
-                            <a class="btn btn-outline-light btn-sm" href="{{ route('user.profile') }}">{{ __('layout.my_profile') }}</a>
+                            <a class="btn btn-outline-light btn-sm"
+                                href="{{ route('user.profile') }}">{{ __('layout.my_profile') }}</a>
                             <form id="logout" action="{{ route('logout') }}" method="POST" class="d-inline">
                                 <button type="submit" class="btn btn-light btn-sm">{{ __('layout.logout') }}</button>
                                 @csrf

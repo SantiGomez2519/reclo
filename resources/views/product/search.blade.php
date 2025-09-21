@@ -157,10 +157,12 @@
                         class="badge bg-warning ms-2">{{ __('product.' . strtolower(str_replace(' ', '_', $viewData['filters']['condition']))) }}</span>
                 @endif
                 @if (!empty($viewData['filters']['min_price']))
-                    <span class="badge bg-info ms-2">Min: ${{ $viewData['filters']['min_price'] }}</span>
+                    <span class="badge bg-info ms-2">{{ __('product.min_price_label') }}:
+                        ${{ $viewData['filters']['min_price'] }}</span>
                 @endif
                 @if (!empty($viewData['filters']['max_price']))
-                    <span class="badge bg-info ms-2">Max: ${{ $viewData['filters']['max_price'] }}</span>
+                    <span class="badge bg-info ms-2">{{ __('product.max_price_label') }}:
+                        ${{ $viewData['filters']['max_price'] }}</span>
                 @endif
             </div>
         @endif
@@ -185,11 +187,12 @@
                             <div class="position-absolute top-0 end-0 m-2">
                                 @if ($product->getSwap())
                                     <button class="btn btn-sm btn-dark bg-opacity-75 text-white me-1"
-                                        title="Available for Exchange">
+                                        title="{{ __('product.available_for_exchange') }}">
                                         <i class="fas fa-exchange-alt"></i>
                                     </button>
                                 @endif
-                                <button class="btn btn-sm btn-dark bg-opacity-75 text-white" title="Add to Favorites">
+                                <button class="btn btn-sm btn-dark bg-opacity-75 text-white"
+                                    title="{{ __('product.add_to_favorites') }}">
                                     <i class="fas fa-heart"></i>
                                 </button>
                             </div>

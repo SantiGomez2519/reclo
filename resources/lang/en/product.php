@@ -131,4 +131,6 @@ return [
     'not_rated' => 'Not rated',
     'no_purchases_yet' => 'No purchases yet',
     'your_purchase_history' => 'Your purchase history will appear here',
+    'min_price_label' => 'Min',
+    'max_price_label' => 'Max',
 ];

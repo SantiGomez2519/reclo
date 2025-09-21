@@ -29,7 +29,7 @@ return [
         'PayPal' => 'PayPal',
         'Bank Transfer' => 'Transferencia',
     ],
-  
+
     // Sales history
     'my_sales' => 'Mis Ventas',
     'sales' => 'Ventas',
@@ -45,4 +45,5 @@ return [
     'your_sales_history_empty' => 'Tu historial de ventas aparecerá aquí',
     'unknown' => 'Desconocido',
     'profile_info_message' => 'Esta es la información de tu perfil. Puedes editar tus detalles haciendo clic en el botón "Editar Perfil".',
+    'profile_updated_successfully' => '¡Perfil actualizado exitosamente!',
 ];

@@ -131,4 +131,6 @@ return [
     'not_rated' => 'Sin calificar',
     'no_purchases_yet' => 'Aún no tienes compras',
     'your_purchase_history' => 'Tu historial de compras aparecerá aquí',
+    'min_price_label' => 'Mín',
+    'max_price_label' => 'Máx',
 ];

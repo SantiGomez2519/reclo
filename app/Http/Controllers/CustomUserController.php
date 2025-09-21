@@ -46,13 +46,13 @@ class CustomUserController extends Controller
 
         CustomUser::validate($request, true, $user->getId());
 
-        $user->setName($request->name);
-        $user->setPhone($request->phone);
-        $user->setEmail($request->email);
-        $user->setPaymentMethod($request->payment_method);
+        $user->setName($request->input('name'));
+        $user->setPhone($request->input('phone'));
+        $user->setEmail($request->input('email'));
+        $user->setPaymentMethod($request->input('payment_method'));
 
         $user->save();
 
-        return redirect()->route('user.profile')->with('status', 'Profile updated successfully!');
+        return redirect()->route('user.profile')->with('status', __('user.profile_updated_successfully'));
     }
 }

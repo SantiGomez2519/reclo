@@ -34,13 +34,13 @@ class ProductController extends Controller
         Product::validate($request);
 
         $product = new Product;
-        $product->setTitle($request->title);
-        $product->setDescription($request->description);
-        $product->setCategory($request->category);
-        $product->setColor($request->color);
-        $product->setSize($request->size);
-        $product->setCondition($request->condition);
-        $product->setPrice($request->price);
+        $product->setTitle($request->input('title'));
+        $product->setDescription($request->input('description'));
+        $product->setCategory($request->input('category'));
+        $product->setColor($request->input('color'));
+        $product->setSize($request->input('size'));
+        $product->setCondition($request->input('condition'));
+        $product->setPrice($request->input('price'));
         $product->setAvailable(true);
         $product->setSwap($request->has('swap'));
         $product->setSellerId(Auth::guard('web')->id());
@@ -81,13 +81,13 @@ class ProductController extends Controller
 
         Product::validate($request, true);
 
-        $product->setTitle($request->title);
-        $product->setDescription($request->description);
-        $product->setCategory($request->category);
-        $product->setColor($request->color);
-        $product->setSize($request->size);
-        $product->setCondition($request->condition);
-        $product->setPrice($request->price);
+        $product->setTitle($request->input('title'));
+        $product->setDescription($request->input('description'));
+        $product->setCategory($request->input('category'));
+        $product->setColor($request->input('color'));
+        $product->setSize($request->input('size'));
+        $product->setCondition($request->input('condition'));
+        $product->setPrice($request->input('price'));
         $product->setSwap($request->has('swap'));
 
         // Handle image upload
