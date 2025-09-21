@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -25,7 +27,7 @@ class AdminProductController extends Controller
         return view('admin.product.index')->with('viewData', $viewData);
     }
 
-    public function show(string $id): View
+    public function show(int $id): View
     {
         $viewData = [];
         $viewData['product'] = Product::with('seller')->findOrFail($id);
@@ -69,7 +71,7 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', __('admin.product_created_successfully'));
     }
 
-    public function edit(string $id): View
+    public function edit(int $id): View
     {
         $viewData = [];
         $viewData['product'] = Product::findOrFail($id);
@@ -78,7 +80,7 @@ class AdminProductController extends Controller
         return view('admin.product.edit')->with('viewData', $viewData);
     }
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
 
@@ -105,7 +107,7 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', __('admin.product_updated_successfully'));
     }
 
-    public function destroy(string $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
 

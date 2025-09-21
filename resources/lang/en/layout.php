@@ -25,4 +25,5 @@ return [
     'view_all' => 'See all',
 
     'footer_text' => '© 2025 Reclo - Second-Hand Store | Made with Laravel',
+    'app_name' => 'Reclo',
 ];

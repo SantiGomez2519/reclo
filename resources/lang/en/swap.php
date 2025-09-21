@@ -27,7 +27,7 @@ return [
     'swap_counter_offer' => 'Swap counter-offer',
     'someone_wants_to_swap' => 'Someone wants to Swap with you!',
 
-    'select_product_to_offer' => 'You must select a product to accept the swap request.',
+    'must_select_product_to_offer' => 'You must select a product to accept the swap request.',
     'product_not_available' => 'Error: The desired product is not available for swap.',
     'dont_have_products' => 'Error: To send a swap request you must have products available for swap.',
     'already_requested' => 'Error: You already made a swap request for this product.',

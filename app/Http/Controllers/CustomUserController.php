@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomUser;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,16 @@ class CustomUserController extends Controller
 
     public function show(): View
     {
+        $user = Auth::guard('web')->user();
+
         $viewData = [];
-        $viewData['user'] = Auth::guard('web')->user();
+        $viewData['user'] = $user;
+
+        $viewData['salesHistory'] = Product::where('seller_id', $user->getId())
+            ->whereNotNull('order_id')
+            ->with(['order.buyer', 'review'])
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         return view('user.profile')->with('viewData', $viewData);
     }
@@ -37,13 +46,13 @@ class CustomUserController extends Controller
 
         CustomUser::validate($request, true, $user->getId());
 
-        $user->setName($request->name);
-        $user->setPhone($request->phone);
-        $user->setEmail($request->email);
-        $user->setPaymentMethod($request->payment_method);
+        $user->setName($request->input('name'));
+        $user->setPhone($request->input('phone'));
+        $user->setEmail($request->input('email'));
+        $user->setPaymentMethod($request->input('payment_method'));
 
         $user->save();
 
-        return redirect()->route('user.profile')->with('status', 'Profile updated successfully!');
+        return redirect()->route('user.profile')->with('status', __('user.profile_updated_successfully'));
     }
 }

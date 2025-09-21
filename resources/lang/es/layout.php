@@ -25,4 +25,5 @@ return [
     'view_all' => 'Ver todo',
 
     'footer_text' => '© 2025 Reclo - Tienda de Segunda Mano | Hecho con Laravel',
+    'app_name' => 'Reclo',
 ];

@@ -42,6 +42,7 @@ class Product extends Model
         'size',
         'condition',
         'price',
+        'available',
         'image',
     ];
 
@@ -202,14 +203,14 @@ class Product extends Model
         $this->attributes['image'] = json_encode($images);
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): mixed
     {
-        return $this->attributes['created_at'];
+        return $this->created_at;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): mixed
     {
-        return $this->attributes['updated_at'];
+        return $this->updated_at;
     }
 
     // Foreign Key Getters/Setters

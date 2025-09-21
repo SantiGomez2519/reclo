@@ -29,7 +29,7 @@ class ProductSold extends Notification
             'product_id' => $this->product->getId(),
             'product_title' => $this->product->getTitle(),
             'translation_key' => 'notification.product_sold',
-            'translation_params' => ['product' => $this->product->title],
+            'translation_params' => ['product' => $this->product->getTitle()],
         ];
     }
 }

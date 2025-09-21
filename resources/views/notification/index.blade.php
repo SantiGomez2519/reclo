@@ -13,11 +13,7 @@
 
                         <div>
                             <strong>
-                                @if ($notification->data['translation_params'] ?? false)
-                                    {{ __($notification->data['translation_key'], $notification->data['translation_params']) }}
-                                @else
-                                    {{ __($notification->data['translation_key']) }}
-                                @endif
+                                {{ $notification->translated_message ?? __('notification.new_notification') }}
                             </strong>
                             <br>
                             <small class="text-muted">

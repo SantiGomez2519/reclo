@@ -39,7 +39,7 @@ class SwapRequest extends Model
         ];
 
         $messages = [
-            'offered_item_id.required' => __('swap.select_product_to_offer'),
+            'offered_item_id.required' => __('swap.must_select_product_to_offer'),
             'offered_item_id.exists' => __('swap.product_not_available'),
         ];
 
@@ -81,14 +81,14 @@ class SwapRequest extends Model
         $this->attributes['status'] = $status;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): mixed
     {
-        return $this->attributes['created_at'];
+        return $this->created_at;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): mixed
     {
-        return $this->attributes['updated_at'];
+        return $this->updated_at;
     }
 
     // Foreign Key Getters/Setters

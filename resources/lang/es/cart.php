@@ -54,4 +54,5 @@ return [
     'completed' => 'Completado',
     'pending' => 'Pendiente',
     'cancelled' => 'Cancelado',
+    'download_invoice' => 'Descargar Factura',
 ];
