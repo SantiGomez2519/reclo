@@ -126,7 +126,7 @@
                             </button>
                         </div>
                         <div class="col-md-3">
-                            <a href="{{ route('product.index') }}" class="btn btn-outline-dark w-100">
+                            <a href="{{ route('product.search') }}" class="btn btn-outline-dark w-100">
                                 <i class="fas fa-undo me-2"></i>
                                 {{ __('product.reset_filters') }}
                             </a>

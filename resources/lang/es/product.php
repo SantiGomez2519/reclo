@@ -133,4 +133,6 @@ return [
     'your_purchase_history' => 'Tu historial de compras aparecerá aquí',
     'min_price_label' => 'Mín',
     'max_price_label' => 'Máx',
+    'reset_filters' => 'Restablecer Filtros',
+    'search_keyword' => 'Palabra Clave',
 ];

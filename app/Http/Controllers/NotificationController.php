@@ -26,12 +26,13 @@ class NotificationController extends Controller
             $data = $notification->data;
 
             if (isset($data['translation_key'])) {
+                $translationParams = $data['translation_params'] ?? [];
                 $notification->translated_message = __(
                     $data['translation_key'],
-                    $data['translation_params'] ?? []
+                    $translationParams
                 );
             } else {
-                $notification->translated_message = $data['message'] ?? '';
+                $notification->translated_message = $data['message'] ?? __('notification.new_notification');
             }
         });
 
