@@ -8,9 +8,14 @@
                     <h2>
                         <i class="fas fa-receipt me-2"></i>{{ __('cart.order_details') }} #{{ $viewData['order']->getId() }}
                     </h2>
-                    <a href="{{ route('orders.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>{{ __('cart.back') }}
-                    </a>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('orders.invoice', $viewData['order']->getId()) }}" class="btn btn-success">
+                            <i class="fas fa-download me-2"></i>{{ __('cart.download_invoice') }}
+                        </a>
+                        <a href="{{ route('orders.index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>{{ __('cart.back') }}
+                        </a>
+                    </div>
                 </div>
 
                 <div class="row">

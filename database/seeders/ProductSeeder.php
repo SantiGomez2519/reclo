@@ -21,6 +21,7 @@ class ProductSeeder extends Seeder
 
         $user1 = $users->first(); // John Customer
         $user2 = $users->skip(1)->first(); // Jane Customer
+        $user3 = $users->skip(2)->first(); // Bob Customer
 
         $products = [
             [
@@ -100,6 +101,32 @@ class ProductSeeder extends Seeder
                 'swap' => true,
                 'image' => json_encode(['products/boxy-white.webp', 'products/boxy-white2.webp', 'products/boxy-white3.webp']),
                 'seller_id' => $user2->getId(),
+            ],
+            [
+                'title' => 'Leather Jacket',
+                'description' => 'Premium genuine leather jacket with classic biker style. Features multiple pockets, zippers, and adjustable waist belt. Perfect for adding edge to any outfit.',
+                'category' => 'Men',
+                'color' => 'Black',
+                'size' => 'L',
+                'condition' => 'Excellent',
+                'price' => 120,
+                'available' => true,
+                'swap' => true,
+                'image' => json_encode(['products/leather-jacket.webp', 'products/leather-jacket2.webp', 'products/leather-jacket3.webp']),
+                'seller_id' => $user3->getId(),
+            ],
+            [
+                'title' => 'Casual Sneakers',
+                'description' => 'Comfortable white casual sneakers perfect for everyday wear. Features breathable material, cushioned sole, and classic design that goes with everything.',
+                'category' => 'Shoes',
+                'color' => 'White',
+                'size' => '10',
+                'condition' => 'Very Good',
+                'price' => 65,
+                'available' => true,
+                'swap' => false,
+                'image' => json_encode(['products/sneakers.webp', 'products/sneakers2.webp', 'products/sneakers3.webp']),
+                'seller_id' => $user3->getId(),
             ],
         ];
 
