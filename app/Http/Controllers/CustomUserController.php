@@ -44,7 +44,7 @@ class CustomUserController extends Controller
     {
         $user = Auth::guard('web')->user();
 
-        CustomUser::validateUpdate($request, $user->getId());
+        CustomUser::validate($request, true, $user->getId());
 
         $user->setName($request->name);
         $user->setPhone($request->phone);

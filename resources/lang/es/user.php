@@ -29,7 +29,7 @@ return [
         'PayPal' => 'PayPal',
         'Bank Transfer' => 'Transferencia',
     ],
-
+  
     // Sales history
     'my_sales' => 'Mis Ventas',
     'sales' => 'Ventas',
