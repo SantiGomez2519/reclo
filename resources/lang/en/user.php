@@ -29,4 +29,20 @@ return [
         'PayPal' => 'PayPal',
         'Bank Transfer' => 'Bank Transfer',
     ],
+
+    // Sales history
+    'my_sales' => 'My Sales',
+    'sales' => 'Sales',
+    'price' => 'Price',
+    'sold_on' => 'Sold on',
+    'buyer' => 'Buyer',
+    'category' => 'Category',
+    'condition' => 'Condition',
+    'size' => 'Size',
+    'rating' => 'Rating',
+    'no_rating_yet' => 'No rating yet',
+    'no_sales_yet' => 'No sales yet',
+    'your_sales_history_empty' => 'Your sales history will appear here',
+    'unknown' => 'Unknown',
+    'profile_info_message' => 'This is your profile information. You can edit your details by clicking the "Edit Profile" button.',
 ];

@@ -1,61 +1,64 @@
+![Reclo](https://github.com/user-attachments/assets/1de157a7-3e65-4361-a42b-f4360fea2bf5)
+Second Chances, Timeless Style
+
+# About Reclo
+Reclo is an innovative e-commerce platform for second-hand clothing that tackles the challenges of fast fashion, overconsumption, and textile pollution. Built with **Laravel**, Reclo introduces a unique clothing exchange system that encourages a **circular economy** approach. Users can buy, sell, and swap second-hand clothing items, offering a sustainable and appealing alternative to mass-produced fashion.  
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Key Features  
+- **Clothing Exchange System**: Users can send and accept swap requests for clothing items.  
+- **Sustainability-Oriented**: Promotes conscious consumer habits and reduces textile waste.  
+- **User-Friendly Platform**: Designed with Laravel best practices, including models, controllers, routes, and database migrations.  
+- **Notifications System**: Keeps users informed about accepted or rejected swap requests.  
+- **Scalable Architecture**: Developed with maintainability in mind, using clean code practices such as getters and setters in models.
 
-## About Laravel
+Want to learn more about the project? Check out the [Wiki](https://github.com/SantiGomez2519/reclo/wiki) for additional information and documentation. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Make sure your system meets the following requirements before running the project:  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP** >= 8.1  
+- **Composer** >= 2.0  
+- **Node.js** >= 16.x and **npm** >= 8.x  
+- **MySQL** or **MariaDB** (or another supported database)  
+- **Git** for version control  
+- **Laravel CLI** (installed via Composer)  
 
-## Learning Laravel
+Optional but recommended:  
+- **XAMPP** or **Docker** for an easier local development setup.  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Follow these steps to set up the project locally:  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/your-username/reclo.git
+   cd reclo
 
-## Laravel Sponsors
+2. **Install dependencies**
+    ```bash
+   composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Set up environment file**
+   Copy the .env.example file and update it with your local configuration:
+    ```bash
+   cp .env.example .env
 
-### Premium Partners
+4. **Generate application key**
+    ```bash
+   php artisan key: generate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+5. **Run migrations and seed the database**
+   ```bash
+   php artisan migrate --seed
 
-## Contributing
+6. **Start the development server**
+   ```bash
+   php artisan serve
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Now you can access the application at <a>http://localhost:8000</a>.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

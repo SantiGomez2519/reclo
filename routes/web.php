@@ -23,19 +23,19 @@ Route::get('/admin/login', 'App\Http\Controllers\Admin\AdminLoginController@show
 Route::post('/admin/login', 'App\Http\Controllers\Admin\AdminLoginController@login');
 Route::post('/admin/logout', 'App\Http\Controllers\Admin\AdminLoginController@logout')->name('admin.logout');
 
-// --- Customer Protected Routes (Middleware) ---
-
-// Customer Routes
+// --- Customer Routes ---
+// Profile
 Route::get('/customer/profile', 'App\Http\Controllers\CustomUserController@show')->name('user.profile');
 Route::get('/customer/profile/edit', 'App\Http\Controllers\CustomUserController@edit')->name('user.edit');
 Route::put('/customer/profile', 'App\Http\Controllers\CustomUserController@update')->name('user.update');
 
-// Product Management Routes - Specific routes first
+// Product Management Routes (specific first)
+Route::get('/products/search', 'App\Http\Controllers\ProductController@search')->name('product.search');
 Route::get('/products/create', 'App\Http\Controllers\ProductController@create')->name('product.create');
 Route::post('/products', 'App\Http\Controllers\ProductController@store')->name('product.store');
 Route::get('/my-products', 'App\Http\Controllers\ProductController@myProducts')->name('product.my-products');
 
-// Product Routes with Parameters - Must come after specific routes (Note: product.show is public)
+// Product Routes with Parameters
 Route::get('/products/{id}', 'App\Http\Controllers\ProductController@show')->name('product.show');
 Route::get('/products/{id}/edit', 'App\Http\Controllers\ProductController@edit')->name('product.edit');
 Route::put('/products/{id}', 'App\Http\Controllers\ProductController@update')->name('product.update');
@@ -55,7 +55,7 @@ Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('order
 Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('orders.show');
 
 // Swap Routes
-Route::get('/swap-request/create/{id}', 'App\\Http\\Controllers\\SwapRequestController@create')->name('swap-request.create');
+Route::get('/swap-request/create/{id}', 'App\Http\Controllers\SwapRequestController@create')->name('swap-request.create');
 Route::post('/swap-request/store', 'App\Http\Controllers\SwapRequestController@store')->name('swap-request.store');
 Route::get('/swap-request/{id}/receive', 'App\Http\Controllers\SwapRequestController@receive')->name('swap-request.receive');
 Route::post('/swap-request/{id}/respond', 'App\Http\Controllers\SwapRequestController@respond')->name('swap-request.respond');
@@ -68,9 +68,8 @@ Route::get('/swap-request/{id}/show', 'App\Http\Controllers\SwapRequestControlle
 Route::get('/notifications', 'App\Http\Controllers\NotificationController@index')->name('notifications.index');
 Route::get('/notifications/{id}', 'App\Http\Controllers\NotificationController@read')->name('notifications.read');
 
-// --- Admin Protected Routes (Middleware) ---
-
-// Admin Dashboard Route
+// --- Admin Routes ---
+// Dashboard
 Route::get('/admin/dashboard', 'App\Http\Controllers\Admin\AdminDashboardController@index')->name('admin.dashboard');
 
 // Product CRUD Routes
