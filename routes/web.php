@@ -53,6 +53,7 @@ Route::post('/cart/process-order', 'App\Http\Controllers\ShoppingCartController@
 // Order Routes
 Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('orders.index');
 Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('orders.show');
+Route::get('/orders/{id}/invoice', 'App\Http\Controllers\OrderController@downloadInvoice')->name('orders.invoice');
 
 // Swap Routes
 Route::get('/swap-request/create/{id}', 'App\\Http\\Controllers\\SwapRequestController@create')->name('swap-request.create');

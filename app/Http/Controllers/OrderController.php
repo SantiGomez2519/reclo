@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Util\InvoicePdfGenerator;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -34,5 +36,14 @@ class OrderController extends Controller
         $viewData['order'] = $order;
 
         return view('orders.show')->with('viewData', $viewData);
+    }
+
+    public function downloadInvoice(int $id): Response
+    {
+        $order = Order::where('buyer_id', Auth::guard('web')->id())
+            ->with(['buyer', 'products.seller'])
+            ->findOrFail($id);
+
+        return InvoicePdfGenerator::generateInvoicePdf($order);
     }
 }
