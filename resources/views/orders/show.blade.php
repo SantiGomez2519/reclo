@@ -50,6 +50,15 @@
                                         <div class="col-md-2">
                                             <span class="badge bg-success">{{ __('cart.completed') }}</span>
                                         </div>
+
+                                        @if($product->getReview())
+                                            <span class="badge bg-success fs-6 w-auto">{{ __('review.reviewed') }}</span>
+                                        @else
+                                            <a href="{{ route('reviews.create', ['product' => $product->getId(), 'order_id' => $viewData['order']->getId()]) }}" 
+                                            class="btn btn-sm btn-outline-primary w-auto">
+                                                {{ __('review.leave_review')}}
+                                            </a>
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>

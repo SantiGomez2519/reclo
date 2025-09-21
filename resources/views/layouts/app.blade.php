@@ -39,7 +39,6 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <!-- Reorganized navigation links with better spacing and centering -->
                 <div class="navbar-nav me-auto d-flex justify-content-center">
-                    <a class="nav-link px-3" href="{{ route('home.index') }}">{{ __('layout.nav_home') }}</a>
                     <a class="nav-link px-3" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
                     @auth
                         <a class="nav-link px-3"
@@ -104,7 +103,7 @@
                         <div class="d-flex align-items-center gap-2">
                             <a class="btn btn-outline-light btn-sm"
                                 href="{{ route('login') }}">{{ __('layout.login') }}</a>
-                            <a class="btn btn-light btn-sm" href="{{ route('register') }}">{{ __('layout.register') }}</a>
+                            <a class="btn btn-outline-light btn-sm" href="{{ route('register') }}">{{ __('layout.register') }}</a>
                         </div>
                     @else
                         <!-- Better organized user actions with consistent spacing -->

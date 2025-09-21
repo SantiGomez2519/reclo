@@ -2,17 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    // Here it goes the methods that are not implemented yet
+    public function create(int $productId): View
+    {
+        $product = Product::findOrFail($productId);
 
-    // Note: Remember to validate the request in the model using unified validation
-    // public function save(Request $request): View
-    // {
-    //    Review::validate($request, false); // false for creation, true for update
-    //    Review::create($request->only(['attribute1', 'attribute2', 'attribute3']));
-    // }
+        $viewData = [];
+        $viewData['product'] = $product;
+
+        return view('reviews.create')->with('viewData', $viewData);
+    }
+
+    public function store(Request $request, int $productId): RedirectResponse
+    {
+        Review::validate($request);
+
+        $product = Product::findOrFail($productId);
+
+        $review = Review::create([
+            'user_id' =>  Auth::guard('web')->user()->getId(),  
+            'product_id' => $productId,
+            'rating' => $request->input('rating'),
+            'comment' => $request->input('comment'),
+        ]);
+
+        $review->setUser(Auth::guard('web')->user());
+        $product->setReview($review);
+
+        return redirect()
+            ->route('orders.show', $request->input('order_id'))
+            ->with('status', __('review.thank_message'));
+    }
 }
