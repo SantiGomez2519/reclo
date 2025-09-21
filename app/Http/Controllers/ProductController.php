@@ -138,9 +138,6 @@ class ProductController extends Controller
     {
         $viewData = [];
 
-        $viewData['categories'] = ['Women', 'Men', 'Vintage', 'Accessories', 'Shoes', 'Bags', 'Jewelry'];
-        $viewData['conditions'] = ['Like New', 'Excellent', 'Very Good', 'Good', 'Fair'];
-        $viewData['sizes'] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size'];
         $viewData['filters'] = $request->all();
 
         $productsQuery = Product::with('seller')->where('available', true);
