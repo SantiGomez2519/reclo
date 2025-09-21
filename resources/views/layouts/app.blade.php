@@ -44,7 +44,7 @@
                         <a class="nav-link px-3"
                             href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>
                         <a class="nav-link px-3" href="{{ route('orders.index') }}">
-                            <i class="fas fa-receipt me-1"></i>{{ __('cart.order_details') }}
+                            <i class="fas fa-receipt me-1"></i>{{ __('cart.my_orders') }}
                         </a>
                         <a class="nav-link px-3" href="{{ route('swap-request.index') }}">{{ __('layout.nav_swap') }}</a>
                     @endauth
