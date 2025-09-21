@@ -29,4 +29,20 @@ return [
         'PayPal' => 'PayPal',
         'Bank Transfer' => 'Transferencia',
     ],
+
+    // Sales history
+    'my_sales' => 'Mis Ventas',
+    'sales' => 'Ventas',
+    'price' => 'Precio',
+    'sold_on' => 'Vendido el',
+    'buyer' => 'Comprador',
+    'category' => 'Categoría',
+    'condition' => 'Condición',
+    'size' => 'Talla',
+    'rating' => 'Calificación',
+    'no_rating_yet' => 'Aún sin calificación',
+    'no_sales_yet' => 'Aún no tienes ventas',
+    'your_sales_history_empty' => 'Tu historial de ventas aparecerá aquí',
+    'unknown' => 'Desconocido',
+    'profile_info_message' => 'Esta es la información de tu perfil. Puedes editar tus detalles haciendo clic en el botón "Editar Perfil".',
 ];
