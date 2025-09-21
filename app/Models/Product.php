@@ -151,12 +151,11 @@ class Product extends Model
     public function getAvailable(): bool
     {
         return $this->attributes['available'];
-        return $this->attributes['available'];
     }
 
     public function setAvailable(bool $available): void
     {
-        $this->attributes['available'] = true;
+        $this->attributes['available'] = $available;
     }
 
     public function getSwap(): bool

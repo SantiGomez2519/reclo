@@ -24,7 +24,7 @@ class AdminCustomUserController extends Controller
         return view('admin.customuser.index')->with('viewData', $viewData);
     }
 
-    public function show(string $id): View
+    public function show(int $id): View
     {
         $viewData = [];
         $viewData['customUser'] = CustomUser::with(['products', 'orders', 'reviews'])->findOrFail($id);
@@ -52,7 +52,7 @@ class AdminCustomUserController extends Controller
         return redirect()->route('admin.customusers.index')->with('success', __('admin.customer_created_successfully'));
     }
 
-    public function edit(string $id): View
+    public function edit(int $id): View
     {
         $viewData = [];
         $viewData['customUser'] = CustomUser::findOrFail($id);
@@ -60,11 +60,11 @@ class AdminCustomUserController extends Controller
         return view('admin.customuser.edit')->with('viewData', $viewData);
     }
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         $customUser = CustomUser::findOrFail($id);
 
-        CustomUser::validate($request, true, (int) $id);
+        CustomUser::validate($request, true, $id);
 
         $customUser->setName($request->input('name'));
         $customUser->setPhone($request->input('phone'));
@@ -81,7 +81,7 @@ class AdminCustomUserController extends Controller
         return redirect()->route('admin.customusers.index')->with('success', __('admin.customer_updated_successfully'));
     }
 
-    public function destroy(string $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $customUser = CustomUser::findOrFail($id);
 

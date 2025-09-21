@@ -111,7 +111,6 @@ return [
     'product_marked_as_sold' => '¡Producto marcado como vendido!',
     'are_you_sure_delete' => '¿Estás seguro de que quieres eliminar este producto?',
 
-
     'search_placeholder' => 'Buscar productos...',
     'apply_filters' => 'Aplicar Filtros',
     'category' => 'Categoría',
@@ -125,8 +124,8 @@ return [
     'clear_filters' => 'Limpiar Filtros',
     'showing_results_for' => 'Mostrando resultados para:',
     'try_different_filters' => 'Intenta con diferentes filtros o términos de búsqueda',
-    'clear_all_filters' => 'Limpiar Todos los Filtros',   
-    
+    'clear_all_filters' => 'Limpiar Todos los Filtros',
+
     'purchases' => 'Compras',
     'sales' => 'Ventas',
     'my_purchases' => 'Mis Compras',
@@ -149,7 +148,7 @@ return [
     'name' => 'Nombre',
     'email' => 'Correo Electrónico',
     'phone' => 'Teléfono',
-    'payment_method' => 'Método de Pago',  
+    'payment_method' => 'Método de Pago',
     'member_since' => 'Miembro desde',
     'showing_results_for' => 'Mostrando resultados para:',
     'try_different_filters' => 'Intenta con diferentes filtros o términos de búsqueda',

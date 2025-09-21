@@ -126,8 +126,6 @@ return [
     'try_different_filters' => 'Try different filters or search terms',
     'clear_all_filters' => 'Clear All Filters',
 
-
-    
     'purchases' => 'Purchases',
     'sales' => 'Sales',
     'my_purchases' => 'My Purchases',
