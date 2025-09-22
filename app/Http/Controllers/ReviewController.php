@@ -1,13 +1,15 @@
 <?php
 
+// Author: Isabella Camacho
+
 namespace App\Http\Controllers;
 
-use App\Models\Review;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
@@ -28,7 +30,7 @@ class ReviewController extends Controller
         $product = Product::findOrFail($productId);
 
         $review = Review::create([
-            'user_id' =>  Auth::guard('web')->user()->getId(),  
+            'user_id' => Auth::guard('web')->user()->getId(),
             'product_id' => $productId,
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),

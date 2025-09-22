@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 namespace App\Http\Controllers;
 
 use App\Models\CustomUser;

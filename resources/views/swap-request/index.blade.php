@@ -1,3 +1,4 @@
+<!-- Author: Isabella Camacho -->
 @extends('layouts.app')
 
 @section('content')
