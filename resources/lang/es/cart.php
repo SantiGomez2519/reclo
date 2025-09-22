@@ -1,5 +1,7 @@
 <?php
 
+// Author: Santiago Gómez 
+
 return [
     'title' => 'Carrito de Compras',
     'empty_cart' => 'Tu carrito está vacío',

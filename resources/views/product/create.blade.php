@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- Author: Santiago Gómez  --}}
+
 @section('title', __('product.create_title'))
 
 @section('content')

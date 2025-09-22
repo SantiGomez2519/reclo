@@ -1,5 +1,7 @@
 <?php
 
+// Author: Santiago Gómez 
+
 return [
     'title' => 'Productos - Reclo',
     'create_title' => 'Crear Producto - Reclo',

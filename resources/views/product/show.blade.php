@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- Author: Santiago Gómez  --}}
+
 @section('title', $viewData['product']->getTitle() . ' - Reclo')
 
 @section('content')
