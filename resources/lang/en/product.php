@@ -50,11 +50,13 @@ return [
 
     // Show page
     'by' => 'by',
+    'buyer' => 'Buyer: ',
     'description_label' => 'Description',
     'product_details' => 'Product Details',
     'sold_by' => 'Sold by',
     'reviews' => 'Reviews',
-    'no_reviews_yet' => 'No reviews yet. Be the first to review this product!',
+    'review' => 'Review',
+    'no_reviews_yet' => 'No reviews yet.',
     'edit_product' => 'Edit Product',
     'delete_product' => 'Delete Product',
     'mark_as_sold' => 'Mark as Sold',

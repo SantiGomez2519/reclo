@@ -55,6 +55,10 @@ Route::get('/orders', 'App\Http\Controllers\OrderController@index')->name('order
 Route::get('/orders/{id}', 'App\Http\Controllers\OrderController@show')->name('orders.show');
 Route::get('/orders/{id}/invoice', 'App\Http\Controllers\OrderController@downloadInvoice')->name('orders.invoice');
 
+// Review Routes
+Route::get('/products/{product}/reviews/create', 'App\Http\Controllers\ReviewController@create')->name('reviews.create');
+Route::post('/products/{product}/reviews', 'App\Http\Controllers\ReviewController@store')->name('reviews.store');
+
 // Swap Routes
 Route::get('/swap-request/create/{id}', 'App\Http\Controllers\SwapRequestController@create')->name('swap-request.create');
 Route::post('/swap-request/store', 'App\Http\Controllers\SwapRequestController@store')->name('swap-request.store');

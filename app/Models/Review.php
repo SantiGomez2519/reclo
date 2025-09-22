@@ -23,14 +23,27 @@ class Review extends Model
     protected $fillable = [
         'comment',
         'rating',
+        'user_id',
+        'product_id',
     ];
 
     public static function validate(Request $request): void
     {
-        $request->validate([
+        $rules = [
             'comment' => 'required|string',
             'rating' => 'required|integer|min:1|max:5',
-        ]);
+        ];
+
+        $messages = [
+            'comment.required' => __('review.comment_required'),
+            'comment.string' => __('review.comment_string'),
+            'rating.required' => __('review.rating_required'),
+            'rating.integer' => __('review.rating_integer'),
+            'rating.min' => __('review.rating_min'),
+            'rating.max' => __('review.rating_max'),
+        ];
+
+        $request->validate($rules, $messages);
     }
 
     public function getId(): int

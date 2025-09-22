@@ -55,4 +55,5 @@ return [
     'pending' => 'Pendiente',
     'cancelled' => 'Cancelado',
     'download_invoice' => 'Descargar Factura',
+    'my_orders' => 'Mis Pedidos',
 ];
