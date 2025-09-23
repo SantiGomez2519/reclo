@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 return [
     'title' => 'Notificaciones',
     'new_notification' => 'Nueva notificación',

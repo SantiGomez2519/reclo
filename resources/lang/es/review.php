@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 return [
     'review_for' => 'Reseña para :product',
     'rating' => 'Calificación',

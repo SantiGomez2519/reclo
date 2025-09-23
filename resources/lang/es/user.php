@@ -1,5 +1,7 @@
 <?php
 
+// Author: Sofia Flores
+
 return [
     'my_profile' => 'Mi Perfil',
     'edit_profile' => 'Editar Perfil',

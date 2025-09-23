@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 return [
     'site_title' => 'Reclo - Tienda de Segunda Mano',
 
