@@ -201,7 +201,7 @@
                                                 <tr>
                                                     <td>{{ $order->getId() }}</td>
                                                     <td>{{ date('M d, Y', strtotime($order->getCreatedAt())) }}</td>
-                                                    <td>${{ number_format($order->getTotal()) }}</td>
+                                                    <td>${{ number_format($order->getTotalPrice()) }}</td>
                                                     <td>
                                                         <span
                                                             class="badge bg-info">{{ __('admin.status_' . $order->getStatus()) }}</span>
