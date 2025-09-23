@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 namespace Database\Seeders;
 
 use App\Models\CustomUser;

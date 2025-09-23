@@ -1,6 +1,6 @@
 <?php
 
-// Author: Santiago Gómez 
+// Author: Santiago Gómez y Sofia Flores
 
 namespace App\Http\Controllers;
 
@@ -16,7 +16,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:web')->except(['index', 'show']);
+        $this->middleware('auth:web')->except(['index', 'show', 'search']);
     }
 
     public function index(): View

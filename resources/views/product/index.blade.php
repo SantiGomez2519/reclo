@@ -1,6 +1,5 @@
+<!-- Author: Santiago Gómez -->
 @extends('layouts.app')
-
-{{-- Author: Santiago Gómez  --}}
 
 @section('title', __('product.title'))
 
