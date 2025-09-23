@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 return [
     'create_intro' => 'You are about to propose a swap to :name for the following product:',
     'propose_intro' => ' :name made a swap request for one of your products, select one of her listed products to exchange. You can also reject the swap request.',

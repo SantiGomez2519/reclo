@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 return [
     'title' => 'Home Page - Reclo',
     'welcome_title' => 'Welcome to Reclo',

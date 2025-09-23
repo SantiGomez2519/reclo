@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 return [
     // Common terms
     'actions' => 'Acciones',
@@ -93,6 +95,11 @@ return [
     // Product status
     'status_available' => 'Disponible',
     'status_unavailable' => 'No Disponible',
+
+    // Order status
+    'status_pending' => 'Pendiente',
+    'status_completed' => 'Completado',
+    'status_cancelled' => 'Cancelado',
 
     // Customers
     'customers' => 'Clientes',

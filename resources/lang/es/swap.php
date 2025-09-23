@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 return [
     'create_intro' => 'Estás a punto de proponer un intercambio a :name para el siguiente producto:',
     'propose_intro' => ':name ha realizado una solicitud de intercambio por uno de tus productos, selecciona uno de sus productos listados para intercambiar. También puedes rechazar la solicitud de intercambio.',
