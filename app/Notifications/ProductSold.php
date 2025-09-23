@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 namespace App\Notifications;
 
 use App\Models\CustomUser;

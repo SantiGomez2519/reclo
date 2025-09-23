@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 namespace App\Providers;
 
 use App\Http\View\Composers\LocaleComposer;

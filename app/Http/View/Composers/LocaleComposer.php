@@ -1,5 +1,7 @@
 <?php
 
+// Author: Pablo Cabrejos
+
 namespace App\Http\View\Composers;
 
 use Illuminate\Support\Facades\App;

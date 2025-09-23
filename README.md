@@ -49,7 +49,7 @@ Follow these steps to set up the project locally:
 
 4. **Generate application key**
     ```bash
-   php artisan key: generate
+   php artisan key:generate
 
 5. **Run migrations and seed the database**
    ```bash

@@ -1,5 +1,7 @@
 <?php
 
+// Author: Isabella Camacho
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;

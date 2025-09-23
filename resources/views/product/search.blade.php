@@ -1,3 +1,4 @@
+<!-- Author: Sofia Flores -->
 @extends('layouts.app')
 
 @section('title', __('product.title'))
