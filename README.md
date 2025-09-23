@@ -43,19 +43,30 @@ Follow these steps to set up the project locally:
    composer install
 
 3. **Set up environment file**
+
    Copy the .env.example file and update it with your local configuration:
     ```bash
    cp .env.example .env
 
-4. **Generate application key**
+5. **Generate application key**
     ```bash
    php artisan key:generate
 
-5. **Run migrations and seed the database**
+6. **Create a Storage Symlink**
+   
+   To make uploaded files publicly accessible:
    ```bash
-   php artisan migrate --seed
+    php artisan storage:link
 
-6. **Start the development server**
+7. **Run migrations** 
+   ```bash
+   php artisan migrate
+
+8. **(Optional) Seed the database with test data**
+   ```bash
+   php artisan db:seed
+
+9. **Start the development server**
    ```bash
    php artisan serve
 
