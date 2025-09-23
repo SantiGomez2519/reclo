@@ -1,6 +1,6 @@
 <?php
 
-// Author: Santiago Gómez 
+// Author: Santiago Gómez
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -1,6 +1,6 @@
 <?php
 
-// Author: Santiago Gómez 
+// Author: Santiago Gómez
 
 namespace App\Providers;
 
