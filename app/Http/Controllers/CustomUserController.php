@@ -1,6 +1,6 @@
 <?php
 
-// Author: Pablo Cabrejos
+// Author: Pablo Cabrejos y Sofía Flores
 
 namespace App\Http\Controllers;
 
