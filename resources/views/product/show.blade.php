@@ -1,3 +1,4 @@
+<!-- Author: Santiago Gómez -->
 @extends('layouts.app')
 
 @section('title', $viewData['product']->getTitle() . ' - Reclo')
@@ -76,18 +77,17 @@
                         <!-- Price -->
                         <div class="mb-4">
                             <span class="display-6 fw-bold text-dark">${{ $viewData['product']->getPrice() }}</span>
-                            <span
-                                class="text-muted text-decoration-line-through fs-5 ms-3">${{ $viewData['product']->getPrice() * 2 }}</span>
                         </div>
 
                         <!-- Rating -->
                         <div class="mb-4">
-                            <div class="d-flex align-items-center">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <i class="fas fa-star text-warning me-1"></i>
-                                @endfor
-                                <span class="text-muted ms-2">(4.9) • 23 {{ __('product.reviews') }}</span>
-                            </div>
+                            <h5 class="fw-bold">{{ __('review.seller_rating') }}</h5>
+                            @if($viewData['sellerRatingAvg'])
+                                <div class="star-rating" data-rating="{{ $viewData['sellerRatingAvg'] }}"></div>
+                                <p>{{ __('review.seller_rating_info') }} {{ number_format($viewData['sellerRatingAvg'], 1) }} / 5 </p>
+                            @else
+                                <p>{{ __('review.seller_no_reviews') }}</p>
+                            @endif
                         </div>
 
                         <!-- Description -->
@@ -206,19 +206,17 @@
         <!-- Reviews Section -->
         <div class="row mt-5">
             <div class="col-12">
-                <h2 class="fw-bold mb-4">{{ __('product.reviews') }}</h2>
+                <h2 class="fw-bold mb-4">{{ __('product.review') }}</h2>
                 <div class="card">
                     <div class="card-body">
-                        @if ($viewData['product']->review)
+                        @if ($viewData['product']->getReview())
                             <div class="d-flex align-items-center mb-3">
-                                @for ($i = 1; $i <= $viewData['product']->review->getRating(); $i++)
-                                    <i class="fas fa-star text-warning me-1"></i>
-                                @endfor
-                                <span class="text-muted ms-2">{{ $viewData['product']->review->getRating() }}/5</span>
+                                <div class="star-rating" data-rating="{{ $viewData['product']->getReview()->getRating() }}"></div>
+                                <span class="text-muted ms-2">{{ $viewData['product']->getReview()->getRating() }}/5</span>
                             </div>
-                            <p class="text-muted mb-2">{{ $viewData['product']->review->getComment() }}</p>
-                            <small class="text-muted">{{ __('product.by') }}
-                                {{ $viewData['product']->review->user->getName() }}</small>
+                            <p class="text-muted mb-2">{{ $viewData['product']->getReview()->getComment() }}</p>
+                            <small class="text-muted">{{ __('product.buyer') }}
+                                {{ $viewData['product']->getReview()->user->getName() }}</small>
                         @else
                             <div class="text-center py-4">
                                 <i class="fas fa-comments fa-3x text-muted mb-3"></i>
@@ -230,4 +228,6 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/render-stars.js') }}"></script>
 @endsection

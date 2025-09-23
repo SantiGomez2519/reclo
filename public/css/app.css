@@ -284,8 +284,8 @@ a.cart-icon:hover i {
 
 .btn-swap {
     display: inline-block;
-    padding: 0.25em 0.65em;   /* mismo padding que el badge */
-    font-size: 1rem;          /* igual que fs-6 */
+    padding: 0.25em 0.65em;   
+    font-size: 1rem;          
     font-weight: 600;
     line-height: 1;
     color: #fff;          
@@ -300,8 +300,19 @@ a.cart-icon:hover i {
 }
 
 .btn-swap:hover {
-    background-color: #ffc107; /* amarillo bootstrap (warning) */
+    background-color: #ffc107;
     border-color: #ffc107;
-    color: #fff;              /* texto oscuro para contraste */
+    color: #fff;              
+}
+
+/* Star rating style */
+.star-rating {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star-rating .star.selected {
+    color: gold;
 }
 

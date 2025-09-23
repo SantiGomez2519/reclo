@@ -1,5 +1,7 @@
 <?php
 
+// Author: Santiago Gómez
+
 return [
     'title' => 'Shopping Cart',
     'empty_cart' => 'Your cart is empty',
@@ -55,4 +57,5 @@ return [
     'pending' => 'Pending',
     'cancelled' => 'Cancelled',
     'download_invoice' => 'Download Invoice',
+    'my_orders' => 'My Orders',
 ];

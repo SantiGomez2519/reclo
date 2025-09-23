@@ -1,3 +1,4 @@
+<!-- Author: Santiago Gómez -->
 @extends('layouts.app')
 
 @section('title', __('product.my_products_title'))

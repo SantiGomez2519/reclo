@@ -1,3 +1,4 @@
+<!-- Author: Isabella Camacho -->
 @extends('layouts.app')
 
 @section('title', __('home.title'))
@@ -43,7 +44,7 @@
     <div class="text-center mt-5">
         <h3 class="fw-bold">{{ __('home.final_message_title') }}</h3>
         <p class="fs-5 text-secondary">{{ __('home.final_message_subtitle') }}</p>
-        <a href="#" class="btn btn-custom">{{ __('home.start_now_button') }}</a>
+        <a href="{{ route('product.index') }}" class="btn btn-custom">{{ __('home.start_now_button') }}</a>
     </div>
 </div>
 @endsection

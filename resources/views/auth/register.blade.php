@@ -1,3 +1,4 @@
+<!-- Author: Pablo Cabrejos -->
 @extends('layouts.app')
 
 @section('content')

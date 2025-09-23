@@ -1,3 +1,4 @@
+<!-- Author: Santiago Gómez -->
 @extends('layouts.app')
 
 @section('title', __('product.title'))
@@ -68,18 +69,6 @@
                             <!-- Price -->
                             <div class="mb-2">
                                 <span class="h5 text-dark fw-bold">${{ $product->getPrice() }}</span>
-                                <span
-                                    class="text-muted text-decoration-line-through ms-2">${{ $product->getPrice() * 2 }}</span>
-                            </div>
-
-                            <!-- Rating -->
-                            <div class="mb-3">
-                                <div class="d-flex align-items-center">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <i class="fas fa-star text-warning"></i>
-                                    @endfor
-                                    <span class="text-muted ms-2">(4.9)</span>
-                                </div>
                             </div>
 
                             <!-- View Product Button -->

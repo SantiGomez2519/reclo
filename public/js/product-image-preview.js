@@ -1,4 +1,6 @@
 /**
+ * Author: Santiago Gómez 
+ * 
  * Product Image Preview Functionality
  * Handles image preview when user selects a file
  */
