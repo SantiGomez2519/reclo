@@ -39,8 +39,10 @@ class SwapRequestController extends Controller
     {
         $swapRequest = SwapRequest::findOrFail($id);
 
-        if ($swapRequest->getInitiatorId() !== Auth::guard('web')->user()->getId() &&
-            $swapRequest->getDesiredItem()->getSellerId() !== Auth::guard('web')->user()->getId()) {
+        if (
+            $swapRequest->getInitiatorId() !== Auth::guard('web')->user()->getId() &&
+            $swapRequest->getDesiredItem()->getSellerId() !== Auth::guard('web')->user()->getId()
+        ) {
             abort(403, __('swap.not_authorized'));
         }
 
@@ -64,7 +66,7 @@ class SwapRequestController extends Controller
     {
         $desiredItem = Product::find($id);
 
-        if (! $desiredItem || ! $desiredItem->getSwap() || ! $desiredItem->getAvailable()) {
+        if (!$desiredItem || !$desiredItem->getSwap() || !$desiredItem->getAvailable()) {
             return redirect()->route('home.index')
                 ->with('status', __('swap.product_not_available'));
         }
@@ -106,7 +108,7 @@ class SwapRequestController extends Controller
             'date_created' => now(),
         ]);
 
-        $desiredItem->seller->notify(new SwapRequestCreated($swapRequest));
+        $desiredItem->getSeller()->notify(new SwapRequestCreated($swapRequest));
 
         return redirect()->route('home.index')
             ->with('status', __('swap.success'));
@@ -246,11 +248,11 @@ class SwapRequestController extends Controller
                 $relatedSwap->save();
 
                 $relatedSwap->getInitiator()->notify(new SwapRequestFinalized($relatedSwap));
-                $relatedSwap->getDesiredItem()->seller->notify(new SwapRequestFinalized($relatedSwap));
+                $relatedSwap->getDesiredItem()->getSeller()->notify(new SwapRequestFinalized($relatedSwap));
             }
 
-            $swapRequest->getDesiredItem()->seller->notify(new SwapRequestFinalized($swapRequest));
-            $swapRequest->getOfferedItem()->seller->notify(new SwapRequestFinalized($swapRequest));
+            $swapRequest->getDesiredItem()->getSeller()->notify(new SwapRequestFinalized($swapRequest));
+            $swapRequest->getOfferedItem()->getSeller()->notify(new SwapRequestFinalized($swapRequest));
         }
 
         $swapRequest->save();

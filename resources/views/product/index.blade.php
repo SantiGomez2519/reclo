@@ -64,7 +64,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $product->getTitle() }}</h5>
                             <p class="card-text text-muted small mb-2">{{ __('product.by') }}
-                                {{ $product->seller->getName() }}</p>
+                                {{ $product->getSeller()->getName() }}</p>
 
                             <!-- Price -->
                             <div class="mb-2">

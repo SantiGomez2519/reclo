@@ -71,7 +71,7 @@
                         <!-- Title and Seller -->
                         <h1 class="card-title display-6 fw-bold mb-2">{{ $viewData['product']->getTitle() }}</h1>
                         <p class="text-muted fs-5 mb-3">{{ __('product.by') }}
-                            {{ $viewData['product']->seller->getName() }}
+                            {{ $viewData['product']->getSeller()->getName() }}
                         </p>
 
                         <!-- Price -->
@@ -82,9 +82,10 @@
                         <!-- Rating -->
                         <div class="mb-4">
                             <h5 class="fw-bold">{{ __('review.seller_rating') }}</h5>
-                            @if($viewData['sellerRatingAvg'])
+                            @if ($viewData['sellerRatingAvg'])
                                 <div class="star-rating" data-rating="{{ $viewData['sellerRatingAvg'] }}"></div>
-                                <p>{{ __('review.seller_rating_info') }} {{ number_format($viewData['sellerRatingAvg'], 1) }} / 5 </p>
+                                <p>{{ __('review.seller_rating_info') }}
+                                    {{ number_format($viewData['sellerRatingAvg'], 1) }} / 5 </p>
                             @else
                                 <p>{{ __('review.seller_no_reviews') }}</p>
                             @endif
@@ -211,8 +212,10 @@
                     <div class="card-body">
                         @if ($viewData['product']->getReview())
                             <div class="d-flex align-items-center mb-3">
-                                <div class="star-rating" data-rating="{{ $viewData['product']->getReview()->getRating() }}"></div>
-                                <span class="text-muted ms-2">{{ $viewData['product']->getReview()->getRating() }}/5</span>
+                                <div class="star-rating"
+                                    data-rating="{{ $viewData['product']->getReview()->getRating() }}"></div>
+                                <span
+                                    class="text-muted ms-2">{{ $viewData['product']->getReview()->getRating() }}/5</span>
                             </div>
                             <p class="text-muted mb-2">{{ $viewData['product']->getReview()->getComment() }}</p>
                             <small class="text-muted">{{ __('product.buyer') }}
