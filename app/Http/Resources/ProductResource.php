@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
             'price' => $this->getPrice(),
             'available' => $this->getAvailable(),
             'images' => $this->getImages(),
-            'url' => route('product.show', ['id' => $this->getId()])
+            'url' => route('product.show', ['id' => $this->getId()]),
         ];
     }
 }
