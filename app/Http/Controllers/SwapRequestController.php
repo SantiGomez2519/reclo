@@ -66,7 +66,7 @@ class SwapRequestController extends Controller
     {
         $desiredItem = Product::find($id);
 
-        if (!$desiredItem || !$desiredItem->getSwap() || !$desiredItem->getAvailable()) {
+        if (! $desiredItem || ! $desiredItem->getSwap() || ! $desiredItem->getAvailable()) {
             return redirect()->route('home.index')
                 ->with('status', __('swap.product_not_available'));
         }
