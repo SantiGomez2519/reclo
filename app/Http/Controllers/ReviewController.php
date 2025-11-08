@@ -33,17 +33,18 @@ class ReviewController extends Controller
 
         if (
             Review::where('user_id', $user->getId())
-                ->where('seller_id', $sellerId)
+                ->where('product_id', $productId)
                 ->exists()
         ) {
             return redirect()
                 ->route('orders.show', $request->input('order_id'))
-                ->with('error', __('review.already_reviewed_seller'));
+                ->with('error', __('review.already_reviewed_product'));
         }
 
         Review::create([
             'user_id' => $user->getId(),
             'seller_id' => $sellerId,
+            'product_id' => $productId,
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
         ]);

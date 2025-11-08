@@ -36,21 +36,21 @@ class OrderController extends Controller
             ->findOrFail($id);
 
         $userId = Auth::guard('web')->id();
-        $sellerIds = $order->products->pluck('seller_id')->unique();
+        $productIds = $order->products->pluck('id')->toArray();
 
-        $reviewedSellerIds = Review::where('user_id', $userId)
-            ->whereIn('seller_id', $sellerIds)
-            ->pluck('seller_id')
+        $reviewedProductIds = Review::where('user_id', $userId)
+            ->whereIn('product_id', $productIds)
+            ->pluck('product_id')
             ->toArray();
 
-        $sellerReviews = [];
-        foreach ($sellerIds as $sellerId) {
-            $sellerReviews[$sellerId] = in_array($sellerId, $reviewedSellerIds);
+        $productReviews = [];
+        foreach ($order->products as $product) {
+            $productReviews[$product->getId()] = in_array($product->getId(), $reviewedProductIds);
         }
 
         $viewData = [];
         $viewData['order'] = $order;
-        $viewData['sellerReviews'] = $sellerReviews;
+        $viewData['productReviews'] = $productReviews;
 
         return view('orders.show')->with('viewData', $viewData);
     }
