@@ -163,26 +163,26 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <strong>{{ __('admin.name') }}:</strong>
-                                                <p class="mb-1">{{ $viewData['product']->seller->getName() }}</p>
+                                                <p class="mb-1">{{ $viewData['product']->getSeller()->getName() }}</p>
                                             </div>
                                             <div class="col-md-3">
                                                 <strong>{{ __('admin.email') }}:</strong>
-                                                <p class="mb-1">{{ $viewData['product']->seller->getEmail() }}</p>
+                                                <p class="mb-1">{{ $viewData['product']->getSeller()->getEmail() }}</p>
                                             </div>
                                             <div class="col-md-3">
                                                 <strong>{{ __('admin.phone') }}:</strong>
-                                                <p class="mb-1">{{ $viewData['product']->seller->getPhone() }}</p>
+                                                <p class="mb-1">{{ $viewData['product']->getSeller()->getPhone() }}</p>
                                             </div>
                                             <div class="col-md-3">
                                                 <strong>{{ __('admin.payment_method') }}:</strong>
                                                 <p class="mb-1">
                                                     <span
-                                                        class="badge bg-info">{{ __('admin.payment_' . str_replace(' ', '_', strtolower($viewData['product']->seller->getPaymentMethod()))) }}</span>
+                                                        class="badge bg-info">{{ __('admin.payment_' . str_replace(' ', '_', strtolower($viewData['product']->getSeller()->getPaymentMethod()))) }}</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="mt-2">
-                                            <a href="{{ route('admin.customusers.show', $viewData['product']->seller->getId()) }}"
+                                            <a href="{{ route('admin.customusers.show', $viewData['product']->getSeller()->getId()) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <i class="fas fa-user me-1"></i>{{ __('admin.view_seller_profile') }}
                                             </a>

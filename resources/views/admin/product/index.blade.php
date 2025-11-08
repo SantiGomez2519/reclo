@@ -72,7 +72,7 @@
                                                         {{ $product->getAvailable() ? __('admin.status_available') : __('admin.status_unavailable') }}
                                                     </span>
                                                 </td>
-                                                <td>{{ $product->seller->getName() }}</td>
+                                                <td>{{ $product->getSeller()->getName() }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
                                                         <a href="{{ route('admin.products.show', $product->getId()) }}"

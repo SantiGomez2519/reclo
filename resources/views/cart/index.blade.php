@@ -42,7 +42,7 @@
                                                     {{ $item['product']->getSize() }}</small>
                                                 <br>
                                                 <small class="text-muted">{{ __('cart.sold_by') }}:
-                                                    {{ $item['product']->seller->getName() }}</small>
+                                                    {{ $item['product']->getSeller()->getName() }}</small>
                                             </div>
                                             <div class="col-md-2">
                                                 <span

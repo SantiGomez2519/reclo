@@ -27,7 +27,7 @@ class CustomUserController extends Controller
 
         $viewData['salesHistory'] = Product::where('seller_id', $user->getId())
             ->whereNotNull('order_id')
-            ->with(['order.buyer', 'review'])
+            ->with('order.buyer')
             ->orderBy('updated_at', 'desc')
             ->get();
 
