@@ -52,7 +52,7 @@
                                             <span class="badge bg-success">{{ __('cart.completed') }}</span>
                                         </div>
 
-                                        @if ($product->getReview())
+                                        @if ($viewData['sellerReviews'][$product->getSellerId()] ?? false)
                                             <span class="badge bg-success fs-6 w-auto">{{ __('review.reviewed') }}</span>
                                         @else
                                             <a href="{{ route('reviews.create', ['product' => $product->getId(), 'order_id' => $viewData['order']->getId()]) }}"

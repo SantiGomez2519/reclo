@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Review;
 use App\Util\InvoicePdfGenerator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -31,11 +32,25 @@ class OrderController extends Controller
     public function show(int $id): View
     {
         $order = Order::where('buyer_id', Auth::guard('web')->id())
-            ->with('products')
+            ->with('products.seller')
             ->findOrFail($id);
+
+        $userId = Auth::guard('web')->id();
+        $sellerIds = $order->products->pluck('seller_id')->unique();
+
+        $reviewedSellerIds = Review::where('user_id', $userId)
+            ->whereIn('seller_id', $sellerIds)
+            ->pluck('seller_id')
+            ->toArray();
+
+        $sellerReviews = [];
+        foreach ($sellerIds as $sellerId) {
+            $sellerReviews[$sellerId] = in_array($sellerId, $reviewedSellerIds);
+        }
 
         $viewData = [];
         $viewData['order'] = $order;
+        $viewData['sellerReviews'] = $sellerReviews;
 
         return view('orders.show')->with('viewData', $viewData);
     }

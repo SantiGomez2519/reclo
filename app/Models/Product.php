@@ -32,7 +32,6 @@ class Product extends Model
      * $this->attributes['updated_at'] - timestamp - contains the product last update timestamp
      * $this->seller - CustomUser - contains the associated seller
      * $this->order - Order - contains the associated order (nullable)
-     * $this->review - Review - contains the associated review (nullable)
      * $this->swapRequestsDesired - SwapRequest[] - contains swap requests where this product is desired
      * $this->swapRequestsOffered - SwapRequest[] - contains swap requests where this product is offered
      */
@@ -186,7 +185,7 @@ class Product extends Model
                         if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                             $urls[] = $imagePath;
                         } else {
-                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
                         }
                     }
 
@@ -265,21 +264,6 @@ class Product extends Model
     public function setOrder(?Order $order): void
     {
         $this->order = $order;
-    }
-
-    public function review(): HasOne
-    {
-        return $this->hasOne(Review::class);
-    }
-
-    public function getReview(): ?Review
-    {
-        return $this->review;
-    }
-
-    public function setReview(?Review $review): void
-    {
-        $this->review = $review;
     }
 
     public function swapRequestsDesired(): HasMany
