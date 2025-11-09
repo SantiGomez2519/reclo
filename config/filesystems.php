@@ -60,6 +60,18 @@ return [
             'report' => false,
         ],
 
+        'gcs' => [
+            'driver' => 'gcs',
+            'project_id' => env('GCS_PROJECT_ID', 'project-id'),
+            'key_file_path' => env('GCS_KEY_FILE', null), // path to the service account json file
+            'bucket' => env('GCS_BUCKET', 'bucket-name'),
+            'path_prefix' => 'products',
+            'storage_api_uri' => null,
+            'visibility' => 'public', // optional: public|private
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*
