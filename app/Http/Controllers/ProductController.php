@@ -4,8 +4,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ImageStorage;
 use App\Models\Product;
-use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +13,12 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    protected ImageStorage $imageStorage;
+
+    public function __construct(ImageStorage $imageStorage)
     {
         $this->middleware('auth:web')->except(['index', 'show', 'search']);
+        $this->imageStorage = $imageStorage;
     }
 
     public function index(): View
@@ -48,8 +51,7 @@ class ProductController extends Controller
         $product->setSellerId(Auth::guard('web')->id());
 
         // Handle image upload
-        $imageStorage = new ImageLocalStorage;
-        $imagePaths = $imageStorage->store($request, 'products');
+        $imagePaths = $this->imageStorage->store($request, 'products');
         $product->setImages($imagePaths);
 
         $product->save();
@@ -101,8 +103,7 @@ class ProductController extends Controller
         $product->setSwap($request->has('swap'));
 
         // Handle image upload
-        $imageStorage = new ImageLocalStorage;
-        $imageStorage->handleImageUpload($request, $product);
+        $this->imageStorage->handleImageUpload($request, $product);
 
         $product->save();
 
@@ -115,8 +116,7 @@ class ProductController extends Controller
         $product->checkProductOwnership();
 
         // Delete image files
-        $imageStorage = new ImageLocalStorage;
-        $imageStorage->deleteOldImages($product->getImages(false));
+        $this->imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
 
