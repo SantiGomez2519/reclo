@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: always
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - .:/var/www/html
+      - /var/www/gcp-credentials.json:/var/www/html/storage/gcp-credentials.json:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/var/www/html/storage/gcp-credentials.json
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+  php:
+    image: php:8.3-fpm
+    container_name: php_fpm
+    restart: always
+    volumes:
+      - .:/var/www/html
+    networks:
+      - app-network
+

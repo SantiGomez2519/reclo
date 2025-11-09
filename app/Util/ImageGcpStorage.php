@@ -1,7 +1,5 @@
 <?php
 
-// Author: Santiago Gómez
-
 namespace App\Util;
 
 use App\Interfaces\ImageStorage;
@@ -9,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ImageLocalStorage implements ImageStorage
+class ImageGcpStorage implements ImageStorage
 {
     public function store(Request $request, string $folder = ''): array
     {
@@ -17,12 +15,8 @@ class ImageLocalStorage implements ImageStorage
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-                $path = $folder ? $folder.'/'.$fileName : $fileName;
-
-                Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
-
-                $urls[] = Storage::disk('public')->url($path);
+                $path = Storage::disk('gcs')->putFile($folder, $file);
+                $urls[] = Storage::disk('gcs')->url($path);
             }
         }
 
@@ -31,8 +25,11 @@ class ImageLocalStorage implements ImageStorage
 
     public function delete(string $path): void
     {
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
+        $relativePath = parse_url($path, PHP_URL_PATH);
+        $bucketName = env('GCS_BUCKET');
+        $relativePath = ltrim(str_replace("/{$bucketName}", '', $relativePath), '/');
+        if (Storage::disk('gcs')->exists($relativePath)) {
+            Storage::disk('gcs')->delete($relativePath);
         }
     }
 
@@ -46,12 +43,10 @@ class ImageLocalStorage implements ImageStorage
     public function handleImageUpload(Request $request, Product $product): void
     {
         if ($request->hasFile('images')) {
-            // Delete old images if they're not the default
             $this->deleteOldImages($product->getImages(false));
-            $imagePaths = $this->store($request, 'products');
-            $product->setImages($imagePaths);
+            $imageUrls = $this->store($request, 'products');
+            $product->setImages($imageUrls);
         } else {
-            // Keep current images if no new images are uploaded
             $currentImages = $product->getImages(false);
             $product->setImages($currentImages);
         }
@@ -59,10 +54,6 @@ class ImageLocalStorage implements ImageStorage
 
     public function deleteOldImages(array $images): void
     {
-        foreach ($images as $imagePath) {
-            if ($imagePath !== 'images/default-product.jpg') {
-                $this->delete($imagePath);
-            }
-        }
+        $this->deleteMultiple($images);
     }
 }
