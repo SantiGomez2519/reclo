@@ -173,29 +173,16 @@ class Product extends Model
      */
     public function getImages(bool $asUrls = true): array
     {
-        $image = $this->attributes['image'];
+        $imageJson = $this->attributes['image'];
 
-        if ($image) {
-            $images = json_decode($image, true);
+        if ($imageJson) {
+            $images = json_decode($imageJson, true);
             if (is_array($images)) {
-                if ($asUrls) {
-                    $urls = [];
-                    foreach ($images as $imagePath) {
-                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
-                            $urls[] = $imagePath;
-                        } else {
-                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
-                        }
-                    }
-
-                    return $urls;
-                } else {
-                    return $images;
-                }
+                return $images;
             }
         }
 
-        return [];
+        return ['images/default-product.jpg'];
     }
 
     public function setImages(array $images): void
