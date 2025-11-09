@@ -4,10 +4,9 @@
 
 namespace App\Providers;
 
-
+use App\Http\View\Composers\LocaleComposer;
 use App\Interfaces\ImageStorage;
 use App\Util\ImageLocalStorage;
-use App\Http\View\Composers\LocaleComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
