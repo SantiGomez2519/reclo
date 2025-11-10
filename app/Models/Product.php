@@ -56,7 +56,7 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
+            'images' => $isUpdate ? 'nullable|array|max:5' : 'nullable|array|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
 
@@ -178,11 +178,24 @@ class Product extends Model
         if ($imageJson) {
             $images = json_decode($imageJson, true);
             if (is_array($images)) {
-                return $images;
+                if ($asUrls) {
+                    $urls = [];
+                    foreach ($images as $imagePath) {
+                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                            $urls[] = $imagePath;
+                        } else {
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
+                        }
+                    }
+
+                    return $urls;
+                } else {
+                    return $images;
+                }
             }
         }
 
-        return [asset('images/default-product.jpg')];
+        return $asUrls ? [asset('images/default-product.jpg')] : ['images/default-product.jpg'];
     }
 
     public function setImages(array $images): void

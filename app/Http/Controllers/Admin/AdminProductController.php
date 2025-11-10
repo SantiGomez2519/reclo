@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CustomUser;
 use App\Models\Product;
+use App\Services\PexelsImageService;
 use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,9 +15,12 @@ use Illuminate\View\View;
 
 class AdminProductController extends Controller
 {
-    public function __construct()
+    protected ImageLocalStorage $imageStorage;
+
+    public function __construct(PexelsImageService $pexelsImageService)
     {
         $this->middleware('admin');
+        $this->imageStorage = new ImageLocalStorage($pexelsImageService);
     }
 
     public function index(): View
@@ -60,11 +64,8 @@ class AdminProductController extends Controller
         $product->setSwap(false);
 
         // Handle image upload
-        if ($request->hasFile('images')) {
-            $imageStorage = new ImageLocalStorage;
-            $imagePaths = $imageStorage->store($request, 'products');
-            $product->setImages($imagePaths);
-        }
+        $imagePaths = $this->imageStorage->getProductImages($request, $product);
+        $product->setImages($imagePaths);
 
         $product->save();
 
@@ -97,10 +98,7 @@ class AdminProductController extends Controller
         $product->setSellerId($request->input('seller_id'));
 
         // Handle image upload
-        if ($request->hasFile('images')) {
-            $imageStorage = new ImageLocalStorage;
-            $imageStorage->handleImageUpload($request, $product);
-        }
+        $this->imageStorage->handleImageUpload($request, $product);
 
         $product->save();
 
@@ -112,8 +110,7 @@ class AdminProductController extends Controller
         $product = Product::findOrFail($id);
 
         // Delete associated images
-        $imageStorage = new ImageLocalStorage;
-        $imageStorage->deleteOldImages($product->getImages(false));
+        $this->imageStorage->deleteOldImages($product->getImages(false));
 
         $product->delete();
 
