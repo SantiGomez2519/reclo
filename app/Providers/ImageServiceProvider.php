@@ -5,8 +5,8 @@ namespace App\Providers;
 use App\Interfaces\ImageStorage;
 use App\Util\ImageGcpStorage;
 use App\Util\ImageLocalStorage;
-use Illuminate\Support\ServiceProvider;
 use Exception;
+use Illuminate\Support\ServiceProvider;
 
 class ImageServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,8 @@ class ImageServiceProvider extends ServiceProvider
             $storageType = config('app.image_storage', 'local');
 
             return match ($storageType) {
-                'gcp'   => new ImageGcpStorage(),
-                'local' => new ImageLocalStorage(),
+                'gcp' => new ImageGcpStorage,
+                'local' => new ImageLocalStorage,
                 default => throw new Exception("Tipo de almacenamiento desconocido: {$storageType}"),
             };
         });
