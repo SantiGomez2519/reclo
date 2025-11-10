@@ -18,14 +18,15 @@ class ImageLocalStorage implements ImageStorage
     {
         $this->pexelsImageService = $pexelsImageService;
     }
+
     public function store(Request $request, string $folder = ''): array
     {
         $urls = [];
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-                $path = $folder ? $folder . '/' . $fileName : $fileName;
+                $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+                $path = $folder ? $folder.'/'.$fileName : $fileName;
 
                 Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
                 $urls[] = Storage::disk('public')->url($path);
@@ -79,7 +80,7 @@ class ImageLocalStorage implements ImageStorage
             if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                 // Verificar si es una URL de nuestro storage
                 $storageUrl = Storage::disk('public')->url('');
-                if (!str_starts_with($imagePath, $storageUrl)) {
+                if (! str_starts_with($imagePath, $storageUrl)) {
                     continue; // Es una URL externa, no eliminar
                 }
                 // Es una URL de nuestro storage, extraer la ruta relativa
@@ -94,7 +95,7 @@ class ImageLocalStorage implements ImageStorage
     public function deleteProductImages(Product $product): void
     {
         $images = $this->extractRawImages($product);
-        if (!empty($images)) {
+        if (! empty($images)) {
             $this->deleteOldImages($images);
         }
     }
@@ -126,7 +127,7 @@ class ImageLocalStorage implements ImageStorage
             );
             $maxImages = config('services.pexels.max_images', 5);
             $pexelsImages = $this->pexelsImageService->searchImages($searchQuery, $maxImages);
-            $imagePaths = !empty($pexelsImages) ? $pexelsImages : ['images/default-product.jpg'];
+            $imagePaths = ! empty($pexelsImages) ? $pexelsImages : ['images/default-product.jpg'];
         }
 
         return $imagePaths;

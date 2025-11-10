@@ -177,7 +177,7 @@ class Product extends Model
 
         if ($imageJson) {
             $images = json_decode($imageJson, true);
-            if (is_array($images) && !empty($images)) {
+            if (is_array($images) && ! empty($images)) {
                 $urls = [];
                 foreach ($images as $imagePath) {
                     // Si ya es una URL completa (http/https), usarla directamente
@@ -194,7 +194,7 @@ class Product extends Model
                             if (str_starts_with($cleanPath, 'storage/')) {
                                 $urls[] = url($cleanPath);
                             } else {
-                                $urls[] = url('storage/' . $cleanPath);
+                                $urls[] = url('storage/'.$cleanPath);
                             }
                         }
                     }

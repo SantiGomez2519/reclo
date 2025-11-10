@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Log;
 class PexelsImageService
 {
     private string $apiUrl;
+
     private string $apiKey;
+
     private int $cacheTtl;
 
     public function __construct()
@@ -23,14 +25,15 @@ class PexelsImageService
     {
         if (empty($this->apiKey) || empty($this->apiUrl)) {
             Log::warning('Pexels API credentials not configured');
+
             return [];
         }
 
-        $cacheKey = 'pexels_images_' . md5($query . '_' . $perPage);
+        $cacheKey = 'pexels_images_'.md5($query.'_'.$perPage);
 
         return Cache::remember($cacheKey, $this->cacheTtl, function () use ($query, $perPage) {
             try {
-                $searchUrl = rtrim($this->apiUrl, '/') . '/search';
+                $searchUrl = rtrim($this->apiUrl, '/').'/search';
 
                 $httpClient = Http::timeout(10)
                     ->withHeaders([
@@ -47,12 +50,13 @@ class PexelsImageService
                     'orientation' => config('services.pexels.orientation', 'portrait'),
                 ]);
 
-                if (!$response->successful()) {
+                if (! $response->successful()) {
                     Log::warning('Pexels API request failed', [
                         'status' => $response->status(),
                         'query' => $query,
                         'response' => $response->body(),
                     ]);
+
                     return [];
                 }
 
@@ -62,6 +66,7 @@ class PexelsImageService
                     'message' => $e->getMessage(),
                     'query' => $query,
                 ]);
+
                 return [];
             }
         });
@@ -74,12 +79,12 @@ class PexelsImageService
         $titleWords = explode(' ', strtolower($title));
         $titleTerm = implode(' ', array_slice($titleWords, 0, 3));
 
-        return trim($categoryTerm . ' ' . $titleTerm);
+        return trim($categoryTerm.' '.$titleTerm);
     }
 
     private function extractImageUrls(array $data): array
     {
-        if (!isset($data['photos']) || empty($data['photos'])) {
+        if (! isset($data['photos']) || empty($data['photos'])) {
             return [];
         }
 
@@ -89,7 +94,7 @@ class PexelsImageService
                 $imageUrls[] = $photo['src']['large'];
             }
         }
+
         return $imageUrls;
     }
 }
-

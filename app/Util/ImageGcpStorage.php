@@ -36,7 +36,7 @@ class ImageGcpStorage implements ImageStorage
         // No eliminar URLs externas (Pexels, etc.)
         if (filter_var($path, FILTER_VALIDATE_URL)) {
             $storageUrl = Storage::disk('gcs')->url('');
-            if (!str_starts_with($path, $storageUrl)) {
+            if (! str_starts_with($path, $storageUrl)) {
                 return; // Es una URL externa, no eliminar
             }
             // Es una URL de GCS, extraer la ruta relativa
@@ -87,7 +87,7 @@ class ImageGcpStorage implements ImageStorage
             // No eliminar URLs externas (Pexels, etc.)
             if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                 $storageUrl = Storage::disk('gcs')->url('');
-                if (!str_starts_with($imagePath, $storageUrl)) {
+                if (! str_starts_with($imagePath, $storageUrl)) {
                     continue; // Es una URL externa, no eliminar
                 }
             }
@@ -99,7 +99,7 @@ class ImageGcpStorage implements ImageStorage
     public function deleteProductImages(Product $product): void
     {
         $images = $this->extractRawImages($product);
-        if (!empty($images)) {
+        if (! empty($images)) {
             $this->deleteOldImages($images);
         }
     }
@@ -131,7 +131,7 @@ class ImageGcpStorage implements ImageStorage
             );
             $maxImages = config('services.pexels.max_images', 5);
             $pexelsImages = $this->pexelsImageService->searchImages($searchQuery, $maxImages);
-            $imagePaths = !empty($pexelsImages) ? $pexelsImages : [asset('images/default-product.jpg')];
+            $imagePaths = ! empty($pexelsImages) ? $pexelsImages : [asset('images/default-product.jpg')];
         }
 
         return $imagePaths;
