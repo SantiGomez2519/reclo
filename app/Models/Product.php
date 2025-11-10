@@ -60,12 +60,10 @@ class Product extends Model
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
 
-        // seller_id validation for admin
         if ($request->has('seller_id')) {
             $rules['seller_id'] = 'required|exists:custom_users,id';
         }
 
-        // available flag (admin forms)
         if ($request->has('available')) {
             $rules['available'] = 'required|boolean';
         }
@@ -168,9 +166,6 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    /**
-     * Get product images as URLs
-     */
     public function getImages(): array
     {
         $imageJson = $this->attributes['image'];
@@ -180,16 +175,12 @@ class Product extends Model
             if (is_array($images) && ! empty($images)) {
                 $urls = [];
                 foreach ($images as $imagePath) {
-                    // Si ya es una URL completa (http/https), usarla directamente
                     if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                         $urls[] = $imagePath;
                     } else {
-                        // Si es una ruta relativa, convertirla a URL
-                        // Verificar si es la imagen por defecto
                         if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
                             $urls[] = asset('images/default-product.jpg');
                         } else {
-                            // Remover la ruta base de storage si existe
                             $cleanPath = ltrim($imagePath, '/');
                             if (str_starts_with($cleanPath, 'storage/')) {
                                 $urls[] = url($cleanPath);

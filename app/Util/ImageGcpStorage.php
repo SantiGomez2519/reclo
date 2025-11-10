@@ -33,13 +33,11 @@ class ImageGcpStorage implements ImageStorage
 
     public function delete(string $path): void
     {
-        // No eliminar URLs externas (Pexels, etc.)
         if (filter_var($path, FILTER_VALIDATE_URL)) {
             $storageUrl = Storage::disk('gcs')->url('');
             if (! str_starts_with($path, $storageUrl)) {
-                return; // Es una URL externa, no eliminar
+                return;
             }
-            // Es una URL de GCS, extraer la ruta relativa
             $path = str_replace($storageUrl, '', $path);
         }
 
@@ -61,13 +59,10 @@ class ImageGcpStorage implements ImageStorage
     public function handleImageUpload(Request $request, Product $product): void
     {
         if ($request->hasFile('images')) {
-            // Delete old images if they're not the default
             $this->deleteProductImages($product);
             $imageUrls = $this->store($request, 'products');
             $product->setImages($imageUrls);
         } else {
-            // Keep current images if no new images are uploaded
-            // If no images exist, use Pexels as fallback
             $currentImages = $this->extractRawImages($product);
             if (empty($currentImages)) {
                 $imagePaths = $this->getProductImages($request, $product);
@@ -79,16 +74,14 @@ class ImageGcpStorage implements ImageStorage
     public function deleteOldImages(array $images): void
     {
         foreach ($images as $imagePath) {
-            // No eliminar imágenes por defecto
             if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
                 continue;
             }
 
-            // No eliminar URLs externas (Pexels, etc.)
             if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                 $storageUrl = Storage::disk('gcs')->url('');
                 if (! str_starts_with($imagePath, $storageUrl)) {
-                    continue; // Es una URL externa, no eliminar
+                    continue;
                 }
             }
 
@@ -104,9 +97,6 @@ class ImageGcpStorage implements ImageStorage
         }
     }
 
-    /**
-     * Extract raw images from product attribute
-     */
     private function extractRawImages(Product $product): array
     {
         $imageJson = $product->attributes['image'] ?? null;

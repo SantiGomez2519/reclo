@@ -96,7 +96,6 @@ class AdminProductController extends Controller
         $product->setAvailable($request->boolean('available'));
         $product->setSellerId($request->input('seller_id'));
 
-        // Handle image upload
         $this->imageStorage->handleImageUpload($request, $product);
 
         $product->save();
@@ -108,7 +107,6 @@ class AdminProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // Delete associated images
         $this->imageStorage->deleteProductImages($product);
 
         $product->delete();

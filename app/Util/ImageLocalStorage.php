@@ -71,23 +71,18 @@ class ImageLocalStorage implements ImageStorage
     public function deleteOldImages(array $images): void
     {
         foreach ($images as $imagePath) {
-            // No eliminar imágenes por defecto
             if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
                 continue;
             }
 
-            // No eliminar URLs externas (Pexels, etc.)
             if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
-                // Verificar si es una URL de nuestro storage
                 $storageUrl = Storage::disk('public')->url('');
                 if (! str_starts_with($imagePath, $storageUrl)) {
-                    continue; // Es una URL externa, no eliminar
+                    continue;
                 }
-                // Es una URL de nuestro storage, extraer la ruta relativa
                 $imagePath = str_replace($storageUrl, '', $imagePath);
             }
 
-            // Eliminar el archivo si existe
             $this->delete($imagePath);
         }
     }
@@ -100,9 +95,6 @@ class ImageLocalStorage implements ImageStorage
         }
     }
 
-    /**
-     * Extract raw images from product attribute
-     */
     private function extractRawImages(Product $product): array
     {
         $imageJson = $product->attributes['image'] ?? null;

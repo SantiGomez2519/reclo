@@ -20,13 +20,10 @@ class ImageServiceProvider extends ServiceProvider
             return match ($storageType) {
                 'gcp' => new ImageGcpStorage($pexelsImageService),
                 'local' => new ImageLocalStorage($pexelsImageService),
-                default => throw new Exception("Tipo de almacenamiento desconocido: {$storageType}"),
+                default => throw new Exception("Unknown storage type: {$storageType}"),
             };
         });
     }
 
-    public function boot(): void
-    {
-        // Aquí podrías agregar logs o eventos si necesitas
-    }
+    public function boot(): void {}
 }

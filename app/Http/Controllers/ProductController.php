@@ -102,7 +102,6 @@ class ProductController extends Controller
         $product->setPrice($request->input('price'));
         $product->setSwap($request->has('swap'));
 
-        // Handle image upload
         $this->imageStorage->handleImageUpload($request, $product);
 
         $product->save();
@@ -115,7 +114,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->checkProductOwnership();
 
-        // Delete image files
         $this->imageStorage->deleteProductImages($product);
 
         $product->delete();
