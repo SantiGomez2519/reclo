@@ -116,10 +116,7 @@ class ProductController extends Controller
         $product->checkProductOwnership();
 
         // Delete image files
-        $oldImages = json_decode($product->attributes['image'] ?? '[]', true);
-        if (is_array($oldImages)) {
-            $this->imageStorage->deleteOldImages($oldImages);
-        }
+        $this->imageStorage->deleteProductImages($product);
 
         $product->delete();
 

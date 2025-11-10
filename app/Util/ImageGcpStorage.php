@@ -62,17 +62,14 @@ class ImageGcpStorage implements ImageStorage
     {
         if ($request->hasFile('images')) {
             // Delete old images if they're not the default
-            $oldImages = json_decode($product->attributes['image'] ?? '[]', true);
-            if (is_array($oldImages)) {
-                $this->deleteOldImages($oldImages);
-            }
+            $this->deleteProductImages($product);
             $imageUrls = $this->store($request, 'products');
             $product->setImages($imageUrls);
         } else {
             // Keep current images if no new images are uploaded
-            $currentImages = json_decode($product->attributes['image'] ?? '[]', true);
-            if (!is_array($currentImages) || empty($currentImages)) {
-                // Si no hay imágenes, usar Pexels como fallback
+            // If no images exist, use Pexels as fallback
+            $currentImages = $this->extractRawImages($product);
+            if (empty($currentImages)) {
                 $imagePaths = $this->getProductImages($request, $product);
                 $product->setImages($imagePaths);
             }
@@ -97,6 +94,30 @@ class ImageGcpStorage implements ImageStorage
 
             $this->delete($imagePath);
         }
+    }
+
+    public function deleteProductImages(Product $product): void
+    {
+        $images = $this->extractRawImages($product);
+        if (!empty($images)) {
+            $this->deleteOldImages($images);
+        }
+    }
+
+    /**
+     * Extract raw images from product attribute
+     */
+    private function extractRawImages(Product $product): array
+    {
+        $imageJson = $product->attributes['image'] ?? null;
+
+        if (empty($imageJson)) {
+            return [];
+        }
+
+        $images = json_decode($imageJson, true);
+
+        return is_array($images) ? $images : [];
     }
 
     public function getProductImages(Request $request, Product $product): array
