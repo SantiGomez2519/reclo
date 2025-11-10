@@ -169,7 +169,7 @@ class Product extends Model
     }
 
     /**
-     * Get product images as URLs or file paths
+     * Get product images as URLs
      */
     public function getImages(): array
     {
@@ -177,25 +177,34 @@ class Product extends Model
 
         if ($imageJson) {
             $images = json_decode($imageJson, true);
-            if (is_array($images)) {
-                if ($asUrls) {
-                    $urls = [];
-                    foreach ($images as $imagePath) {
-                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
-                            $urls[] = $imagePath;
+            if (is_array($images) && !empty($images)) {
+                $urls = [];
+                foreach ($images as $imagePath) {
+                    // Si ya es una URL completa (http/https), usarla directamente
+                    if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                        $urls[] = $imagePath;
+                    } else {
+                        // Si es una ruta relativa, convertirla a URL
+                        // Verificar si es la imagen por defecto
+                        if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
+                            $urls[] = asset('images/default-product.jpg');
                         } else {
-                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
+                            // Remover la ruta base de storage si existe
+                            $cleanPath = ltrim($imagePath, '/');
+                            if (str_starts_with($cleanPath, 'storage/')) {
+                                $urls[] = url($cleanPath);
+                            } else {
+                                $urls[] = url('storage/' . $cleanPath);
+                            }
                         }
                     }
-
-                    return $urls;
-                } else {
-                    return $images;
                 }
+
+                return $urls;
             }
         }
 
-        return $asUrls ? [asset('images/default-product.jpg')] : ['images/default-product.jpg'];
+        return [asset('images/default-product.jpg')];
     }
 
     public function setImages(array $images): void

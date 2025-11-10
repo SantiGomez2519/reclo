@@ -6,8 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\ImageStorage;
 use App\Models\Product;
-use App\Services\PexelsImageService;
-use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +13,12 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    protected ImageLocalStorage $imageStorage;
+    protected ImageStorage $imageStorage;
 
-    public function __construct(PexelsImageService $pexelsImageService)
+    public function __construct(ImageStorage $imageStorage)
     {
         $this->middleware('auth:web')->except(['index', 'show', 'search']);
-        $this->imageStorage = new ImageLocalStorage($pexelsImageService);
+        $this->imageStorage = $imageStorage;
     }
 
     public function index(): View
@@ -118,7 +116,10 @@ class ProductController extends Controller
         $product->checkProductOwnership();
 
         // Delete image files
-        $this->imageStorage->deleteOldImages($product->getImages(false));
+        $oldImages = json_decode($product->attributes['image'] ?? '[]', true);
+        if (is_array($oldImages)) {
+            $this->imageStorage->deleteOldImages($oldImages);
+        }
 
         $product->delete();
 

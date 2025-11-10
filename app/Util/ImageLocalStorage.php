@@ -56,30 +56,43 @@ class ImageLocalStorage implements ImageStorage
     {
         if ($request->hasFile('images')) {
             // Delete old images if they're not the default
-            $this->deleteOldImages($product->getImages(false));
+            $oldImages = json_decode($product->attributes['image'] ?? '[]', true);
+            if (is_array($oldImages)) {
+                $this->deleteOldImages($oldImages);
+            }
             $imagePaths = $this->store($request, 'products');
             $product->setImages($imagePaths);
         } else {
             // Keep current images if no new images are uploaded
-            $currentImages = $product->getImages(false);
-            $product->setImages($currentImages);
+            $currentImages = json_decode($product->attributes['image'] ?? '[]', true);
+            if (!is_array($currentImages) || empty($currentImages)) {
+                // Si no hay imágenes, usar Pexels como fallback
+                $imagePaths = $this->getProductImages($request, $product);
+                $product->setImages($imagePaths);
+            }
         }
     }
 
     public function deleteOldImages(array $images): void
     {
         foreach ($images as $imagePath) {
-            if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'images/default-product.jpg')) {
+            // No eliminar imágenes por defecto
+            if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
                 continue;
             }
 
-            $storageUrl = Storage::disk('public')->url('');
-            $isExternalUrl = filter_var($imagePath, FILTER_VALIDATE_URL) && !str_starts_with($imagePath, $storageUrl);
-
-            if ($isExternalUrl) {
-                continue;
+            // No eliminar URLs externas (Pexels, etc.)
+            if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                // Verificar si es una URL de nuestro storage
+                $storageUrl = Storage::disk('public')->url('');
+                if (!str_starts_with($imagePath, $storageUrl)) {
+                    continue; // Es una URL externa, no eliminar
+                }
+                // Es una URL de nuestro storage, extraer la ruta relativa
+                $imagePath = str_replace($storageUrl, '', $imagePath);
             }
 
+            // Eliminar el archivo si existe
             $this->delete($imagePath);
         }
     }
