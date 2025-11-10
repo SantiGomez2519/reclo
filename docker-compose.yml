@@ -14,3 +14,26 @@ services:
       - /var/www/gcp-credentials.json:/var/www/html/storage/gcp-credentials.json:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/var/www/html/storage/gcp-credentials.json
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: always
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - .:/var/www/html
+      - /var/www/gcp-credentials.json:/var/www/html/storage/gcp-credentials.json:ro
+    environment:
+      - GCS_KEY_FILE=/var/www/html/storage/gcp-credentials.json
+
+    command: >
+      bash -c "
+      php artisan migrate --force &&
+      /usr/sbin/apache2ctl -D FOREGROUND
+      "
