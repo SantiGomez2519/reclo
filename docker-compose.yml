@@ -17,6 +17,7 @@ services:
 
     command: >
       bash -c "
+      composer install &&
       php artisan migrate --force &&
       /usr/sbin/apache2ctl -D FOREGROUND
       "
