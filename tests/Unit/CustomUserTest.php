@@ -9,7 +9,7 @@ class CustomUserTest extends TestCase
 {
     public function test_custom_user_getters_and_setters(): void
     {
-        $user = new CustomUser();
+        $user = new CustomUser;
 
         $user->setName('John Doe');
         $user->setPhone('1234567890');
@@ -26,7 +26,7 @@ class CustomUserTest extends TestCase
 
     public function test_custom_user_email_can_be_updated(): void
     {
-        $user = new CustomUser();
+        $user = new CustomUser;
         $user->setEmail('old@example.com');
 
         $this->assertEquals('old@example.com', $user->getEmail());
@@ -38,7 +38,7 @@ class CustomUserTest extends TestCase
 
     public function test_custom_user_payment_method_can_be_changed(): void
     {
-        $user = new CustomUser();
+        $user = new CustomUser;
         $user->setPaymentMethod('paypal');
 
         $this->assertEquals('paypal', $user->getPaymentMethod());
@@ -48,4 +48,3 @@ class CustomUserTest extends TestCase
         $this->assertEquals('bank_transfer', $user->getPaymentMethod());
     }
 }
-
