@@ -16,4 +16,8 @@ interface ImageStorage
     public function handleImageUpload(Request $request, Product $product): void;
 
     public function deleteOldImages(array $images): void;
+
+    public function deleteProductImages(Product $product): void;
+
+    public function getProductImages(Request $request, Product $product): array;
 }

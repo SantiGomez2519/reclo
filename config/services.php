@@ -35,4 +35,21 @@ return [
         ],
     ],
 
+    'pexels' => [
+        'url' => env('API_URL_PEXELS', 'https://api.pexels.com/v1'),
+        'key' => env('API_KEY_PEXELS'),
+        'cache_ttl' => env('PEXELS_CACHE_TTL', 3600),
+        'category_map' => [
+            'Women' => 'women fashion clothing',
+            'Men' => 'men fashion clothing',
+            'Vintage' => 'vintage clothing',
+            'Accessories' => 'fashion accessories',
+            'Shoes' => 'shoes footwear',
+            'Bags' => 'bags handbags',
+            'Jewelry' => 'jewelry',
+        ],
+        'max_images' => 5,
+        'orientation' => 'portrait',
+    ],
+
 ];

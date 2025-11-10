@@ -56,16 +56,14 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
+            'images' => $isUpdate ? 'nullable|array|max:5' : 'nullable|array|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
 
-        // seller_id validation for admin
         if ($request->has('seller_id')) {
             $rules['seller_id'] = 'required|exists:custom_users,id';
         }
 
-        // available flag (admin forms)
         if ($request->has('available')) {
             $rules['available'] = 'required|boolean';
         }
@@ -168,21 +166,36 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    /**
-     * Get product images as URLs or file paths
-     */
-    public function getImages(bool $asUrls = true): array
+    public function getImages(): array
     {
         $imageJson = $this->attributes['image'];
 
         if ($imageJson) {
             $images = json_decode($imageJson, true);
-            if (is_array($images)) {
-                return $images;
+            if (is_array($images) && ! empty($images)) {
+                $urls = [];
+                foreach ($images as $imagePath) {
+                    if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                        $urls[] = $imagePath;
+                    } else {
+                        if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
+                            $urls[] = asset('images/default-product.jpg');
+                        } else {
+                            $cleanPath = ltrim($imagePath, '/');
+                            if (str_starts_with($cleanPath, 'storage/')) {
+                                $urls[] = url($cleanPath);
+                            } else {
+                                $urls[] = url('storage/'.$cleanPath);
+                            }
+                        }
+                    }
+                }
+
+                return $urls;
             }
         }
 
-        return ['images/default-product.jpg'];
+        return [asset('images/default-product.jpg')];
     }
 
     public function setImages(array $images): void

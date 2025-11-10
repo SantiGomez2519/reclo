@@ -63,7 +63,7 @@ return [
         'gcs' => [
             'driver' => 'gcs',
             'project_id' => env('GCS_PROJECT_ID', 'project-id'),
-            'key_file_path' => env('GCS_KEY_FILE', null), 
+            'key_file_path' => env('GCS_KEY_FILE') ? base_path(env('GCS_KEY_FILE')) : null,
             'bucket' => env('GCS_BUCKET', 'bucket-name'),
             'path_prefix' => 'products',
             'storage_api_uri' => null,

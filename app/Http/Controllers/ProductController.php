@@ -51,7 +51,7 @@ class ProductController extends Controller
         $product->setSellerId(Auth::guard('web')->id());
 
         // Handle image upload
-        $imagePaths = $this->imageStorage->store($request, 'products');
+        $imagePaths = $this->imageStorage->getProductImages($request, $product);
         $product->setImages($imagePaths);
 
         $product->save();
@@ -102,7 +102,6 @@ class ProductController extends Controller
         $product->setPrice($request->input('price'));
         $product->setSwap($request->has('swap'));
 
-        // Handle image upload
         $this->imageStorage->handleImageUpload($request, $product);
 
         $product->save();
@@ -115,8 +114,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->checkProductOwnership();
 
-        // Delete image files
-        $this->imageStorage->deleteOldImages($product->getImages(false));
+        $this->imageStorage->deleteProductImages($product);
 
         $product->delete();
 
