@@ -5,19 +5,26 @@
 namespace App\Util;
 
 use App\Models\Product;
+use App\Services\PexelsImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ImageLocalStorage
 {
+    protected PexelsImageService $pexelsImageService;
+
+    public function __construct(PexelsImageService $pexelsImageService)
+    {
+        $this->pexelsImageService = $pexelsImageService;
+    }
     public function store(Request $request, string $folder = ''): array
     {
         $paths = [];
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-                $path = $folder ? $folder.'/'.$fileName : $fileName;
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+                $path = $folder ? $folder . '/' . $fileName : $fileName;
 
                 Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
 
@@ -59,9 +66,35 @@ class ImageLocalStorage
     public function deleteOldImages(array $images): void
     {
         foreach ($images as $imagePath) {
-            if ($imagePath !== 'images/default-product.jpg') {
-                $this->delete($imagePath);
+            if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'images/default-product.jpg')) {
+                continue;
             }
+
+            $storageUrl = Storage::disk('public')->url('');
+            $isExternalUrl = filter_var($imagePath, FILTER_VALIDATE_URL) && !str_starts_with($imagePath, $storageUrl);
+
+            if ($isExternalUrl) {
+                continue;
+            }
+
+            $this->delete($imagePath);
         }
+    }
+
+    public function getProductImages(Request $request, Product $product): array
+    {
+        $imagePaths = $this->store($request, 'products');
+
+        if (empty($imagePaths)) {
+            $searchQuery = $this->pexelsImageService->buildSearchQuery(
+                $product->getTitle(),
+                $product->getCategory()
+            );
+            $maxImages = config('services.pexels.max_images', 5);
+            $pexelsImages = $this->pexelsImageService->searchImages($searchQuery, $maxImages);
+            $imagePaths = !empty($pexelsImages) ? $pexelsImages : ['images/default-product.jpg'];
+        }
+
+        return $imagePaths;
     }
 }
