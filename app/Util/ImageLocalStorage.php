@@ -21,8 +21,10 @@ class ImageLocalStorage implements ImageStorage
                 $path = $folder ? $folder.'/'.$fileName : $fileName;
 
                 Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
-
                 $urls[] = Storage::disk('public')->url($path);
+
+                \Log::info('Imagen guardada:', ['urls' => $urls]);
+
             }
         }
 

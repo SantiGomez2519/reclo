@@ -171,7 +171,7 @@ class Product extends Model
     /**
      * Get product images as URLs or file paths
      */
-    public function getImages(bool $asUrls = true): array
+    public function getImages(): array
     {
         $imageJson = $this->attributes['image'];
 
@@ -182,7 +182,7 @@ class Product extends Model
             }
         }
 
-        return ['images/default-product.jpg'];
+        return [asset('images/default-product.jpg')];
     }
 
     public function setImages(array $images): void
