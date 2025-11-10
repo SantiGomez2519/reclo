@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
-class AlliedProductApiController extends Controller
+class AlliedProductsApiController extends Controller
 {
     public function index(): View|RedirectResponse
     {
-        $url = 'http://127.0.0.1:8000/api/products';
+        $url = env('API_URL').'/api/products';
 
         try {
             $response = Http::get($url);
