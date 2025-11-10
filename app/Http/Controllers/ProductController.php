@@ -19,6 +19,7 @@ class ProductController extends Controller
     {
         $this->middleware('auth:web')->except(['index', 'show', 'search']);
         $this->imageStorage = $imageStorage;
+
     }
 
     public function index(): View
