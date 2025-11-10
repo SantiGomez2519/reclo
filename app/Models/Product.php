@@ -184,7 +184,7 @@ class Product extends Model
                         if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
                             $urls[] = $imagePath;
                         } else {
-                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
+                            $urls[] = url('storage/' . ltrim($imagePath, '/'));
                         }
                     }
 
@@ -195,7 +195,7 @@ class Product extends Model
             }
         }
 
-        return [];
+        return $asUrls ? [asset('images/default-product.jpg')] : ['images/default-product.jpg'];
     }
 
     public function setImages(array $images): void
