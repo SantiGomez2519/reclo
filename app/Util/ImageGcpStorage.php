@@ -33,20 +33,6 @@ class ImageGcpStorage implements ImageStorage
         return $urls;
     }
 
-    public function store(Request $request, string $folder = ''): array
-    {
-        $urls = [];
-
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $path = Storage::disk('gcs')->putFile($folder, $file);
-                $urls[] = Storage::disk('gcs')->url($path);
-            }
-        }
-
-        return $urls;
-    }
-
     public function delete(string $path): void
     {
         if (filter_var($path, FILTER_VALIDATE_URL)) {
