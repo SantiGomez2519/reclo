@@ -4,12 +4,13 @@
 
 namespace App\Util;
 
+use App\Interfaces\ImageStorage;
 use App\Models\Product;
 use App\Services\PexelsImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ImageLocalStorage
+class ImageLocalStorage implements ImageStorage
 {
     protected PexelsImageService $pexelsImageService;
 
@@ -19,7 +20,7 @@ class ImageLocalStorage
     }
     public function store(Request $request, string $folder = ''): array
     {
-        $paths = [];
+        $urls = [];
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
@@ -27,12 +28,14 @@ class ImageLocalStorage
                 $path = $folder ? $folder . '/' . $fileName : $fileName;
 
                 Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
+                $urls[] = Storage::disk('public')->url($path);
 
-                $paths[] = $path;
+                \Log::info('Imagen guardada:', ['urls' => $urls]);
+
             }
         }
 
-        return $paths;
+        return $urls;
     }
 
     public function delete(string $path): void

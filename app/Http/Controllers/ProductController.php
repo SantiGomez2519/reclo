@@ -4,6 +4,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ImageStorage;
 use App\Models\Product;
 use App\Services\PexelsImageService;
 use App\Util\ImageLocalStorage;

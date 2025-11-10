@@ -171,12 +171,12 @@ class Product extends Model
     /**
      * Get product images as URLs or file paths
      */
-    public function getImages(bool $asUrls = true): array
+    public function getImages(): array
     {
-        $image = $this->attributes['image'];
+        $imageJson = $this->attributes['image'];
 
-        if ($image) {
-            $images = json_decode($image, true);
+        if ($imageJson) {
+            $images = json_decode($imageJson, true);
             if (is_array($images)) {
                 if ($asUrls) {
                     $urls = [];
