@@ -26,7 +26,8 @@
                         <div class="position-relative">
                             <img src="{{ $product->getImages()[0] ?? asset('images/default-product.jpg') }}"
                                 alt="{{ $product->getTitle() }}" class="card-img-top"
-                                style="height: 250px; object-fit: cover;">
+                                style="height: 250px; object-fit: cover;"
+                                onerror="this.src='{{ asset('images/default-product.jpg') }}'">
 
                             <!-- Condition Badge -->
                             <span class="position-absolute top-0 start-0 m-2 badge bg-success">
@@ -64,7 +65,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $product->getTitle() }}</h5>
                             <p class="card-text text-muted small mb-2">{{ __('product.by') }}
-                                {{ $product->seller->getName() }}</p>
+                                {{ $product->getSeller()->getName() }}</p>
 
                             <!-- Price -->
                             <div class="mb-2">

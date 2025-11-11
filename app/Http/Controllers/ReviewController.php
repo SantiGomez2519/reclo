@@ -28,16 +28,26 @@ class ReviewController extends Controller
         Review::validate($request);
 
         $product = Product::findOrFail($productId);
+        $sellerId = $product->getSellerId();
+        $user = Auth::guard('web')->user();
 
-        $review = Review::create([
-            'user_id' => Auth::guard('web')->user()->getId(),
+        if (
+            Review::where('user_id', $user->getId())
+                ->where('product_id', $productId)
+                ->exists()
+        ) {
+            return redirect()
+                ->route('orders.show', $request->input('order_id'))
+                ->with('error', __('review.already_reviewed_product'));
+        }
+
+        Review::create([
+            'user_id' => $user->getId(),
+            'seller_id' => $sellerId,
             'product_id' => $productId,
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
         ]);
-
-        $review->setUser(Auth::guard('web')->user());
-        $product->setReview($review);
 
         return redirect()
             ->route('orders.show', $request->input('order_id'))

@@ -71,7 +71,7 @@
                         <!-- Title and Seller -->
                         <h1 class="card-title display-6 fw-bold mb-2">{{ $viewData['product']->getTitle() }}</h1>
                         <p class="text-muted fs-5 mb-3">{{ __('product.by') }}
-                            {{ $viewData['product']->seller->getName() }}
+                            {{ $viewData['product']->getSeller()->getName() }}
                         </p>
 
                         <!-- Price -->
@@ -82,9 +82,10 @@
                         <!-- Rating -->
                         <div class="mb-4">
                             <h5 class="fw-bold">{{ __('review.seller_rating') }}</h5>
-                            @if($viewData['sellerRatingAvg'])
+                            @if ($viewData['sellerRatingAvg'])
                                 <div class="star-rating" data-rating="{{ $viewData['sellerRatingAvg'] }}"></div>
-                                <p>{{ __('review.seller_rating_info') }} {{ number_format($viewData['sellerRatingAvg'], 1) }} / 5 </p>
+                                <p>{{ __('review.seller_rating_info') }}
+                                    {{ number_format($viewData['sellerRatingAvg'], 1) }} / 5 </p>
                             @else
                                 <p>{{ __('review.seller_no_reviews') }}</p>
                             @endif
@@ -206,21 +207,28 @@
         <!-- Reviews Section -->
         <div class="row mt-5">
             <div class="col-12">
-                <h2 class="fw-bold mb-4">{{ __('product.review') }}</h2>
+                <h2 class="fw-bold mb-4">{{ __('review.seller_reviews') }}</h2>
                 <div class="card">
                     <div class="card-body">
-                        @if ($viewData['product']->getReview())
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="star-rating" data-rating="{{ $viewData['product']->getReview()->getRating() }}"></div>
-                                <span class="text-muted ms-2">{{ $viewData['product']->getReview()->getRating() }}/5</span>
-                            </div>
-                            <p class="text-muted mb-2">{{ $viewData['product']->getReview()->getComment() }}</p>
-                            <small class="text-muted">{{ __('product.buyer') }}
-                                {{ $viewData['product']->getReview()->user->getName() }}</small>
+                        @if (count($viewData['sellerReviews']) > 0)
+                            @foreach ($viewData['sellerReviews'] as $review)
+                                <div class="pb-3 mb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="star-rating" data-rating="{{ $review->getRating() }}"></div>
+                                        <span class="text-muted ms-2">{{ $review->getRating() }}/5</span>
+                                        <span class="text-muted ms-auto">
+                                            {{ $review->getCreatedAt()->translatedFormat('M d, Y') }}
+                                        </span>
+                                    </div>
+                                    <p class="text-muted mb-2">{{ $review->getComment() }}</p>
+                                    <small class="text-muted">{{ __('review.reviewed_by') }}
+                                        {{ $review->getUser()->getName() }}</small>
+                                </div>
+                            @endforeach
                         @else
                             <div class="text-center py-4">
                                 <i class="fas fa-comments fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">{{ __('product.no_reviews_yet') }}</p>
+                                <p class="text-muted">{{ __('review.no_reviews_yet') }}</p>
                             </div>
                         @endif
                     </div>

@@ -4,9 +4,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ImageStorage;
 use App\Models\Product;
-use App\Models\Review;
-use App\Util\ImageLocalStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +13,12 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    protected ImageStorage $imageStorage;
+
+    public function __construct(ImageStorage $imageStorage)
     {
         $this->middleware('auth:web')->except(['index', 'show', 'search']);
+        $this->imageStorage = $imageStorage;
     }
 
     public function index(): View
@@ -49,8 +51,7 @@ class ProductController extends Controller
         $product->setSellerId(Auth::guard('web')->id());
 
         // Handle image upload
-        $imageStorage = new ImageLocalStorage;
-        $imagePaths = $imageStorage->store($request, 'products');
+        $imagePaths = $this->imageStorage->getProductImages($request, $product);
         $product->setImages($imagePaths);
 
         $product->save();
@@ -60,14 +61,15 @@ class ProductController extends Controller
 
     public function show(int $id): View
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('seller.receivedReviews.user')->findOrFail($id);
+        $seller = $product->getSeller();
 
-        $sellerProducts = Product::where('seller_id', $product->getSellerId())->pluck('id');
-
-        $sellerRatingAvg = Review::whereIn('product_id', $sellerProducts)->avg('rating');
+        $sellerReviews = $seller->getReceivedReviews();
+        $sellerRatingAvg = $sellerReviews->avg('rating');
 
         $viewData = [];
         $viewData['product'] = $product;
+        $viewData['sellerReviews'] = $sellerReviews;
         $viewData['sellerRatingAvg'] = $sellerRatingAvg;
 
         return view('product.show')->with('viewData', $viewData);
@@ -100,9 +102,7 @@ class ProductController extends Controller
         $product->setPrice($request->input('price'));
         $product->setSwap($request->has('swap'));
 
-        // Handle image upload
-        $imageStorage = new ImageLocalStorage;
-        $imageStorage->handleImageUpload($request, $product);
+        $this->imageStorage->handleImageUpload($request, $product);
 
         $product->save();
 
@@ -114,9 +114,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->checkProductOwnership();
 
-        // Delete image files
-        $imageStorage = new ImageLocalStorage;
-        $imageStorage->deleteOldImages($product->getImages(false));
+        $this->imageStorage->deleteProductImages($product);
 
         $product->delete();
 

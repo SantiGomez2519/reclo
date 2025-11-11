@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
 class Product extends Model
@@ -32,7 +31,6 @@ class Product extends Model
      * $this->attributes['updated_at'] - timestamp - contains the product last update timestamp
      * $this->seller - CustomUser - contains the associated seller
      * $this->order - Order - contains the associated order (nullable)
-     * $this->review - Review - contains the associated review (nullable)
      * $this->swapRequestsDesired - SwapRequest[] - contains swap requests where this product is desired
      * $this->swapRequestsOffered - SwapRequest[] - contains swap requests where this product is offered
      */
@@ -58,16 +56,14 @@ class Product extends Model
             'size' => 'required|string|in:XS,S,M,L,XL,XXL,One Size',
             'condition' => 'required|string|in:Like New,Excellent,Very Good,Good,Fair',
             'price' => 'required|integer|min:1|max:10000',
-            'images' => $isUpdate ? 'nullable|array|max:5' : 'required|array|min:1|max:5',
+            'images' => $isUpdate ? 'nullable|array|max:5' : 'nullable|array|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
 
-        // seller_id validation for admin
         if ($request->has('seller_id')) {
             $rules['seller_id'] = 'required|exists:custom_users,id';
         }
 
-        // available flag (admin forms)
         if ($request->has('available')) {
             $rules['available'] = 'required|boolean';
         }
@@ -170,34 +166,36 @@ class Product extends Model
         $this->attributes['swap'] = $swap;
     }
 
-    /**
-     * Get product images as URLs or file paths
-     */
-    public function getImages(bool $asUrls = true): array
+    public function getImages(): array
     {
-        $image = $this->attributes['image'];
+        $imageJson = $this->attributes['image'];
 
-        if ($image) {
-            $images = json_decode($image, true);
-            if (is_array($images)) {
-                if ($asUrls) {
-                    $urls = [];
-                    foreach ($images as $imagePath) {
-                        if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
-                            $urls[] = $imagePath;
+        if ($imageJson) {
+            $images = json_decode($imageJson, true);
+            if (is_array($images) && ! empty($images)) {
+                $urls = [];
+                foreach ($images as $imagePath) {
+                    if (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                        $urls[] = $imagePath;
+                    } else {
+                        if ($imagePath === 'images/default-product.jpg' || str_contains($imagePath, 'default-product.jpg')) {
+                            $urls[] = asset('images/default-product.jpg');
                         } else {
-                            $urls[] = url('storage/'.ltrim($imagePath, '/'));
+                            $cleanPath = ltrim($imagePath, '/');
+                            if (str_starts_with($cleanPath, 'storage/')) {
+                                $urls[] = url($cleanPath);
+                            } else {
+                                $urls[] = url('storage/'.$cleanPath);
+                            }
                         }
                     }
-
-                    return $urls;
-                } else {
-                    return $images;
                 }
+
+                return $urls;
             }
         }
 
-        return [];
+        return [asset('images/default-product.jpg')];
     }
 
     public function setImages(array $images): void
@@ -265,21 +263,6 @@ class Product extends Model
     public function setOrder(?Order $order): void
     {
         $this->order = $order;
-    }
-
-    public function review(): HasOne
-    {
-        return $this->hasOne(Review::class);
-    }
-
-    public function getReview(): ?Review
-    {
-        return $this->review;
-    }
-
-    public function setReview(?Review $review): void
-    {
-        $this->review = $review;
     }
 
     public function swapRequestsDesired(): HasMany

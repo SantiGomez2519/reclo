@@ -30,6 +30,7 @@ class CustomUser extends Authenticatable
      * $this->products - Product[] - contains the products sold by this user
      * $this->orders - Order[] - contains the orders made by this user
      * $this->reviews - Review[] - contains the reviews written by this user
+     * $this->receivedReviews - Review[] - contains the reviews received as a seller
      * $this->swapRequests - SwapRequest[] - contains the swap requests initiated by this user
      */
     protected $fillable = [
@@ -185,6 +186,21 @@ class CustomUser extends Authenticatable
     public function setReviews(Collection $reviews): void
     {
         $this->reviews = $reviews;
+    }
+
+    public function receivedReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'seller_id');
+    }
+
+    public function getReceivedReviews(): Collection
+    {
+        return $this->receivedReviews;
+    }
+
+    public function setReceivedReviews(Collection $reviews): void
+    {
+        $this->receivedReviews = $reviews;
     }
 
     public function swapRequests(): HasMany

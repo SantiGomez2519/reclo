@@ -16,16 +16,19 @@ class Review extends Model
      * $this->attributes['comment'] - string - contains the review comment
      * $this->attributes['rating'] - int - contains the review rating
      * $this->attributes['user_id'] - int - contains the user (CustomUser) foreign key
-     * $this->attributes['product_id'] - int - contains the product foreign key
+     * $this->attributes['seller_id'] - int - contains the seller (CustomUser) foreign key
+     * $this->attributes['product_id'] - int - contains the product foreign key (nullable)
      * $this->attributes['created_at'] - timestamp - contains the review creation timestamp
      * $this->attributes['updated_at'] - timestamp - contains the review last update timestamp
      * $this->user - CustomUser - contains the associated user who wrote the review
-     * $this->product - Product - contains the associated product being reviewed
+     * $this->seller - CustomUser - contains the associated seller being reviewed
+     * $this->product - Product - contains the associated product that triggered the review (nullable)
      */
     protected $fillable = [
         'comment',
         'rating',
         'user_id',
+        'seller_id',
         'product_id',
     ];
 
@@ -94,17 +97,26 @@ class Review extends Model
         $this->attributes['user_id'] = $user_id;
     }
 
-    public function getProductId(): int
+    public function getSellerId(): int
     {
-        return $this->attributes['product_id'];
+        return $this->attributes['seller_id'];
     }
 
-    public function setProductId(int $product_id): void
+    public function setSellerId(int $seller_id): void
+    {
+        $this->attributes['seller_id'] = $seller_id;
+    }
+
+    public function getProductId(): ?int
+    {
+        return $this->attributes['product_id'] ?? null;
+    }
+
+    public function setProductId(?int $product_id): void
     {
         $this->attributes['product_id'] = $product_id;
     }
 
-    // Relationships
     public function user(): BelongsTo
     {
         return $this->belongsTo(CustomUser::class, 'user_id');
@@ -120,17 +132,32 @@ class Review extends Model
         $this->user = $user;
     }
 
-    public function product(): BelongsTo
+    public function seller(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(CustomUser::class, 'seller_id');
     }
 
-    public function getProduct(): Product
+    public function getSeller(): CustomUser
+    {
+        return $this->seller;
+    }
+
+    public function setSeller(CustomUser $seller): void
+    {
+        $this->seller = $seller;
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function setProduct(Product $product): void
+    public function setProduct(?Product $product): void
     {
         $this->product = $product;
     }

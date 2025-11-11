@@ -181,7 +181,7 @@
                             <div class="mb-3">
                                 <label for="images" class="form-label">{{ __('admin.product_images') }}</label>
                                 <input type="file" class="form-control @error('images') is-invalid @enderror"
-                                    id="images" name="images[]" accept="image/*" multiple required>
+                                    id="images" name="images[]" accept="image/*" multiple>
                                 <div class="form-text">{{ __('admin.images_help') }}</div>
                                 @error('images')
                                     <div class="invalid-feedback">{{ $message }}</div>

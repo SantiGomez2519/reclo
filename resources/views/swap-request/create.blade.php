@@ -4,7 +4,8 @@
 @section('content')
     <div class="container py-4">
         <h2 class="mb-4">{{ __('swap.confirm_swap_request') }}</h2>
-        <p class="text-muted mb-0">{{ __('swap.create_intro', ['name' => $viewData['desiredItem']->seller->getName()]) }}
+        <p class="text-muted mb-0">
+            {{ __('swap.create_intro', ['name' => $viewData['desiredItem']->getSeller()->getName()]) }}
         </p>
         <hr class="mb-4">
 
@@ -46,9 +47,9 @@
                             <i class="bi bi-person-circle fs-4 text-secondary me-3"></i>
                             <div>
                                 <span class="fw-bold">{{ __('product.sold_by') }}:
-                                    {{ $viewData['desiredItem']->seller->getName() }}</span><br>
+                                    {{ $viewData['desiredItem']->getSeller()->getName() }}</span><br>
                                 <small class="text-muted">{{ __('home.member_since') }}
-                                    {{ \Carbon\Carbon::parse($viewData['desiredItem']->seller->getCreatedAt())->format('Y') }}</small>
+                                    {{ \Carbon\Carbon::parse($viewData['desiredItem']->getSeller()->getCreatedAt())->format('Y') }}</small>
                             </div>
                         </div>
 
@@ -59,8 +60,7 @@
                                     value="{{ $viewData['desiredItem']->getId() }}">
                                 <button type="submit" class="btn btn-success px-4">{{ __('swap.accept') }}</button>
                             </form>
-                            <a href="{{ route('home.index') }}"
-                                class="btn btn-danger px-4">{{ __('swap.cancel') }}</a>
+                            <a href="{{ route('home.index') }}" class="btn btn-danger px-4">{{ __('swap.cancel') }}</a>
                         </div>
 
                     </div>

@@ -7,6 +7,7 @@ return [
 
     'nav_home' => 'Home',
     'nav_products' => 'Products',
+    'nav_allied_products' => 'Parterns',
     'nav_reviews' => 'Reviews',
     'nav_swap' => 'Swap',
 
