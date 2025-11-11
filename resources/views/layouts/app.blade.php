@@ -40,6 +40,7 @@
                 <!-- Navigation links -->
                 <div class="navbar-nav me-auto d-flex justify-content-center">
                     <a class="nav-link px-3" href="{{ route('product.index') }}">{{ __('layout.nav_products') }}</a>
+                    <a class="nav-link px-3" href="{{ route('allied-products.index') }}">{{ __('layout.nav_allied_products') }}</a>
                     @auth
                         <a class="nav-link px-3"
                             href="{{ route('product.my-products') }}">{{ __('product.my_products') }}</a>

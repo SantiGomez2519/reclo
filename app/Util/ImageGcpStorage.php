@@ -23,6 +23,8 @@ class ImageGcpStorage implements ImageStorage
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
+                $fileName = md5($file->getClientOriginalName().time()).'.'.$file->extension();
+
                 $path = Storage::disk('gcs')->putFile($folder, $file);
                 $urls[] = Storage::disk('gcs')->url($path);
             }

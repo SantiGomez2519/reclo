@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
-class AlliedProductApiController extends Controller
+class AlliedProductsApiController extends Controller
 {
     public function index(): View|RedirectResponse
     {
-        $url = 'http://127.0.0.1:8000/api/products';
+        $url = env('API_URL').'/api/products';
 
         try {
             $response = Http::get($url);
@@ -20,11 +21,11 @@ class AlliedProductApiController extends Controller
 
                 return view('allied-products.index', compact('products'));
             } else {
-                return redirect()->back()->with('error', 'Error al obtener los productos. Código: '.$response->status());
+                return redirect()->back()->with('error', __('allied-products.products_error').$response->status());
             }
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'No se pudo conectar con la API: '.$e->getMessage());
+            return redirect()->back()->with('error', __('allied-products.connection_error').$e->getMessage());
         }
     }
 }

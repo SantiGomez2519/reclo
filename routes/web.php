@@ -96,4 +96,4 @@ Route::put('/admin/customusers/{id}', 'App\Http\Controllers\Admin\AdminCustomUse
 Route::delete('/admin/customusers/{id}', 'App\Http\Controllers\Admin\AdminCustomUserController@destroy')->name('admin.customusers.destroy');
 
 // --- Allied Products Routes ---
-Route::get('/allied-products', 'App\Http\Controllers\AlliedProductsApiController@index')->name('allied-products.index');
+Route::get('/allied-products', 'App\Http\Controllers\Api\AlliedProductsApiController@index')->name('allied-products.index');

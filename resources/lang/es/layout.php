@@ -7,6 +7,7 @@ return [
 
     'nav_home' => 'Inicio',
     'nav_products' => 'Productos',
+    'nav_allied_products' => 'Aliados',
     'nav_reviews' => 'Reseñas',
     'nav_swap' => 'Intercambio',
 
