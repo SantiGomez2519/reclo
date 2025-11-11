@@ -7,6 +7,8 @@ return [
     'no_products' => 'No products are available.',
     'visit_website' => 'Visit Website',
     'intro' => 'Discover quality smoking accessories and related products',
+    'products_error' => 'Unable to retrieve products at this time.',
+    'connection_error' => 'Unable to connect to the API.',
     'product_details' => [
         'name' => 'No Name',
         'description_missing' => 'No description',

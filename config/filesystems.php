@@ -67,7 +67,7 @@ return [
             'bucket' => env('GCS_BUCKET', 'bucket-name'),
             'path_prefix' => 'products',
             'storage_api_uri' => null,
-            'visibility' => 'noPredefinedVisibility', 
+            'visibility' => 'noPredefinedVisibility',
             'throw' => true,
             'report' => false,
         ],
