@@ -7,14 +7,15 @@ RUN apt-get update -y && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --prefer-dist
 
-COPY . .
-
-COPY ./public/.htaccess /var/www/html/.htaccess
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
-
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-RUN php artisan key:generate || true
-
-RUN chmod -R 777 storage bootstrap/cache
+RUN php artisan key:generate
+RUN php artisan migrate
+RUN chmod -R 777 storage
+RUN a2enmod rewrite
+RUN service apache2 restart
